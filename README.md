@@ -24,28 +24,25 @@ Source of truth: [`pi-settings.json`](pi-settings.json).
 
 | Setting | Value | Notes |
 |---------|-------|-------|
-| `defaultProvider` | `openai-codex` | Primary provider. |
-| `defaultModel` | `gpt-5.4` | Default model for new sessions. |
-| `defaultThinkingLevel` | `xhigh` | Heavy reasoning by default. |
+| `defaultProvider` | `deepseek` | Primary provider. |
+| `defaultModel` | `deepseek-v4-pro` | Default model for new sessions. |
+| `defaultThinkingLevel` | `high` | Moderate reasoning by default. |
 | `steeringMode` | `all` | Apply steering globally. |
 | `followUpMode` | `one-at-a-time` | Sequential follow-up flow. |
 | `hideThinkingBlock` | `false` | Show thinking block. |
-| `theme` | `light` | Base default; [`mac-system-theme.ts`](pi-extensions/mac-system-theme.ts) can override it in interactive macOS sessions. |
+| `theme` | `dark` | Base default; [`mac-system-theme.ts`](pi-extensions/mac-system-theme.ts) can override it in interactive macOS sessions. |
 | `compaction.enabled` | `true` | Context compaction on. |
 | `compaction.reserveTokens` | `16384` | Reserved token budget. |
 | `compaction.keepRecentTokens` | `20000` | Keep recent context before compacting. |
 
 ### Enabled models
 
-- `openai-codex/gpt-5.4`
-- `openai-codex/gpt-5.3-codex`
-- `openai-codex/gpt-5.3-codex-spark`
 - `zai-custom/zai-glm-4.7`
-- `google-antigravity/claude-opus-4-6-thinking`
-- `google-antigravity/gemini-3.1-pro-high`
-- `google-antigravity/claude-sonnet-4-6`
 - `zai-custom/glm-5-turbo`
 - `zai-custom/glm-5.1`
+- `openai-codex/gpt-5.5`
+- `deepseek/deepseek-v4-flash`
+- `deepseek/deepseek-v4-pro`
 
 ### Packages loaded from `pi-settings.json`
 
@@ -65,6 +62,7 @@ Source of truth: [`pi-settings.json`](pi-settings.json).
 | `visual-explainer` | `git:github.com/vedang/visual-explainer` | Generate self-contained HTML visual explainers. |
 | `pi-read-map` | `git:github.com/Whamp/pi-read-map` | Better large-file reads with structure maps. |
 | `chrome-cdp-skill` | `git:github.com/pasky/chrome-cdp-skill` | Interact with live local Chrome tabs through CDP. |
+| `pi-autoresearch` | `git:github.com/davebcn87/pi-autoresearch` | Autonomous experiment loop with metrics tracking and confidence scoring. |
 
 ## Repository contents
 

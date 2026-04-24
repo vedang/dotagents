@@ -1,18 +1,15 @@
 {
-  "lastChangelogVersion": "0.67.2",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4",
-  "defaultThinkingLevel": "xhigh",
+  "lastChangelogVersion": "0.70.2",
+  "defaultProvider": "deepseek",
+  "defaultModel": "deepseek-v4-pro",
+  "defaultThinkingLevel": "high",
   "enabledModels": [
-    "openai-codex/gpt-5.4",
-    "openai-codex/gpt-5.3-codex",
-    "openai-codex/gpt-5.3-codex-spark",
     "zai-custom/zai-glm-4.7",
-    "google-antigravity/claude-opus-4-6-thinking",
-    "google-antigravity/gemini-3.1-pro-high",
-    "google-antigravity/claude-sonnet-4-6",
     "zai-custom/glm-5-turbo",
-    "zai-custom/glm-5.1"
+    "zai-custom/glm-5.1",
+    "openai-codex/gpt-5.5",
+    "deepseek/deepseek-v4-flash",
+    "deepseek/deepseek-v4-pro"
   ],
   "compaction": {
     "enabled": true,
@@ -22,7 +19,7 @@
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
   "hideThinkingBlock": false,
-  "theme": "light",
+  "theme": "dark",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "npm:pi-interactive-shell",
