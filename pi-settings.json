@@ -36,6 +36,7 @@
     "git:github.com/vedang/visual-explainer",
     "git:github.com/Whamp/pi-read-map",
     "git:github.com/pasky/chrome-cdp-skill",
-    "git:github.com/davebcn87/pi-autoresearch"
+    "git:github.com/davebcn87/pi-autoresearch",
+    "git:github.com/mattleong/pi-better-openai"
   ]
 }
