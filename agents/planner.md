@@ -1,6 +1,6 @@
 ---
 name: planner
-model: openai-codex/gpt-5.3-codex
+model: openai-codex/gpt-5.5
 thinking: xhigh
 tools: read, grep, find, ls, write
 description: Creates implementation plans from context and requirements
