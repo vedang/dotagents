@@ -19,7 +19,7 @@
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
   "hideThinkingBlock": false,
-  "theme": "light",
+  "theme": "dark",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "npm:pi-interactive-shell",
@@ -38,6 +38,7 @@
     "git:github.com/pasky/chrome-cdp-skill",
     "git:github.com/davebcn87/pi-autoresearch",
     "git:github.com/mattleong/pi-better-openai",
-    "git:github.com/vedang/humanizer"
+    "git:github.com/vedang/humanizer",
+    "git:github.com/vedang/pi-review-code"
   ]
 }
