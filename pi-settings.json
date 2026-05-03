@@ -19,7 +19,7 @@
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
   "hideThinkingBlock": false,
-  "theme": "dark",
+  "theme": "light",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "npm:pi-interactive-shell",

@@ -1,6 +1,6 @@
 ---
 name: multimodal
-model: deepseek/deepseek-v4-flash
+model: deepseek/deepseek-v4-flash:high
 tools: read
 description: Media Analysis subagent. Use for reading PDFs, images, or other media
 ---
