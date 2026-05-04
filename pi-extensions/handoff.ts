@@ -12,7 +12,12 @@
  * The generated prompt appears as a draft in the editor for review/editing.
  */
 
-import { complete, type Message, type Model } from "@mariozechner/pi-ai";
+import {
+  type Api,
+  type Message,
+  type Model,
+  complete,
+} from "@mariozechner/pi-ai";
 import type {
   ExtensionAPI,
   ModelRegistry,
@@ -47,15 +52,15 @@ Files involved:
 [Clear description of what to do next based on user's goal]`;
 
 async function generateHandoffPrompt(
-  model: Model<any>,
+  model: Model<Api>,
   registry: ModelRegistry,
   conversationText: string,
   goal: string,
   signal: AbortSignal,
 ): Promise<string | null> {
-  const auth = await registry.getApiKeyAndHeaders(model);
-  if (!auth.ok || !auth.apiKey) {
-    throw new Error(auth.ok ? `No API key for ${model.provider}` : auth.error);
+  const apiKey = await registry.getApiKey(model);
+  if (!apiKey) {
+    throw new Error(`No API key for ${model.provider}`);
   }
 
   const response = await complete(
@@ -75,7 +80,7 @@ async function generateHandoffPrompt(
         },
       ],
     },
-    { apiKey: auth.apiKey, headers: auth.headers, signal },
+    { apiKey, headers: model.headers, signal },
   );
 
   if (response.stopReason === "aborted") return null;
@@ -106,6 +111,7 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
+      const model = ctx.model;
       const branch = ctx.sessionManager.getBranch();
       const messages = branch
         .filter(
@@ -132,7 +138,7 @@ export default function (pi: ExtensionAPI) {
           loader.onAbort = () => done(null);
 
           generateHandoffPrompt(
-            ctx.model!,
+            model,
             ctx.modelRegistry,
             conversationText,
             goal,
@@ -159,19 +165,18 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
-      // Post-switch work must use withSession — old ctx is stale after newSession.
       const { cancelled } = await ctx.newSession({
         parentSession: currentSessionFile,
-        withSession: async (newCtx) => {
-          // Set the edited prompt in the new session's editor for submission
-          newCtx.ui.setEditorText(editedPrompt);
-          newCtx.ui.notify("Handoff ready. Submit when ready.", "info");
-        },
       });
 
       if (cancelled) {
         ctx.ui.notify("New session cancelled", "info");
+        return;
       }
+
+      // Set the edited prompt in the new session's editor for submission.
+      ctx.ui.setEditorText(edited);
+      ctx.ui.notify("Handoff ready. Submit when ready.", "info");
     },
   });
 }
