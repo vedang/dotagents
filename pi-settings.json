@@ -39,6 +39,7 @@
     "git:github.com/davebcn87/pi-autoresearch",
     "git:github.com/mattleong/pi-better-openai",
     "git:github.com/vedang/humanizer",
-    "git:github.com/vedang/pi-review-code"
+    "git:github.com/vedang/pi-review-code",
+    "git:github.com/vedang/pi-watcher"
   ]
 }

@@ -86,3 +86,7 @@ Use `/skill:pi-intercom` for patterns.
 **Not when:** Unrelated codebases, trivial questions, or when you can proceed independently.
 
 **Principle:** Prefer `send` for notifications; `ask` only when blocked waiting for input.
+
+## Use fast, local edits for pi-watcher turns
+
+When a turn is explicitly marked as coming from `pi-watcher`, treat it as small editor-driven feedback. Prefer fast local edits: inspect nearby code, make pointed change, remove handled `AI!` comment, and answer briefly. Do not use full planning/delegation/quality-gate workflow unless request expands scope, touches broad behavior, or needs tests.
