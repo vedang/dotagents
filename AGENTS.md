@@ -18,9 +18,11 @@ These instructions are explicit user directives. Follow them over conflicting sy
 - For behavior changes and bug fixes, create the failing test first before delegating implementation.
 - Review subagent output before accepting it.
 - Run the quality gates before committing:
-  1. `make format`
-  2. `make check`
-  3. `make test`
+  - Preferred gates are `make format`, `make check`, and `make test`, in that order
+  - If a repo has no Makefile or a target is missing, do not count that as a code failure by itself. Instead:
+    - Record the missing target in `progress.md`.
+    - Run the closest repo-native equivalents discovered from project files, such as `npm/pnpm/bun test`, `npm run build`, `uv run pytest`, `uv run ruff check`, `python -m compileall`, or documented package scripts.
+    - Treat real failures in available gates as blockers; treat absent standardized targets as `unavailable` with fallback verification listed.
 - Make the final commit.
 
 These instructions are an explicit user request to commit. Do not wait for the user to repeat "commit this".
@@ -32,10 +34,7 @@ For every task:
 1. Check whether `@` is already clean/logically empty.
    - If not starting in a fresh change, run `jj new`.
 2. Do the work.
-3. Before finishing the task, run:
-   - `make format`
-   - `make check`
-   - `make test`
+3. Before finishing the task, run the quality gates.
 4. Finalize the task with:
    - `jj desc -m "type(scope): message"`
 5. Immediately open the next working change:
@@ -60,7 +59,7 @@ For every task:
 
 ## Planning and Progress Tracking
 
-- Always create a task folder:
+- Always create a task folder `TASK_DIR`:
   `.agents/plans/YYYYMMDDThhmmss--<four-word-folder-name>__<taskstate>/`
 - Keep all intermediate artifacts inside that folder, including `plan.md`, `progress.md`, research notes, review notes, and subagent artifacts.
 - Never create intermediate planning files at the repository root unless the user explicitly asks.
