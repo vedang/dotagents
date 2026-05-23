@@ -19,8 +19,11 @@
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
   "hideThinkingBlock": false,
-  "theme": "dark",
+  "theme": "light",
   "packages": [
+    "git:github.com/championswimmer/pi-cache-graph",
+    "git:github.com/championswimmer/pi-context-prune",
+    "git:github.com/championswimmer/pi-context-usage",
     "git:github.com/davebcn87/pi-autoresearch",
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",
