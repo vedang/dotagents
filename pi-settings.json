@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.71.0",
+  "lastChangelogVersion": "0.75.5",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "xhigh",
@@ -45,6 +45,7 @@
     "git:github.com/vedang/pi-watcher",
     "git:github.com/Whamp/pi-read-map",
     "npm:pi-interactive-shell",
-    "npm:pi-intercom"
+    "npm:pi-intercom",
+    "git:github.com/dbachelder/pi-btw"
   ]
 }
