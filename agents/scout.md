@@ -1,6 +1,6 @@
 ---
 name: scout
-model: zai-custom/zai-glm-4.7
+model: openai-codex/gpt-5.3-codex-spark
 temperature: 0.9
 top_p: 0.95
 clear_thinking: false

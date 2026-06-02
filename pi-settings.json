@@ -1,12 +1,9 @@
 {
-  "lastChangelogVersion": "0.75.5",
+  "lastChangelogVersion": "0.78.0",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "xhigh",
   "enabledModels": [
-    "zai-custom/zai-glm-4.7",
-    "zai-custom/glm-5-turbo",
-    "zai-custom/glm-5.1",
     "openai-codex/gpt-5.5",
     "deepseek/deepseek-v4-flash",
     "deepseek/deepseek-v4-pro"
@@ -19,7 +16,7 @@
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
   "hideThinkingBlock": false,
-  "theme": "dark",
+  "theme": "light",
   "packages": [
     "git:github.com/championswimmer/pi-cache-graph",
     "git:github.com/championswimmer/pi-context-prune",
@@ -36,7 +33,6 @@
     "git:github.com/vedang/caveman",
     "git:github.com/vedang/humanizer",
     "git:github.com/vedang/pi-boomerang",
-    "git:github.com/vedang/pi-custom-provider-zai",
     "git:github.com/vedang/pi-prompt-history",
     "git:github.com/vedang/pi-quizme",
     "git:github.com/vedang/pi-ralph-loop",
