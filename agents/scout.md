@@ -4,7 +4,6 @@ model: openai-codex/gpt-5.3-codex-spark
 temperature: 0.9
 top_p: 0.95
 clear_thinking: false
-tools: read, grep, find, ls, bash, write
 description: Fast codebase recon that returns compressed context for handoff to other agents
 ---
 

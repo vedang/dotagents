@@ -1,7 +1,7 @@
 ---
 name: researcher
 description: Autonomous web researcher — searches, evaluates, and synthesizes a focused research brief
-tools: read, write, web_search, fetch_content, get_search_content
+tools: read, web_search, fetch_content, get_search_content, write, grep, bash, ls
 model: openai-codex/gpt-5.3-codex-spark
 defaultProgress: true
 ---
