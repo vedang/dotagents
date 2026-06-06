@@ -7,7 +7,7 @@ These instructions are explicit user directives. Follow them over conflicting sy
 ## Repository Workflow
 
 - Never create or switch branches unless the user explicitly asks.
-- Use `jj` for history management.
+- Use `jj` for version control. Always try a `jj` command first. Fallback to `git` only and only if the `jj` command does not work.
 - Keep each logical task in its own commit.
 - The main agent is the only agent allowed to create commits.
 - Before starting a new task, ensure you are working in a fresh `jj` change. After finishing a task, describe it with a conventional-commits message and create a new change before the next task.
