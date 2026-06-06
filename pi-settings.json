@@ -16,7 +16,7 @@
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
   "hideThinkingBlock": false,
-  "theme": "dark",
+  "theme": "light",
   "packages": [
     "git:github.com/championswimmer/pi-cache-graph",
     "git:github.com/championswimmer/pi-context-prune",
@@ -43,6 +43,7 @@
     "npm:pi-interactive-shell",
     "npm:pi-intercom",
     "npm:pi-subagents",
-    "git:github.com/vedang/rote-skills"
+    "git:github.com/vedang/rote-skills",
+    "git:github.com/vedang/pi-adr"
   ]
 }
