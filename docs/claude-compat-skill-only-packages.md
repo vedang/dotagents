@@ -1,5 +1,7 @@
 # Claude compatibility plan: caveman, humanizer, rote-skills
 
+> **Status (2026-06-10): done.** All three installed as user-scope plugins (caveman@caveman, rote-onboard@rote-skills, humanizer@humanizer); humanizer got its plugin/marketplace manifests.
+
 These three repos are pure skill packages (no TypeScript extension code), so
 they are already Claude Code compatible in substance. The work is packaging,
 not porting.

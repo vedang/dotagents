@@ -1,5 +1,7 @@
 # Claude compatibility plan: pi-quizme
 
+> **Status (2026-06-10): done.** Implemented as the AskUserQuestion-based skill claude/skills/quizme/.
+
 Source: `~/src/vedang/pi-quizme/pi-quizme.root`
 
 ## Current shape (pi)

@@ -1,5 +1,7 @@
 # Claude compatibility plan: pi-watcher
 
+> **Status (2026-06-10): done.** Plugin monitor added to pi-watcher.root (monitors/watch-markers.mjs), installed as watcher@pi-watcher.
+
 Source: `~/src/vedang/pi-watcher/pi-watcher.root`
 
 ## Current shape (pi)

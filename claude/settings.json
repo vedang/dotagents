@@ -1,35 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "theme": "auto",
-  "model": "claude-fable-5[1m]",
-  "outputStyle": "Explanatory",
-  "alwaysThinkingEnabled": true,
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/notify.sh"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/notify.sh"
-          }
-        ]
-      }
-    ]
-  },
   "permissions": {
     "allow": [
       "Bash(jj st:*)",
@@ -48,5 +18,78 @@
       "Bash(make test:*)"
     ],
     "deny": ["Read(./.env)", "Read(./.env.*)", "Read(**/secrets/**)"]
-  }
+  },
+  "model": "claude-fable-5[1m]",
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/notify.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/notify.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/simplify-auto.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "caveman@caveman": true,
+    "rote-onboard@rote-skills": true,
+    "humanizer@humanizer": true,
+    "adr@pi-adr": true,
+    "watcher@pi-watcher": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/caveman"
+      }
+    },
+    "rote-skills": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/rote-skills"
+      }
+    },
+    "humanizer": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/nejo/src/vedang/humanizer/humanizer.root"
+      }
+    },
+    "pi-adr": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/nejo/src/vedang/pi-adr/pi-adr.root"
+      }
+    },
+    "pi-watcher": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/nejo/src/vedang/pi-watcher/pi-watcher.root"
+      }
+    }
+  },
+  "outputStyle": "Explanatory",
+  "alwaysThinkingEnabled": true,
+  "theme": "auto"
 }

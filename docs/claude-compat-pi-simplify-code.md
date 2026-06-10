@@ -1,5 +1,7 @@
 # Claude compatibility plan: pi-simplify-code
 
+> **Status (2026-06-10): done.** Auto mode implemented as claude/hooks/simplify-auto.sh (Stop hook, modes yes/no/ask, default ask).
+
 Source: `~/src/vedang/pi-simplify-code/pi-simplify-code.root`
 
 ## Current shape (pi)

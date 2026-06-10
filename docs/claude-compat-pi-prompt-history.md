@@ -1,5 +1,7 @@
 # Claude compatibility plan: pi-prompt-history
 
+> **Status (2026-06-10): decided.** Trying the built-in Ctrl+R history search; no port for now.
+
 Source: `~/src/vedang/pi-prompt-history/pi-prompt-history.root`
 
 ## Current shape (pi)

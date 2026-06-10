@@ -1,5 +1,7 @@
 # Claude compatibility plan: pi-ralph-loop
 
+> **Status (2026-06-10): done.** Implemented as claude/skills/ralph/ driven by /loop.
+
 Source: `~/src/vedang/pi-ralph-loop/pi-ralph-loop.root`
 
 ## Current shape (pi)

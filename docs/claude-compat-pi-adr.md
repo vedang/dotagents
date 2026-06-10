@@ -1,5 +1,7 @@
 # Claude compatibility plan: pi-adr
 
+> **Status (2026-06-10): done.** SKILL.md invokes the CLI via $SKILL_DIR, plugin/marketplace manifests added, installed as adr@pi-adr.
+
 Source: `~/src/vedang/pi-adr/pi-adr.root`
 
 ## Current shape (pi)

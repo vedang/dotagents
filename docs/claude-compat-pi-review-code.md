@@ -1,5 +1,7 @@
 # Claude compatibility plan: pi-review-code
 
+> **Status (2026-06-10): decided.** Using the built-in /code-review; no port.
+
 Source: `~/src/vedang/pi-review-code/pi-review-code.root`
 
 ## Current shape (pi)

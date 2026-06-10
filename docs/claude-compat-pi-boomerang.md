@@ -1,5 +1,7 @@
 # Claude compatibility plan: pi-boomerang
 
+> **Status (2026-06-10): done.** Implemented as the context-fork skill claude/skills/boomerang/.
+
 Source: `~/src/vedang/pi-boomerang/pi-boomerang.root`
 
 ## Current shape (pi)
