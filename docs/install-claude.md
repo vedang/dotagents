@@ -97,7 +97,9 @@ my own extensions).
 | `mattleong/pi-better-openai` | N/A (OpenAI-specific). `/fast` exists natively for Opus. |
 | `pi-intercom` (npm) | No direct equivalent; agent teams/channels cover parts of it. |
 | `pi-interactive-shell` (npm) | Mostly unneeded (Claude Code has background shells); cheat-sheet skills can be linked if missed. |
-| `pasky/chrome-cdp-skill`, `nicobailon/visual-explainer`, `unravel-team/dafny-estimation`, `unravel-proposal-creator` | Pure skills — clone and symlink into `~/.claude/skills/` (or install as plugins where provided). |
+| `nicobailon/visual-explainer`, `unravel-proposal-creator` | Installed as plugins from their GitHub marketplaces. |
+| `pasky/chrome-cdp-skill`, `davebcn87/pi-autoresearch` | Installed as plugins from local forks (`~/src/pasky/...`, `~/src/davebcn87/...`) after adding `.claude-plugin` manifests there. |
+| `unravel-team/dafny-estimation` | Ships `plugin.json` but no marketplace; installed via the personal [`claude/extras-marketplace/`](../claude/extras-marketplace/.claude-plugin/marketplace.json) (`dafny-estimation@vedang-extras`). |
 | `vedang/*` (caveman, humanizer, rote-skills, pi-adr, pi-boomerang, pi-prompt-history, pi-quizme, pi-ralph-loop, pi-review-code, pi-simplify-code, pi-watcher) | See `docs/claude-compat-*.md` migration plans. |
 
 ## pi → Claude Code surface map (reference)

@@ -55,7 +55,12 @@
     "rote-onboard@rote-skills": true,
     "humanizer@humanizer": true,
     "adr@pi-adr": true,
-    "watcher@pi-watcher": true
+    "watcher@pi-watcher": true,
+    "visual-explainer@visual-explainer-marketplace": true,
+    "unravel-proposal-creator@unravel-proposal-creator": true,
+    "chrome-cdp@chrome-cdp-skill": true,
+    "autoresearch@pi-autoresearch": true,
+    "dafny-estimation@vedang-extras": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -86,6 +91,36 @@
       "source": {
         "source": "directory",
         "path": "/Users/nejo/src/vedang/pi-watcher/pi-watcher.root"
+      }
+    },
+    "visual-explainer-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "nicobailon/visual-explainer"
+      }
+    },
+    "unravel-proposal-creator": {
+      "source": {
+        "source": "github",
+        "repo": "unravel-team/unravel-proposal-creator"
+      }
+    },
+    "chrome-cdp-skill": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/nejo/src/pasky/chrome-cdp-skill/chrome-cdp-skill.root"
+      }
+    },
+    "pi-autoresearch": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/nejo/src/davebcn87/pi-autoresearch/pi-autoresearch.root"
+      }
+    },
+    "vedang-extras": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/nejo/src/vedang/agents/agents.root/claude/extras-marketplace"
       }
     }
   },

@@ -1,0 +1,21 @@
+{
+  "name": "vedang-extras",
+  "owner": {
+    "name": "Vedang Manerikar",
+    "url": "https://github.com/vedang"
+  },
+  "metadata": {
+    "description": "Personal marketplace for third-party plugins that don't ship their own marketplace.json."
+  },
+  "plugins": [
+    {
+      "name": "dafny-estimation",
+      "source": {
+        "source": "github",
+        "repo": "unravel-team/dafny-estimation"
+      },
+      "description": "Formal specification-driven project estimation using Dafny — converts PRDs into defensible, risk-adjusted estimates.",
+      "category": "planning"
+    }
+  ]
+}
