@@ -22,14 +22,18 @@ case "$event" in
 esac
 
 # Escape sequences must reach the terminal, not the hook's captured stdout.
-if [ -w /dev/tty ]; then
+# Opening /dev/tty fails when the hook runs without a controlling terminal
+# (headless/background), so attempt the write and fall back on failure.
+send_tty() {
   if [ -n "$KITTY_WINDOW_ID" ]; then
-    printf '\033]99;i=1:d=0;%s\033\\' "$title" > /dev/tty
-    printf '\033]99;i=1:p=body;%s\033\\' "$body" > /dev/tty
+    printf '\033]99;i=1:d=0;%s\033\\' "$title" > /dev/tty &&
+      printf '\033]99;i=1:p=body;%s\033\\' "$body" > /dev/tty
   else
     printf '\033]777;notify;%s;%s\007' "$title" "$body" > /dev/tty
   fi
-elif [ "$(uname)" = "Darwin" ]; then
+} 2>/dev/null
+
+if ! send_tty && [ "$(uname)" = "Darwin" ]; then
   osascript -e "display notification \"$body\" with title \"$title\"" >/dev/null 2>&1
 fi
 
