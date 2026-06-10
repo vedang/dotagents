@@ -53,14 +53,14 @@
   "enabledPlugins": {
     "caveman@caveman": true,
     "rote-onboard@rote-skills": true,
+    "visual-explainer@visual-explainer-marketplace": true,
+    "unravel-proposal-creator@unravel-proposal-creator": true,
     "humanizer@humanizer": true,
     "adr@pi-adr": true,
     "watcher@pi-watcher": true,
-    "visual-explainer@visual-explainer-marketplace": true,
-    "unravel-proposal-creator@unravel-proposal-creator": true,
+    "dafny-estimation@dafny-estimation": true,
     "chrome-cdp@chrome-cdp-skill": true,
-    "autoresearch@pi-autoresearch": true,
-    "dafny-estimation@dafny-estimation": true
+    "autoresearch@pi-autoresearch": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -75,24 +75,6 @@
         "repo": "vedang/rote-skills"
       }
     },
-    "humanizer": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/nejo/src/vedang/humanizer/humanizer.root"
-      }
-    },
-    "pi-adr": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/nejo/src/vedang/pi-adr/pi-adr.root"
-      }
-    },
-    "pi-watcher": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/nejo/src/vedang/pi-watcher/pi-watcher.root"
-      }
-    },
     "visual-explainer-marketplace": {
       "source": {
         "source": "github",
@@ -105,22 +87,40 @@
         "repo": "unravel-team/unravel-proposal-creator"
       }
     },
-    "chrome-cdp-skill": {
+    "humanizer": {
       "source": {
-        "source": "directory",
-        "path": "/Users/nejo/src/pasky/chrome-cdp-skill/chrome-cdp-skill.root"
+        "source": "github",
+        "repo": "vedang/humanizer"
       }
     },
-    "pi-autoresearch": {
+    "pi-adr": {
       "source": {
-        "source": "directory",
-        "path": "/Users/nejo/src/davebcn87/pi-autoresearch/pi-autoresearch.root"
+        "source": "github",
+        "repo": "vedang/pi-adr"
+      }
+    },
+    "pi-watcher": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/pi-watcher"
       }
     },
     "dafny-estimation": {
       "source": {
-        "source": "directory",
-        "path": "/Users/nejo/src/unravel-team/dafny-estimation/dafny-estimation.root"
+        "source": "github",
+        "repo": "unravel-team/dafny-estimation"
+      }
+    },
+    "chrome-cdp-skill": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/chrome-cdp-skill"
+      }
+    },
+    "pi-autoresearch": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/pi-autoresearch"
       }
     }
   },
