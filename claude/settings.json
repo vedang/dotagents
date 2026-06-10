@@ -60,7 +60,7 @@
     "unravel-proposal-creator@unravel-proposal-creator": true,
     "chrome-cdp@chrome-cdp-skill": true,
     "autoresearch@pi-autoresearch": true,
-    "dafny-estimation@vedang-extras": true
+    "dafny-estimation@dafny-estimation": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -117,10 +117,10 @@
         "path": "/Users/nejo/src/davebcn87/pi-autoresearch/pi-autoresearch.root"
       }
     },
-    "vedang-extras": {
+    "dafny-estimation": {
       "source": {
         "source": "directory",
-        "path": "/Users/nejo/src/vedang/agents/agents.root/claude/extras-marketplace"
+        "path": "/Users/nejo/src/unravel-team/dafny-estimation/dafny-estimation.root"
       }
     }
   },

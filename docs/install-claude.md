@@ -99,7 +99,7 @@ my own extensions).
 | `pi-interactive-shell` (npm) | Mostly unneeded (Claude Code has background shells); cheat-sheet skills can be linked if missed. |
 | `nicobailon/visual-explainer`, `unravel-proposal-creator` | Installed as plugins from their GitHub marketplaces. |
 | `pasky/chrome-cdp-skill`, `davebcn87/pi-autoresearch` | Installed as plugins from local forks (`~/src/pasky/...`, `~/src/davebcn87/...`) after adding `.claude-plugin` manifests there. |
-| `unravel-team/dafny-estimation` | Ships `plugin.json` but no marketplace; installed via the personal [`claude/extras-marketplace/`](../claude/extras-marketplace/.claude-plugin/marketplace.json) (`dafny-estimation@vedang-extras`). |
+| `unravel-team/dafny-estimation` | Installed from the local checkout (`~/src/unravel-team/...`) after adding its missing `marketplace.json` there; switch the marketplace source to GitHub once that commit is pushed. |
 | `vedang/*` (caveman, humanizer, rote-skills, pi-adr, pi-boomerang, pi-prompt-history, pi-quizme, pi-ralph-loop, pi-review-code, pi-simplify-code, pi-watcher) | See `docs/claude-compat-*.md` migration plans. |
 
 ## pi → Claude Code surface map (reference)
