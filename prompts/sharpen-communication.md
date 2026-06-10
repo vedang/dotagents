@@ -12,7 +12,7 @@ You are an experienced management consultant and expert in written communication
 5. **Preserve intent** - Keep the original message, audience, and desired outcome intact
 
 **Input:**
-$@
+$ARGUMENTS
 
 **Process:**
 1. First, analyze the communication and ask 2-4 targeted clarifying questions to understand:

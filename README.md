@@ -4,7 +4,7 @@
 
 This is my Agent Harness configuration. Tell your agent to clone it to `~/.config/agents` and symlink the parts you want into your harness.
 
-## Example setup
+## Example setup (pi-coding-agent)
 
 1. `git clone https://github.com/vedang/agents ~/.config/agents`
 2. `mkdir -p ~/.pi/agent`
@@ -15,6 +15,20 @@ This is my Agent Harness configuration. Tell your agent to clone it to `~/.confi
 7. `ln -s ~/.config/agents/prompts ~/.pi/agent/prompts`
 8. `ln -s ~/.config/agents/pi-extensions ~/.pi/agent/extensions`
 9. `ln -s ~/.config/agents/skills ~/.pi/agent/skills`
+
+## Claude Code setup
+
+The [`claude/`](claude/) directory holds the Claude Code surface of this
+harness: `CLAUDE.md` (symlink to the shared `AGENTS.md`), `settings.json`
+(Explanatory output style, notification hooks, statusline, permissions),
+ported subagent role cards under [`claude/agents/`](claude/agents/), and
+skills under [`claude/skills/`](claude/skills/) (claude-specific skills plus
+symlinks to the shared `skills/`).
+
+See [`docs/install-claude.md`](docs/install-claude.md) for the symlink setup
+into `~/.claude`, the pi→Claude surface map, and what replaces each pi
+package. Migration plans for my own pi extensions live in
+[`docs/claude-compat-*.md`](docs/).
 
 ## Current Pi runtime profile
 
