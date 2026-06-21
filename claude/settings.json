@@ -17,9 +17,12 @@
       "Bash(make check:*)",
       "Bash(make test:*)"
     ],
-    "deny": ["Read(./.env)", "Read(./.env.*)", "Read(**/secrets/**)"]
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/secrets/**)"
+    ]
   },
-  "model": "claude-fable-5[1m]",
   "hooks": {
     "Notification": [
       {
@@ -126,5 +129,7 @@
   },
   "outputStyle": "Explanatory",
   "alwaysThinkingEnabled": true,
-  "theme": "auto"
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "auto",
+  "effortLevel": "high"
 }
