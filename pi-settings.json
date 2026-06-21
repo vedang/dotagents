@@ -18,9 +18,6 @@
   "hideThinkingBlock": false,
   "theme": "light",
   "packages": [
-    "git:github.com/championswimmer/pi-cache-graph",
-    "git:github.com/championswimmer/pi-context-prune",
-    "git:github.com/championswimmer/pi-context-usage",
     "git:github.com/davebcn87/pi-autoresearch",
     "git:github.com/dbachelder/pi-btw",
     "git:github.com/ghoseb/pi-askuserquestion",
@@ -33,6 +30,8 @@
     "git:github.com/vedang/chrome-cdp-skill",
     "git:github.com/vedang/humanizer",
     "git:github.com/vedang/pi-boomerang",
+    "git:github.com/vedang/pi-custom-provider-kimi",
+    "git:github.com/vedang/pi-custom-provider-zai",
     "git:github.com/vedang/pi-prompt-history",
     "git:github.com/vedang/pi-quizme",
     "git:github.com/vedang/pi-ralph-loop",
