@@ -18,17 +18,15 @@
   "hideThinkingBlock": false,
   "theme": "light",
   "packages": [
-    "git:github.com/davebcn87/pi-autoresearch",
-    "git:github.com/dbachelder/pi-btw",
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",
     "git:github.com/mattleong/pi-better-openai",
     "git:github.com/nicobailon/visual-explainer",
     "git:github.com/unravel-team/dafny-estimation",
     "git:github.com/unravel-team/unravel-proposal-creator",
+    "git:github.com/unravel-team/denote-mono",
     "git:github.com/vedang/caveman",
     "git:github.com/vedang/chrome-cdp-skill",
-    "git:github.com/vedang/humanizer",
     "git:github.com/vedang/pi-boomerang",
     "git:github.com/vedang/pi-custom-provider-kimi",
     "git:github.com/vedang/pi-custom-provider-zai",
@@ -42,7 +40,6 @@
     "npm:pi-interactive-shell",
     "npm:pi-intercom",
     "npm:pi-subagents",
-    "git:github.com/vedang/rote-skills",
     "git:github.com/vedang/pi-adr"
   ]
 }
