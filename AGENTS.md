@@ -36,7 +36,7 @@ For every task:
 2. Do the work.
 3. Before finishing the task, run the quality gates.
 4. Finalize the task with:
-   - `jj desc -m "type(scope): message"`
+   - `jj desc -m "conventional commits message"`
 5. Immediately open the next working change:
    - `jj new`
 6. If one working change accidentally contains multiple logical tasks:
