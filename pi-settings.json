@@ -6,7 +6,8 @@
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "deepseek/deepseek-v4-flash",
-    "deepseek/deepseek-v4-pro"
+    "deepseek/deepseek-v4-pro",
+    "local/mlx-community/Qwen3.6-27B-4bit"
   ],
   "compaction": {
     "enabled": true,
