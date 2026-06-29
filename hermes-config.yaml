@@ -5,7 +5,7 @@ model:
   api_mode: chat_completions
   api_key: no-key-required
   context_length: 131072
-  max_tokens: 1536
+  max_tokens: 16384
   default_headers:
     X-APC-Tenant: hermes-local
 providers: {}
