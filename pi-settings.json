@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.78.0",
+  "lastChangelogVersion": "0.78.1",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "xhigh",
@@ -18,6 +18,12 @@
   "followUpMode": "one-at-a-time",
   "hideThinkingBlock": false,
   "theme": "light",
+  "httpIdleTimeoutMs": 1800000,
+  "retry": {
+    "provider": {
+      "timeoutMs": 3600000
+    }
+  },
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",
