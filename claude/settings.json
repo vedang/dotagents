@@ -1,157 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
-  "enabledPlugins": {
-    "adr@pi-adr": true,
-    "autoresearch@pi-autoresearch": true,
-    "caveman@caveman": true,
-    "chrome-cdp@chrome-cdp-skill": true,
-    "dafny-estimation@dafny-estimation": true,
-    "humanizer@humanizer": true,
-    "rote-onboard@rote-skills": true,
-    "unravel-proposal-creator@unravel-proposal-creator": true,
-    "visual-explainer@visual-explainer-marketplace": true,
-    "watcher@pi-watcher": true
-  },
-  "extraKnownMarketplaces": {
-    "caveman": {
-      "source": {
-        "repo": "vedang/caveman",
-        "source": "github"
-      }
-    },
-    "chrome-cdp-skill": {
-      "source": {
-        "repo": "vedang/chrome-cdp-skill",
-        "source": "github"
-      }
-    },
-    "dafny-estimation": {
-      "source": {
-        "repo": "unravel-team/dafny-estimation",
-        "source": "github"
-      }
-    },
-    "humanizer": {
-      "source": {
-        "repo": "vedang/humanizer",
-        "source": "github"
-      }
-    },
-    "pi-adr": {
-      "source": {
-        "repo": "vedang/pi-adr",
-        "source": "github"
-      }
-    },
-    "pi-autoresearch": {
-      "source": {
-        "repo": "vedang/pi-autoresearch",
-        "source": "github"
-      }
-    },
-    "pi-watcher": {
-      "source": {
-        "repo": "vedang/pi-watcher",
-        "source": "github"
-      }
-    },
-    "rote-skills": {
-      "source": {
-        "repo": "vedang/rote-skills",
-        "source": "github"
-      }
-    },
-    "unravel-proposal-creator": {
-      "source": {
-        "repo": "unravel-team/unravel-proposal-creator",
-        "source": "github"
-      }
-    },
-    "visual-explainer-marketplace": {
-      "source": {
-        "repo": "nicobailon/visual-explainer",
-        "source": "github"
-      }
-    }
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "command": "~/.claude/hooks/notify.sh",
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" heartbeat",
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      }
-    ],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" stop",
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" start",
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "command": "~/.claude/hooks/notify.sh",
-            "type": "command"
-          },
-          {
-            "command": "~/.claude/hooks/simplify-auto.sh",
-            "type": "command"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" turn_end",
-            "type": "command"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" turn_start",
-            "type": "command"
-          }
-        ]
-      }
-    ]
-  },
-  "outputStyle": "Explanatory",
   "permissions": {
     "allow": [
       "Bash(jj st:*)",
@@ -175,10 +23,164 @@
       "Read(**/secrets/**)"
     ]
   },
-  "skipDangerousModePermissionPrompt": true,
-  "statusLine": {
-    "command": "~/.claude/statusline.sh",
-    "type": "command"
+  "model": "claude-fable-5[1m]",
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/notify.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" heartbeat"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" stop"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" start"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/notify.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/simplify-auto.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" turn_end"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" turn_start"
+          }
+        ]
+      }
+    ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "adr@pi-adr": true,
+    "autoresearch@pi-autoresearch": true,
+    "caveman@caveman": true,
+    "chrome-cdp@chrome-cdp-skill": true,
+    "dafny-estimation@dafny-estimation": false,
+    "humanizer@humanizer": false,
+    "rote-onboard@rote-skills": true,
+    "unravel-proposal-creator@unravel-proposal-creator": true,
+    "visual-explainer@visual-explainer-marketplace": true,
+    "watcher@pi-watcher": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/caveman"
+      }
+    },
+    "chrome-cdp-skill": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/chrome-cdp-skill"
+      }
+    },
+    "dafny-estimation": {
+      "source": {
+        "source": "github",
+        "repo": "unravel-team/dafny-estimation"
+      }
+    },
+    "humanizer": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/humanizer"
+      }
+    },
+    "pi-adr": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/pi-adr"
+      }
+    },
+    "pi-autoresearch": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/pi-autoresearch"
+      }
+    },
+    "pi-watcher": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/pi-watcher"
+      }
+    },
+    "rote-skills": {
+      "source": {
+        "source": "github",
+        "repo": "vedang/rote-skills"
+      }
+    },
+    "unravel-proposal-creator": {
+      "source": {
+        "source": "github",
+        "repo": "unravel-team/unravel-proposal-creator"
+      }
+    },
+    "visual-explainer-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "nicobailon/visual-explainer"
+      }
+    }
+  },
+  "outputStyle": "Explanatory",
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
   "theme": "auto"
 }

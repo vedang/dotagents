@@ -17,13 +17,13 @@
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
   "hideThinkingBlock": false,
-  "theme": "light",
   "httpIdleTimeoutMs": 1800000,
   "retry": {
     "provider": {
       "timeoutMs": 3600000
     }
   },
+  "theme": "dark",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",
