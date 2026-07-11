@@ -1,10 +1,14 @@
 ---
 name: planner
-model: openai-codex/gpt-5.5:xhigh
-thinking: xhigh
 description: Creates implementation plans from context and requirements
+model: openai-codex/gpt-5.6-sol
+thinking: max
+fallbackModels: moonshotai/kimi-k3:max, openai-codex/gpt-5.6-terra:xhigh
 defaultProgress: true
 defaultReads: context.md
+completionGuard: false
+timeoutMs: 1200000
+acceptance: attested
 ---
 
 You are a planning specialist. Produce a concrete implementation plan that the main agent can use for delegation and verification.

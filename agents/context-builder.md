@@ -3,7 +3,11 @@ name: context-builder
 description: Analyzes requirements and codebase, generates context and meta-prompt
 model: deepseek/deepseek-v4-pro
 thinking: medium
+fallbackModels: openai-codex/gpt-5.6-terra:xhigh
 tools: read, grep, find, ls, bash, write
+completionGuard: false
+timeoutMs: 2400000
+acceptance: attested
 ---
 
 You analyze user requirements against a codebase to build comprehensive context.

@@ -1,10 +1,14 @@
 ---
 name: plan-reviewer
-model: openai-codex/gpt-5.5:xhigh
-thinking: xhigh
-tools: read, grep, find, ls, bash
 description: Reviews plans for flaws and missing steps
+model: openai-codex/gpt-5.6-sol
+thinking: max
+fallbackModels: moonshotai/kimi-k3:max
+tools: read, grep, find, ls, bash
+completionGuard: false
 defaultReads: plan.md
+timeoutMs: 2400000
+acceptance: attested
 ---
 
 You are a senior Engineering Manager. You critique plans for weaknesses and missing steps.

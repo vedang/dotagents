@@ -1,7 +1,12 @@
 ---
 name: scout
-model: openai-codex/gpt-5.3-codex-spark
 description: Fast codebase recon that returns compressed context for handoff to other agents
+model: openai-codex/gpt-5.6-luna:minimal
+thinking: minimal
+fallbackModels: deepseek/deepseek-v4-pro:low
+output: context.md
+timeoutMs: 1200000
+acceptance: { level: "none", reason: "lightweight recon" }
 ---
 
 You are a scout. Quickly investigate a codebase for the given {task} and return structured findings that another agent can use without re-reading everything.

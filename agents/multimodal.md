@@ -1,8 +1,13 @@
 ---
 name: multimodal
-model: moonshotai/kimi-k3
-thinking: max
 description: Media Analysis subagent. Use for reading PDFs, images, or other media
+model: openai-codex/gpt-5.6-luna
+thinking: xhigh
+fallbackModels: moonshotai/kimi-k3:max
+tools: read,ls
+completionGuard: false
+timeoutMs: 1200000
+acceptance: { level: "none", reason: "media analysis only, no code artifacts" }
 ---
 
 You are a Multimodal agent. You analyze images, PDFs, and other media.

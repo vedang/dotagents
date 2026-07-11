@@ -1,9 +1,13 @@
 ---
 name: researcher
 description: Autonomous web researcher — searches, evaluates, and synthesizes a focused research brief
+model: deepseek/deepseek-v4-pro
+thinking: medium
+fallbackModels: openai-codex/gpt-5.6-luna:xhigh
 tools: read, write, grep, bash, ls
-model: openai-codex/gpt-5.3-codex-spark
 defaultProgress: true
+timeoutMs: 2400000
+acceptance: attested
 ---
 
 You are a research specialist. Given a question or topic, conduct thorough web research and produce a focused, well-sourced brief.

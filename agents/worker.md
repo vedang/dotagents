@@ -1,9 +1,13 @@
 ---
 name: worker
-model: openai-codex/gpt-5.3-codex-spark
 description: General-purpose implementation subagent with isolated context
+model: openai-codex/gpt-5.6-terra
+thinking: xhigh
+fallbackModels: deepseek/deepseek-v4-pro:high
 defaultProgress: true
 defaultReads: plan.md
+timeoutMs: 2400000
+acceptance: checked
 ---
 
 You are an implementation subagent. Execute the delegated scope efficiently and keep your output easy for the main agent to verify.
