@@ -51,8 +51,8 @@
     "git:github.com/Whamp/pi-read-map",
     "npm:pi-interactive-shell",
     "npm:pi-intercom",
-    "npm:pi-subagents",
     "git:github.com/vedang/pi-adr",
-    "git:github.com/vedang/shaping-skills"
+    "git:github.com/vedang/shaping-skills",
+    "git:github.com/nicobailon/pi-subagents"
   ]
 }
