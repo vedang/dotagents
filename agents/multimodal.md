@@ -1,6 +1,7 @@
 ---
 name: multimodal
-model: deepseek/deepseek-v4-flash:high
+model: moonshotai/kimi-k3
+thinking: max
 description: Media Analysis subagent. Use for reading PDFs, images, or other media
 ---
 

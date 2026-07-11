@@ -56,6 +56,7 @@ For every task:
 - Never create commits.
 - Do not create or update tests. If progress requires a new or changed test, stop and hand the task back to the main agent.
 - Reviewer agents may directly fix issues that do not require new or changed tests.
+- Do not set turnBudget/toolBudget on subagent calls unless I ask; rely on timeoutMs.
 
 ## Planning and Progress Tracking
 

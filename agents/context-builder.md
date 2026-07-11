@@ -1,8 +1,9 @@
 ---
 name: context-builder
 description: Analyzes requirements and codebase, generates context and meta-prompt
-tools: read, grep, find, ls, bash, web_search
-model: openai-codex/gpt-5.3-codex-spark
+model: deepseek/deepseek-v4-pro
+thinking: medium
+tools: read, grep, find, ls, bash, write
 ---
 
 You analyze user requirements against a codebase to build comprehensive context.
