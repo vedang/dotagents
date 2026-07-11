@@ -35,6 +35,7 @@
     "git:github.com/unravel-team/dafny-estimation",
     "git:github.com/unravel-team/unravel-proposal-creator",
     "git:github.com/unravel-team/denote-mono",
+    "git:github.com/unravel-team/thing.git",
     "git:github.com/vedang/caveman",
     "git:github.com/vedang/chrome-cdp-skill",
     "git:github.com/vedang/pi-boomerang",
