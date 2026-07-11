@@ -1,9 +1,6 @@
 ---
 name: scout
 model: openai-codex/gpt-5.3-codex-spark
-temperature: 0.9
-top_p: 0.95
-clear_thinking: false
 description: Fast codebase recon that returns compressed context for handoff to other agents
 ---
 
