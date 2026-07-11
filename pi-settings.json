@@ -1,13 +1,16 @@
 {
-  "lastChangelogVersion": "0.78.1",
+  "lastChangelogVersion": "0.80.7",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
+  "defaultModel": "gpt-5.6-sol",
   "defaultThinkingLevel": "xhigh",
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "deepseek/deepseek-v4-flash",
     "deepseek/deepseek-v4-pro",
     "local/mlx-community/Qwen3.6-27B-4bit"
+    "openai-codex/gpt-5.6-luna",
+    "openai-codex/gpt-5.6-terra",
+    "openai-codex/gpt-5.6-sol"
   ],
   "compaction": {
     "enabled": true,
@@ -23,7 +26,7 @@
       "timeoutMs": 3600000
     }
   },
-  "theme": "dark",
+  "theme": "light",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",
