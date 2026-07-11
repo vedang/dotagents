@@ -1,8 +1,8 @@
 {
+  "lastChangelogVersion": "0.80.10",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
   "defaultThinkingLevel": "xhigh",
-  "lastChangelogVersion": "0.80.10",
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "deepseek/deepseek-v4-flash",
@@ -40,8 +40,6 @@
     "git:github.com/vedang/caveman",
     "git:github.com/vedang/chrome-cdp-skill",
     "git:github.com/vedang/pi-boomerang",
-    "git:github.com/vedang/pi-custom-provider-kimi",
-    "git:github.com/vedang/pi-custom-provider-zai",
     "git:github.com/vedang/pi-prompt-history",
     "git:github.com/vedang/pi-quizme",
     "git:github.com/vedang/pi-ralph-loop",
