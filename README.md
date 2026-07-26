@@ -30,6 +30,16 @@ into `~/.claude`, the pi→Claude surface map, and what replaces each pi
 package. Migration plans for my own pi extensions live in
 [`docs/claude-compat-*.md`](docs/).
 
+## Weekly local session analysis
+
+Runbook: [`scripts/README.md`](scripts/README.md). On Sunday, run from repository root:
+
+```sh
+python3 scripts/session_analysis.py --week-ending YYYY-MM-DD
+```
+
+Replace `YYYY-MM-DD` with Sunday date. Generated `session_analysis/` data stays local and ignored.
+
 ## Current Pi runtime profile
 
 Source of truth: [`pi-settings.json`](pi-settings.json).
