@@ -7,3 +7,4 @@ coverage/
 skills/dev-browser/profiles/
 skills/dev-browser/tmp/skills/dev-browser/profiles/
 skills/dev-browser/tmp/
+.pi-subagents/
