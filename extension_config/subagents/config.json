@@ -1,0 +1,13 @@
+{
+  "toolDescriptionMode": "compact",
+  "globalConcurrencyLimit": 3,
+  "maxSubagentSpawnsPerSession": 12,
+  "parallel": {
+    "maxTasks": 12,
+    "concurrency": 3
+  },
+  "intercomBridge": {
+    "mode": "fork-only"
+  },
+  "artifactDir": "session"
+}

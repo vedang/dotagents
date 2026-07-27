@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.80.10",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
-  "defaultThinkingLevel": "xhigh",
+  "defaultThinkingLevel": "high",
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "deepseek/deepseek-v4-flash",
@@ -15,7 +15,7 @@
   ],
   "compaction": {
     "enabled": true,
-    "reserveTokens": 8192,
+    "reserveTokens": 16384,
     "keepRecentTokens": 12000
   },
   "steeringMode": "all",
@@ -27,7 +27,7 @@
       "timeoutMs": 3600000
     }
   },
-  "theme": "light",
+  "theme": "dark",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",
