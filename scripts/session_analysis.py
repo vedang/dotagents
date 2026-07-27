@@ -306,18 +306,23 @@ def write_text_atomically(path: Path, content: str) -> None:
         raise
 
 
+def validate_owned_directories(root: Path) -> None:
+    """Reject owned paths that could redirect generated writes."""
+    for name in ("inventory", "analysis"):
+        owned_directory = root / name
+        if owned_directory.is_symlink():
+            raise ValueError(f"owned directory must not be a symlink: {owned_directory}")
+        if owned_directory.exists() and not owned_directory.is_dir():
+            raise ValueError(f"owned path is not a directory: {owned_directory}")
+
+
 def validate_destination(destination: Path, overwrite: bool) -> None:
     """Validate destination shape without mutating an existing snapshot."""
     if destination.is_symlink():
         raise ValueError(f"destination must not be a symlink: {destination}")
     if destination.exists() and not destination.is_dir():
         raise ValueError(f"destination is not a directory: {destination}")
-    for name in ("inventory", "analysis"):
-        owned_directory = destination / name
-        if owned_directory.is_symlink():
-            raise ValueError(f"owned directory must not be a symlink: {owned_directory}")
-        if owned_directory.exists() and not owned_directory.is_dir():
-            raise ValueError(f"owned path is not a directory: {owned_directory}")
+    validate_owned_directories(destination)
     if destination.is_dir() and any(destination.iterdir()) and not overwrite:
         raise ValueError(f"destination is not empty: {destination}; pass --overwrite to replace generated files")
 
@@ -356,16 +361,6 @@ def remove_owned_snapshot_files(staging: Path) -> None:
     (staging / "analysis" / "quantitative-baseline.md").unlink(missing_ok=True)
 
 
-def validate_staging_tree(staging: Path) -> None:
-    """Reject copied owned paths that could redirect generated writes."""
-    for name in ("inventory", "analysis"):
-        owned_directory = staging / name
-        if owned_directory.is_symlink():
-            raise ValueError(f"owned directory must not be a symlink: {owned_directory}")
-        if owned_directory.exists() and not owned_directory.is_dir():
-            raise ValueError(f"owned path is not a directory: {owned_directory}")
-
-
 def write_staged_snapshot(
     output_root: Path, destination: Path, files: dict[Path, str], overwrite: bool
 ) -> None:
@@ -382,7 +377,7 @@ def write_staged_snapshot(
             shutil.copytree(destination, staging, symlinks=True)
         else:
             staging.mkdir()
-        validate_staging_tree(staging)
+        validate_owned_directories(staging)
         remove_owned_snapshot_files(staging)
         for relative_path, content in files.items():
             if relative_path.is_absolute() or ".." in relative_path.parts:
@@ -494,7 +489,6 @@ def parse_date(value: str, label: str, parser: argparse.ArgumentParser) -> date:
         return date.fromisoformat(value)
     except ValueError:
         parser.error(f"{label} must use YYYY-MM-DD")
-        raise AssertionError("argparse exits")
 
 
 def parse_arguments() -> tuple[argparse.Namespace, date, date, ZoneInfo]:
@@ -528,7 +522,6 @@ def parse_arguments() -> tuple[argparse.Namespace, date, date, ZoneInfo]:
         timezone = ZoneInfo(args.timezone)
     except ZoneInfoNotFoundError:
         parser.error(f"unknown timezone: {args.timezone}")
-        raise AssertionError("argparse exits")
 
     if args.week_ending:
         end_date = parse_date(args.week_ending, "--week-ending", parser)

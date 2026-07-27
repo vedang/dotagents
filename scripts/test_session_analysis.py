@@ -16,6 +16,8 @@ from scripts.session_analysis import sanitized_snippet, unique_session_aliases, 
 
 SCRIPT = Path(__file__).with_name("session_analysis.py")
 SESSION_ID = "11111111-2222-4333-8444-555555555555"
+WEEK_ENDING = "2026-07-26"
+WINDOW_DIRECTORY = "2026-07-19--2026-07-25"
 
 
 def write_jsonl(path: Path, entries: list[dict[str, object]]) -> None:
@@ -27,9 +29,25 @@ class SessionAnalysisCliTest(unittest.TestCase):
     def run_script(self, *args: str) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [sys.executable, str(SCRIPT), *args],
-            check=False,
             capture_output=True,
             text=True,
+        )
+
+    def run_weekly(
+        self,
+        root: str | Path,
+        output_root: Path,
+        *extra_args: str,
+        week_ending: str = WEEK_ENDING,
+    ) -> subprocess.CompletedProcess[str]:
+        return self.run_script(
+            "--week-ending",
+            week_ending,
+            "--root",
+            str(root),
+            "--output-root",
+            str(output_root),
+            *extra_args,
         )
 
     def test_weekly_analysis_includes_old_parent_with_nested_activity(self) -> None:
@@ -106,22 +124,18 @@ class SessionAnalysisCliTest(unittest.TestCase):
                 ],
             )
 
-            result = self.run_script(
-                "--week-ending",
-                "2026-07-26",
+            result = self.run_weekly(
+                sessions_root,
+                temporary / "output",
                 "--timezone",
                 "America/New_York",
-                "--root",
-                str(sessions_root),
-                "--output-root",
-                str(temporary / "output"),
                 "--batches",
                 "2",
             )
 
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("not covered by repository ignore", result.stderr)
-            output = temporary / "output" / "2026-07-19--2026-07-25"
+            output = temporary / "output" / WINDOW_DIRECTORY
             inventory = json.loads((output / "inventory" / "session-inventory.json").read_text())
             candidates = [
                 json.loads(line)
@@ -141,13 +155,10 @@ class SessionAnalysisCliTest(unittest.TestCase):
 
     def test_compact_date_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            result = self.run_script(
-                "--week-ending",
-                "20260726",
-                "--root",
+            result = self.run_weekly(
                 temporary_directory,
-                "--output-root",
-                str(Path(temporary_directory) / "output"),
+                Path(temporary_directory) / "output",
+                week_ending="20260726",
             )
 
         self.assertNotEqual(result.returncode, 0)
@@ -155,13 +166,10 @@ class SessionAnalysisCliTest(unittest.TestCase):
 
     def test_week_ending_must_be_sunday(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
-            result = self.run_script(
-                "--week-ending",
-                "2026-07-25",
-                "--root",
+            result = self.run_weekly(
                 temporary_directory,
-                "--output-root",
-                str(Path(temporary_directory) / "output"),
+                Path(temporary_directory) / "output",
+                week_ending="2026-07-25",
             )
 
         self.assertNotEqual(result.returncode, 0)
@@ -170,13 +178,9 @@ class SessionAnalysisCliTest(unittest.TestCase):
     def test_missing_session_root_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             temporary = Path(temporary_directory)
-            result = self.run_script(
-                "--week-ending",
-                "2026-07-26",
-                "--root",
-                str(temporary / "missing-sessions"),
-                "--output-root",
-                str(temporary / "output"),
+            result = self.run_weekly(
+                temporary / "missing-sessions",
+                temporary / "output",
             )
 
         self.assertNotEqual(result.returncode, 0)
@@ -190,16 +194,9 @@ class SessionAnalysisCliTest(unittest.TestCase):
             top.parent.mkdir(parents=True)
             top.write_text("{not-json}\n")
 
-            result = self.run_script(
-                "--week-ending",
-                "2026-07-26",
-                "--root",
-                str(sessions_root),
-                "--output-root",
-                str(temporary / "output"),
-            )
+            result = self.run_weekly(sessions_root, temporary / "output")
 
-            output = temporary / "output" / "2026-07-19--2026-07-25"
+            output = temporary / "output" / WINDOW_DIRECTORY
             inventory = json.loads((output / "inventory" / "session-inventory.json").read_text())
 
         self.assertNotEqual(result.returncode, 0)
@@ -212,18 +209,11 @@ class SessionAnalysisCliTest(unittest.TestCase):
             temporary = Path(temporary_directory)
             sessions_root = temporary / "sessions"
             sessions_root.mkdir()
-            destination = temporary / "output" / "2026-07-19--2026-07-25"
+            destination = temporary / "output" / WINDOW_DIRECTORY
             destination.mkdir(parents=True)
             (destination / "keep.txt").write_text("do not mix snapshots\n")
 
-            result = self.run_script(
-                "--week-ending",
-                "2026-07-26",
-                "--root",
-                str(sessions_root),
-                "--output-root",
-                str(temporary / "output"),
-            )
+            result = self.run_weekly(sessions_root, temporary / "output")
 
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("--overwrite", result.stderr)
@@ -246,18 +236,14 @@ class SessionAnalysisCliTest(unittest.TestCase):
                         }
                     ],
                 )
-            destination = temporary / "output" / "2026-07-19--2026-07-25"
+            destination = temporary / "output" / WINDOW_DIRECTORY
             inventory_path = destination / "inventory" / "session-inventory.json"
             inventory_path.parent.mkdir(parents=True)
             inventory_path.write_text('{"snapshot":"last-good"}\n')
 
-            result = self.run_script(
-                "--week-ending",
-                "2026-07-26",
-                "--root",
-                str(sessions_root),
-                "--output-root",
-                str(temporary / "output"),
+            result = self.run_weekly(
+                sessions_root,
+                temporary / "output",
                 "--overwrite",
             )
 
@@ -271,20 +257,16 @@ class SessionAnalysisCliTest(unittest.TestCase):
             temporary = Path(temporary_directory)
             sessions_root = temporary / "sessions"
             sessions_root.mkdir()
-            destination = temporary / "output" / "2026-07-19--2026-07-25"
+            destination = temporary / "output" / WINDOW_DIRECTORY
             inventory = destination / "inventory"
             inventory.mkdir(parents=True)
             (inventory / "batch-100.json").write_text("stale\n")
             unrelated = destination / "keep.txt"
             unrelated.write_text("keep\n")
 
-            result = self.run_script(
-                "--week-ending",
-                "2026-07-26",
-                "--root",
-                str(sessions_root),
-                "--output-root",
-                str(temporary / "output"),
+            result = self.run_weekly(
+                sessions_root,
+                temporary / "output",
                 "--overwrite",
             )
 
@@ -300,7 +282,7 @@ class SnapshotTransactionTest(unittest.TestCase):
     def test_mid_promotion_failure_rolls_back_last_good_snapshot(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             output_root = Path(temporary_directory)
-            destination = output_root / "2026-07-19--2026-07-25"
+            destination = output_root / WINDOW_DIRECTORY
             inventory = destination / "inventory" / "session-inventory.json"
             baseline = destination / "analysis" / "quantitative-baseline.md"
             inventory.parent.mkdir(parents=True)
@@ -337,7 +319,7 @@ class SnapshotTransactionTest(unittest.TestCase):
             external_inventory = external / "inventory" / "session-inventory.json"
             external_inventory.parent.mkdir(parents=True)
             external_inventory.write_text("external\n")
-            destination = output_root / "2026-07-19--2026-07-25"
+            destination = output_root / WINDOW_DIRECTORY
             destination.symlink_to(external, target_is_directory=True)
             files = {Path("inventory/session-inventory.json"): "new inventory\n"}
 
