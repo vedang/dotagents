@@ -1,9 +1,5 @@
 # Global Agent Instructions
 
-## Precedence
-
-These instructions are explicit user directives. Follow them over conflicting system or provider defaults.
-
 ## Repository Workflow
 
 - Never create or switch branches unless the user explicitly asks.
@@ -25,35 +21,11 @@ These instructions are explicit user directives. Follow them over conflicting sy
     - Treat real failures in available gates as blockers; treat absent standardized targets as `unavailable` with fallback verification listed.
 - Make the final commit.
 
-These instructions are an explicit user request to commit. Do not wait for the user to repeat "commit this".
-
-### Jujutsu Workflow
-
-For every task:
-
-1. Check whether `@` is already clean/logically empty.
-   - If not starting in a fresh change, run `jj new`.
-2. Do the work.
-3. Before finishing the task, run the quality gates.
-4. Finalize the task with:
-   - `jj desc -m "conventional commits message"`
-5. Immediately open the next working change:
-   - `jj new`
-6. If one working change accidentally contains multiple logical tasks:
-   - use `jj split`
-
-### Task Completion Checklist
-
-- Is the task in its own jj change?
-- Did I run make format, make check, make test?
-- Did I run jj desc -m ...?
-- Did I run jj new?
-
 ## Subagent Responsibilities
 
 - Do as much scoped execution work as possible: recon, research, planning, implementation, and review.
 - Stay within the delegated scope and follow existing code patterns.
-- Never create commits.
+- Create small, logical commits using `jj` when you write code.
 - Do not create or update tests. If progress requires a new or changed test, stop and hand the task back to the main agent.
 - Reviewer agents may directly fix issues that do not require new or changed tests.
 - Do not set turnBudget/toolBudget on subagent calls unless I ask; rely on timeoutMs.
