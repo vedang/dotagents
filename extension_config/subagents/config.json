@@ -9,5 +9,5 @@
   "intercomBridge": {
     "mode": "fork-only"
   },
-  "artifactDir": "session"
+  "artifactDir": "project"
 }
