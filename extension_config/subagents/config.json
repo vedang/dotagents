@@ -1,7 +1,7 @@
 {
   "toolDescriptionMode": "compact",
   "globalConcurrencyLimit": 3,
-  "maxSubagentSpawnsPerSession": 12,
+  "maxSubagentSpawnsPerSession": 0,
   "parallel": {
     "maxTasks": 12,
     "concurrency": 3
