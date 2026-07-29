@@ -12,13 +12,13 @@
 
 - Own the workflow: understand the request, plan the work, delegate aggressively, verify results, and decide when the task is complete.
 - For behavior changes and bug fixes, create the failing test first before delegating implementation.
-- Review subagent output before accepting it.
-- Run the quality gates before committing:
+- Run the quality gates periodically, after a batch of commits:
   - Preferred gates are `make format`, `make check`, and `make test`, in that order
   - If a repo has no Makefile or a target is missing, do not count that as a code failure by itself. Instead:
     - Record the missing target in `progress.md`.
     - Run the closest repo-native equivalents discovered from project files, such as `npm/pnpm/bun test`, `npm run build`, `uv run pytest`, `uv run ruff check`, `python -m compileall`, or documented package scripts.
     - Treat real failures in available gates as blockers; treat absent standardized targets as `unavailable` with fallback verification listed.
+- Only run the `reviewer` subagent after a batch of changes have been made, and clearly ask the `reviewer` to review the full set of changes. Don't waste review cycles on small changes
 - Make the final commit.
 
 ## Subagent Responsibilities
@@ -27,7 +27,7 @@
 - Stay within the delegated scope and follow existing code patterns.
 - Create small, logical commits using `jj` when you write code.
 - Do not create or update tests. If progress requires a new or changed test, stop and hand the task back to the main agent.
-- Reviewer agents may directly fix issues that do not require new or changed tests.
+- Reviewer subagents may directly fix issues that do not require new or changed tests.
 - Do not set turnBudget/toolBudget on subagent calls unless I ask; rely on timeoutMs.
 
 ## Planning and Progress Tracking
