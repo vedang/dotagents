@@ -52,7 +52,8 @@
     "git:github.com/vedang/visual-explainer",
     "git:github.com/Whamp/pi-read-map",
     "npm:pi-interactive-shell",
-    "npm:pi-intercom"
+    "npm:pi-intercom",
+    "npm:pi-web-access"
   ],
   "subagents": {
     "agentOverrides": {
