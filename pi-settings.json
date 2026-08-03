@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.80.10",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "deepseek/deepseek-v4-flash",
@@ -27,7 +27,7 @@
       "timeoutMs": 3600000
     }
   },
-  "theme": "dark",
+  "theme": "light",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",
@@ -53,5 +53,27 @@
     "git:github.com/Whamp/pi-read-map",
     "npm:pi-interactive-shell",
     "npm:pi-intercom"
-  ]
+  ],
+  "subagents": {
+    "agentOverrides": {
+      "scout": {
+        "model": "openai-codex/gpt-5.6-luna",
+        "thinking": "minimal",
+        "fallbackModels": ["deepseek/deepseek-v4-pro:low"]
+      },
+      "worker": {
+        "model": "openai-codex/gpt-5.6-terra",
+        "thinking": "xhigh",
+        "fallbackModels": ["deepseek/deepseek-v4-pro:high"]
+      },
+      "reviewer": {
+        "model": "openai-codex/gpt-5.6-sol",
+        "thinking": "max",
+        "fallbackModels": [
+          "moonshotai/kimi-k3:max",
+          "openai-codex/gpt-5.6-terra:xhigh"
+        ]
+      }
+    }
+  }
 }
