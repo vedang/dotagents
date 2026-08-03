@@ -60,12 +60,16 @@
       "scout": {
         "model": "openai-codex/gpt-5.6-luna",
         "thinking": "minimal",
-        "fallbackModels": ["deepseek/deepseek-v4-pro:low"]
+        "fallbackModels": [
+          "deepseek/deepseek-v4-pro:low"
+        ]
       },
       "worker": {
         "model": "openai-codex/gpt-5.6-terra",
         "thinking": "xhigh",
-        "fallbackModels": ["deepseek/deepseek-v4-pro:high"]
+        "fallbackModels": [
+          "deepseek/deepseek-v4-pro:high"
+        ]
       },
       "reviewer": {
         "model": "openai-codex/gpt-5.6-sol",

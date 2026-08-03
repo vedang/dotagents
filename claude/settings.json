@@ -106,11 +106,10 @@
   "enabledPlugins": {
     "adr@pi-adr": true,
     "autoresearch@pi-autoresearch": true,
-    "caveman@caveman": true,
+    "caveman@caveman": false,
     "chrome-cdp@chrome-cdp-skill": true,
     "dafny-estimation@dafny-estimation": false,
     "humanizer@humanizer": false,
-    "rote-onboard@rote-skills": true,
     "unravel-proposal-creator@unravel-proposal-creator": true,
     "visual-explainer@visual-explainer-marketplace": true,
     "watcher@pi-watcher": true
