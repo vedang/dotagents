@@ -126,6 +126,7 @@ Reusable prompt templates and operator instructions.
 
 | File | Description |
 |------|-------------|
+| [`orchestration-watchdog.md`](prompts/orchestration-watchdog.md) | Starts a verified periodic headless Pi watchdog that wakes the master for cross-workspace orchestration checks. |
 | [`sharpen-communication.md`](prompts/sharpen-communication.md) | Rewrites communication with BLUF/MECE structure and stronger phrasing. |
 
 ### `pi-extensions/`
