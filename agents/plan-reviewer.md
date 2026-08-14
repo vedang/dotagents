@@ -3,7 +3,7 @@ name: plan-reviewer
 description: Reviews plans for flaws and missing steps
 model: openai-codex/gpt-5.6-sol
 thinking: max
-fallbackModels: moonshotai/kimi-k3:max
+fallbackModels: deepseek/deepseek-v4-pro:max
 tools: read, grep, find, ls, bash
 completionGuard: false
 defaultReads: plan.md
