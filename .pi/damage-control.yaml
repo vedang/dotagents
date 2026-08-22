@@ -188,6 +188,7 @@ rules:
         except:
           - /tmp/
           - /dev/null
+          - /Users/nejo/src/vedang/vedang.me/vedang.me.root/
   - id: path-readonly-shell-history
     type: path:readOnly
     action: block
