@@ -1,0 +1,431 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vedang.me/dotagents/schemas/catalog.v1.json",
+  "title": "Dotagents catalog",
+  "description": "Closed public source contract for projects, licenses, and agent surfaces.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "metadata", "projects", "licenses", "entries"],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "projects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/project"
+      }
+    },
+    "licenses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/license"
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "httpsUrl": {
+      "type": "string",
+      "pattern": "^https://[^\\s]+$"
+    },
+    "stringSet": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "tagline", "repository"],
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "tagline": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "repository": {
+          "$ref": "#/$defs/httpsUrl"
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "installedLocator",
+        "canonicalUrl",
+        "relationship",
+        "originalAuthors",
+        "currentMaintainers"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "installedLocator": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "canonicalUrl": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "upstreamUrl": {
+          "$ref": "#/$defs/httpsUrl"
+        },
+        "relationship": {
+          "type": "string",
+          "enum": ["original", "fork", "adopted"]
+        },
+        "originalAuthors": {
+          "$ref": "#/$defs/stringSet"
+        },
+        "currentMaintainers": {
+          "$ref": "#/$defs/stringSet"
+        },
+        "reviewedRevision": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        }
+      }
+    },
+    "licenseEvidence": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "value"],
+          "properties": {
+            "type": {
+              "const": "path"
+            },
+            "value": {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "value"],
+          "properties": {
+            "type": {
+              "const": "url"
+            },
+            "value": {
+              "$ref": "#/$defs/httpsUrl"
+            }
+          }
+        }
+      ]
+    },
+    "localLicenseScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "pathPrefixes"],
+      "properties": {
+        "type": {
+          "const": "local-paths"
+        },
+        "pathPrefixes": {
+          "$ref": "#/$defs/stringSet"
+        }
+      }
+    },
+    "externalLicenseScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "projectIds"],
+      "properties": {
+        "type": {
+          "const": "external-projects"
+        },
+        "projectIds": {
+          "$ref": "#/$defs/stringSet"
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "scheme",
+        "identifier",
+        "evidence",
+        "scope",
+        "publicationScope",
+        "reviewedBy",
+        "reviewedOn"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "scheme": {
+          "type": "string",
+          "enum": ["spdx", "custom"]
+        },
+        "identifier": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "evidence": {
+          "$ref": "#/$defs/licenseEvidence"
+        },
+        "scope": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/localLicenseScope"
+            },
+            {
+              "$ref": "#/$defs/externalLicenseScope"
+            }
+          ]
+        },
+        "publicationScope": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "reviewedBy": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "reviewedOn": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "localSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "gitPackageSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["locator"],
+      "properties": {
+        "locator": {
+          "type": "string",
+          "pattern": "^git:.+"
+        },
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "npmPackageSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["locator"],
+      "properties": {
+        "locator": {
+          "type": "string",
+          "pattern": "^npm:.+"
+        },
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "projectId",
+        "licenseRef",
+        "slug",
+        "name",
+        "kind",
+        "delivery",
+        "source",
+        "summary",
+        "activation",
+        "compatibility",
+        "useAreas",
+        "publication"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "projectId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "licenseRef": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "slug": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["extension", "skill", "prompt"]
+        },
+        "delivery": {
+          "type": "string",
+          "enum": ["local-file", "git-package", "npm-package"]
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/localSource"
+            },
+            {
+              "$ref": "#/$defs/gitPackageSource"
+            },
+            {
+              "$ref": "#/$defs/npmPackageSource"
+            }
+          ]
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "activation": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "automatic",
+              "model-invoked",
+              "user-command",
+              "hook",
+              "tool"
+            ]
+          }
+        },
+        "compatibility": {
+          "$ref": "#/$defs/stringSet"
+        },
+        "useAreas": {
+          "$ref": "#/$defs/stringSet"
+        },
+        "publication": {
+          "type": "string",
+          "enum": ["featured", "listed"]
+        },
+        "detailPath": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "evidencePath": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "delivery": {
+                "const": "local-file"
+              }
+            },
+            "required": ["delivery"]
+          },
+          "then": {
+            "properties": {
+              "source": {
+                "$ref": "#/$defs/localSource"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "delivery": {
+                "const": "git-package"
+              }
+            },
+            "required": ["delivery"]
+          },
+          "then": {
+            "properties": {
+              "source": {
+                "$ref": "#/$defs/gitPackageSource"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "delivery": {
+                "const": "npm-package"
+              }
+            },
+            "required": ["delivery"]
+          },
+          "then": {
+            "properties": {
+              "source": {
+                "$ref": "#/$defs/npmPackageSource"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publication": {
+                "const": "featured"
+              }
+            },
+            "required": ["publication"]
+          },
+          "then": {
+            "properties": {
+              "detailPath": {
+                "$ref": "#/$defs/nonEmptyString"
+              },
+              "evidencePath": {
+                "$ref": "#/$defs/nonEmptyString"
+              }
+            },
+            "required": ["detailPath", "evidencePath"]
+          },
+          "else": {
+            "properties": {
+              "detailPath": false,
+              "evidencePath": false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

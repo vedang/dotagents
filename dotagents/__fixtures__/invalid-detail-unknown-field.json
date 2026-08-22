@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": ["Carries context."],
+  "whenToReachForIt": {
+    "invocation": "Type /handoff.",
+    "situations": []
+  },
+  "whatItAdds": [],
+  "howItFits": [],
+  "questions": [],
+  "workingIf": [],
+  "setupNotes": [],
+  "commands": ["/handoff"],
+  "bodyMarkdown": "# Operational instructions"
+}

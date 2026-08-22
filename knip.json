@@ -1,7 +1,11 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": ["pi-extensions/**/*.ts", "vitest.config.*.ts"],
-  "project": ["pi-extensions/**/*.ts", "vitest.config.*.ts"],
+  "entry": ["pi-extensions/**/*.ts", "dotagents/**/*.ts", "vitest.config.*.ts"],
+  "project": [
+    "pi-extensions/**/*.ts",
+    "dotagents/**/*.ts",
+    "vitest.config.*.ts"
+  ],
   "ignoreDependencies": ["@biomejs/biome", "jscpd", "playwright"],
   "ignoreBinaries": ["make"]
 }

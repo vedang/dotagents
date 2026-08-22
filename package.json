@@ -16,6 +16,7 @@
     "@mariozechner/pi-ai": "^0.57.1",
     "@mariozechner/pi-coding-agent": "^0.57.1",
     "@types/node": "^24.12.0",
+    "ajv": "^8.18.0",
     "jscpd": "^4.0.8",
     "knip": "^5.86.0",
     "playwright": "^1.50.0",

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Carries a focused working brief into another agent session.",
+    "It transfers explicit context rather than hidden runtime state."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Type /handoff with the next session goal.",
+    "situations": [
+      {
+        "when": "Context must cross sessions",
+        "use": "Create a concise handoff brief."
+      }
+    ]
+  },
+  "whatItAdds": ["A repeatable context-transfer boundary."],
+  "howItFits": [
+    {
+      "entryId": "prompt/sharpen-communication",
+      "relationship": "Can tighten the brief before transfer."
+    }
+  ],
+  "questions": [
+    {
+      "question": "When should I avoid it?",
+      "answer": [
+        "Stay in the current session when context remains small and focused."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The next session can act without rereading the full transcript."
+  ],
+  "setupNotes": ["The extension is loaded from the Dotagents repository."],
+  "commands": ["/handoff <goal>"]
+}

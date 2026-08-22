@@ -1,6 +1,6 @@
 SHELL = /bin/bash -Eeu -o pipefail
 
-BIOME_SCOPE ?= pi-extensions package.json tsconfig.json biome.json knip.json vitest.config.unit.ts vitest.config.integration.ts vitest.config.llm.ts
+BIOME_SCOPE ?= pi-extensions dotagents package.json tsconfig.json biome.json knip.json vitest.config.unit.ts vitest.config.integration.ts vitest.config.llm.ts
 JSCPD_SCOPE ?= pi-extensions
 TEST_CONFIG_UNIT ?= vitest.config.unit.ts
 TEST_CONFIG_INTEGRATION ?= vitest.config.integration.ts

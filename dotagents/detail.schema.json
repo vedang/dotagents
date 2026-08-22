@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vedang.me/dotagents/schemas/detail.v1.json",
+  "title": "Dotagents featured-entry detail",
+  "description": "Structured, presentation-neutral public explanation for one featured entry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "whatItDoes",
+    "whenToReachForIt",
+    "whatItAdds",
+    "howItFits",
+    "questions",
+    "workingIf",
+    "setupNotes",
+    "commands"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "whatItDoes": {
+      "$ref": "#/$defs/nonEmptyStringList"
+    },
+    "whenToReachForIt": {
+      "$ref": "#/$defs/reachForIt"
+    },
+    "whatItAdds": {
+      "$ref": "#/$defs/nonEmptyStringList"
+    },
+    "howItFits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relationship"
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/question"
+      }
+    },
+    "workingIf": {
+      "$ref": "#/$defs/nonEmptyStringList"
+    },
+    "setupNotes": {
+      "$ref": "#/$defs/nonEmptyStringList"
+    },
+    "commands": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nonEmptyStringList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "situation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["when", "use"],
+      "properties": {
+        "when": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "use": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "reachForIt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invocation", "situations"],
+      "properties": {
+        "invocation": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "situations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/situation"
+          }
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entryId", "relationship"],
+      "properties": {
+        "entryId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "relationship": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "answer"],
+      "properties": {
+        "question": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "answer": {
+          "$ref": "#/$defs/nonEmptyStringList"
+        }
+      }
+    }
+  }
+}

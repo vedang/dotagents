@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vedang.me/dotagents/schemas/evidence.v1.json",
+  "title": "Dotagents claim evidence",
+  "description": "Review record connecting public behavior claims to source evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "entryId",
+    "verifiedAgainst",
+    "reviewedBy",
+    "reviewedOn",
+    "claims"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "entryId": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "verifiedAgainst": {
+      "$ref": "#/$defs/verifiedAgainst"
+    },
+    "reviewedBy": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "reviewedOn": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/claim"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "immutableSourceUrl": {
+      "type": "string",
+      "pattern": "^https://[^\\s?#]+/(?:[0-9a-f]{40}|[0-9a-f]{64})(?:/[^\\s?#]+)+(?:#[^\\s]+)?$"
+    },
+    "verifiedAgainst": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "value"],
+      "properties": {
+        "type": {
+          "const": "commit"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim"],
+      "properties": {
+        "claim": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sourcePath": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sourceLines": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sourceUrl": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "sourcePath": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "sourceLines": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "sourceUrl": false
+          },
+          "required": ["sourcePath", "sourceLines"]
+        },
+        {
+          "properties": {
+            "sourcePath": false,
+            "sourceLines": false,
+            "sourceUrl": {
+              "$ref": "#/$defs/immutableSourceUrl"
+            }
+          },
+          "required": ["sourceUrl"]
+        }
+      ]
+    }
+  }
+}

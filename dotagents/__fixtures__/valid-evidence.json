@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/handoff",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "0123456789abcdef0123456789abcdef01234567"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Registers an explicit handoff command.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "96-180"
+    }
+  ]
+}
