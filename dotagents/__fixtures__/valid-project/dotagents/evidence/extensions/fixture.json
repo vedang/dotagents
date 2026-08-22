@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/fixture",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "0123456789abcdef0123456789abcdef01234567"
+  },
+  "reviewedBy": "Catalog test fixture",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Exports a synthetic fixture symbol.",
+      "sourcePath": "pi-extensions/fixture.ts",
+      "sourceLines": "1-1"
+    }
+  ]
+}

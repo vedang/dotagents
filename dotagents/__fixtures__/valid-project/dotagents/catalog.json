@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "metadata": {
+    "title": "Catalog validation fixture",
+    "tagline": "Synthetic public data used only by automated checks.",
+    "repository": "https://github.com/vedang/dotagents"
+  },
+  "projects": [
+    {
+      "id": "project/fixture",
+      "title": "Fixture extension",
+      "installedLocator": "pi-extensions/fixture.ts",
+      "canonicalUrl": "https://github.com/vedang/dotagents",
+      "relationship": "original",
+      "originalAuthors": ["Catalog test fixture"],
+      "currentMaintainers": ["Catalog test fixture"],
+      "reviewedRevision": "0123456789abcdef0123456789abcdef01234567"
+    }
+  ],
+  "licenses": [
+    {
+      "id": "license/fixture",
+      "scheme": "custom",
+      "identifier": "Fixture-only",
+      "evidence": {
+        "type": "path",
+        "value": "LICENSE.txt"
+      },
+      "scope": {
+        "type": "local-paths",
+        "pathPrefixes": ["pi-extensions/"]
+      },
+      "publicationScope": "automated-validation-fixture",
+      "reviewedBy": "Catalog test fixture",
+      "reviewedOn": "2026-08-22"
+    }
+  ],
+  "entries": [
+    {
+      "id": "extension/fixture",
+      "projectId": "project/fixture",
+      "licenseRef": "license/fixture",
+      "slug": "fixture",
+      "name": "Fixture extension",
+      "kind": "extension",
+      "delivery": "local-file",
+      "source": {
+        "path": "pi-extensions/fixture.ts"
+      },
+      "summary": "Provides a synthetic export for catalog validation.",
+      "activation": ["tool"],
+      "compatibility": ["Catalog tests"],
+      "useAreas": ["automated-validation"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/fixture.json",
+      "evidencePath": "dotagents/evidence/extensions/fixture.json"
+    }
+  ]
+}

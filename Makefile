@@ -5,6 +5,7 @@ JSCPD_SCOPE ?= pi-extensions
 TEST_CONFIG_UNIT ?= vitest.config.unit.ts
 TEST_CONFIG_INTEGRATION ?= vitest.config.integration.ts
 TEST_CONFIG_LLM ?= vitest.config.llm.ts
+CATALOG_ROOT ?= .
 
 .DEFAULT_GOAL := help
 
@@ -39,6 +40,10 @@ check-tagref:
 		echo "tagref not installed; skipping tagref validation"; \
 	fi
 
+.PHONY: check-catalog
+check-catalog:
+	bun run check:catalog -- --root $(CATALOG_ROOT)
+
 .PHONY: check-biome
 check-biome:
 	bunx @biomejs/biome check $(BIOME_SCOPE)
@@ -62,6 +67,10 @@ check: check-biome check-typescript check-tagref check-knip check-jscpd    ## Ru
 .PHONY: format
 format:    ## Format project files with Biome
 	bunx @biomejs/biome check --write $(BIOME_SCOPE)
+
+.PHONY: test-catalog
+test-catalog:
+	bunx vitest run --config $(TEST_CONFIG_UNIT) dotagents/__tests__/*.test.ts
 
 .PHONY: test-unit
 test-unit:

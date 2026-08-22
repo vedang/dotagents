@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "check": "make check",
+    "check:catalog": "bun dotagents/src/check-catalog.ts",
     "format": "make format",
     "test": "make test",
     "build": "tsc -p tsconfig.json",

@@ -20,6 +20,7 @@ import { CatalogValidationError, validateCatalog } from "../src/catalog.js";
 const dotagentsRoot = join(import.meta.dirname, "..");
 const repositoryRoot = join(dotagentsRoot, "..");
 const fixturesRoot = join(dotagentsRoot, "__fixtures__");
+const validProjectRoot = join(fixturesRoot, "valid-project");
 const temporaryRoots: string[] = [];
 const fixtureRevision = "0123456789abcdef0123456789abcdef01234567";
 const otherRevision = "abcdef0123456789abcdef0123456789abcdef01";
@@ -207,17 +208,10 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
-  test("checks a valid catalog through the CLI seam", () => {
-    const fixture = createFixtureProject();
+  test("checks a valid catalog through the package CLI entrypoint", () => {
     const result = spawnSync(
       "bun",
-      [
-        join(dotagentsRoot, "src", "check-catalog.ts"),
-        "--root",
-        fixture.root,
-        "--catalog",
-        fixture.catalogPath,
-      ],
+      ["run", "check:catalog", "--", "--root", validProjectRoot],
       { cwd: repositoryRoot, encoding: "utf8" },
     );
 

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Provides one synthetic export for end-to-end catalog validation.",
+    "The fixture is test data and is not a real public catalog entry."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Run the catalog checks.",
+    "situations": [
+      {
+        "when": "The catalog CLI needs a complete repository root",
+        "use": "Validate against this self-contained fixture."
+      }
+    ]
+  },
+  "whatItAdds": ["A deterministic valid input for automated checks."],
+  "howItFits": [
+    {
+      "entryId": "extension/fixture",
+      "relationship": "Exercises featured-entry loading."
+    }
+  ],
+  "questions": [
+    {
+      "question": "Is this a public catalog entry?",
+      "answer": ["No. It exists only under the test fixture directory."]
+    }
+  ],
+  "workingIf": ["The CLI reports one valid featured entry."],
+  "setupNotes": ["No setup is needed outside the test suite."],
+  "commands": ["bun run check:catalog"]
+}
