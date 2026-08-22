@@ -8,6 +8,7 @@ skills/dev-browser/profiles/
 skills/dev-browser/tmp/skills/dev-browser/profiles/
 skills/dev-browser/tmp/
 .pi-subagents/
+.pi/subagents/
 __pycache__/
 *.py[cod]
 # [tag:private_session_analysis] Session-derived audits must never enter version control.
