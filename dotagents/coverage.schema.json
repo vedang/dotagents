@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vedang.me/dotagents/schemas/coverage.v1.json",
+  "title": "Dotagents discovery coverage",
+  "description": "Closed producer-only record of discovered candidates intentionally excluded from publication.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "excluded"],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "excluded": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/exclusion"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "source", "reason"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["extension", "skill", "prompt", "package"]
+        },
+        "source": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    }
+  }
+}

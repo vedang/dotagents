@@ -21,8 +21,11 @@ const dotagentsRoot = join(import.meta.dirname, "..");
 const repositoryRoot = join(dotagentsRoot, "..");
 const fixturesRoot = join(dotagentsRoot, "__fixtures__");
 const temporaryRoots: string[] = [];
+const fixtureRevision = "0123456789abcdef0123456789abcdef01234567";
+const otherRevision = "abcdef0123456789abcdef0123456789abcdef01";
 
 type MutableCatalog = {
+  metadata: Record<string, unknown>;
   projects: Array<Record<string, unknown>>;
   licenses: Array<
     Record<string, unknown> & {
@@ -36,6 +39,20 @@ type MutableCatalog = {
   >;
 };
 
+type MutableCoverage = {
+  schemaVersion: number;
+  excluded: Array<{
+    kind: "extension" | "skill" | "prompt" | "package";
+    source: string;
+    reason: string;
+  }>;
+};
+
+type FixtureProject = {
+  root: string;
+  catalogPath: string;
+};
+
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
 }
@@ -45,10 +62,7 @@ function writeJson(path: string, value: unknown): void {
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-function createFixtureProject(): {
-  root: string;
-  catalogPath: string;
-} {
+function createFixtureProject(): FixtureProject {
   const root = mkdtempSync(join(tmpdir(), "dotagents-validator-"));
   temporaryRoots.push(root);
 
@@ -66,6 +80,11 @@ function createFixtureProject(): {
     join(root, "dotagents", "evidence", "extensions", "handoff.json"),
     readJson(join(fixturesRoot, "valid-evidence.json")),
   );
+  writeJson(
+    join(root, "dotagents", "coverage.json"),
+    readJson(join(fixturesRoot, "valid-coverage.json")),
+  );
+  writeJson(join(root, "pi-settings.json"), { packages: [] });
   mkdirSync(join(root, "pi-extensions"), { recursive: true });
   cpSync(
     join(repositoryRoot, "pi-extensions", "handoff.ts"),
@@ -83,6 +102,65 @@ function mutateCatalog(
   const catalog = readJson<MutableCatalog>(catalogPath);
   mutate(catalog);
   writeJson(catalogPath, catalog);
+}
+
+function mutateCoverage(
+  root: string,
+  mutate: (coverage: MutableCoverage) => void,
+): void {
+  const path = join(root, "dotagents", "coverage.json");
+  const coverage = readJson<MutableCoverage>(path);
+  mutate(coverage);
+  writeJson(path, coverage);
+}
+
+function setPackages(root: string, packages: string[]): void {
+  writeJson(join(root, "pi-settings.json"), { packages });
+}
+
+function configureGitPackage(
+  fixture: FixtureProject,
+  locator = "git:github.com/example/handoff",
+  configured = true,
+): void {
+  mutateCatalog(fixture.catalogPath, (catalog) => {
+    Object.assign(catalog.projects[0], {
+      installedLocator: locator,
+      canonicalUrl: "https://github.com/example/handoff",
+      relationship: "adopted",
+      reviewedRevision: fixtureRevision,
+    });
+    catalog.licenses[0].evidence = {
+      type: "url",
+      value: `https://github.com/example/handoff/blob/${fixtureRevision}/LICENSE`,
+    };
+    catalog.licenses[0].scope = {
+      type: "external-projects",
+      projectIds: ["project/handoff"],
+    };
+    catalog.entries[0].delivery = "git-package";
+    catalog.entries[0].source = { locator };
+  });
+
+  const evidencePath = join(
+    fixture.root,
+    "dotagents",
+    "evidence",
+    "extensions",
+    "handoff.json",
+  );
+  const evidence = readJson<{
+    claims: Array<Record<string, unknown>>;
+  }>(evidencePath);
+  evidence.claims = [
+    {
+      claim: "Registers an explicit handoff command.",
+      sourceUrl: `https://github.com/example/handoff/blob/${fixtureRevision}/src/index.ts#L10-L20`,
+    },
+  ];
+  writeJson(evidencePath, evidence);
+  rmSync(join(fixture.root, "pi-extensions", "handoff.ts"));
+  setPackages(fixture.root, configured ? [locator] : []);
 }
 
 function expectCatalogError(
@@ -389,6 +467,343 @@ describe("Dotagents catalog validator", () => {
       external.root,
       external.catalogPath,
       "license-scope-mismatch",
+    );
+  });
+
+  test("requires every discovered candidate to be public or explicitly excluded", () => {
+    const unclassified = createFixtureProject();
+    const unclassifiedSkill = join(
+      unclassified.root,
+      "skills",
+      "private-skill",
+      "SKILL.md",
+    );
+    mkdirSync(dirname(unclassifiedSkill), { recursive: true });
+    writeFileSync(unclassifiedSkill, "# Private skill\n");
+    expectCatalogError(
+      unclassified.root,
+      unclassified.catalogPath,
+      "coverage-unclassified",
+    );
+
+    const excluded = createFixtureProject();
+    const excludedSkill = join(
+      excluded.root,
+      "skills",
+      "private-skill",
+      "SKILL.md",
+    );
+    mkdirSync(dirname(excludedSkill), { recursive: true });
+    writeFileSync(excludedSkill, "# Private skill\n");
+    mutateCoverage(excluded.root, (coverage) => {
+      coverage.excluded.push({
+        kind: "skill",
+        source: "skills/private-skill/SKILL.md",
+        reason: "Not selected for public documentation.",
+      });
+    });
+    assert.equal(validateCatalog(excluded).catalog.entries.length, 1);
+
+    const unknown = createFixtureProject();
+    mutateCoverage(unknown.root, (coverage) => {
+      coverage.excluded.push({
+        kind: "prompt",
+        source: "prompts/missing.md",
+        reason: "Not selected for public documentation.",
+      });
+    });
+    expectCatalogError(
+      unknown.root,
+      unknown.catalogPath,
+      "coverage-unknown-candidate",
+    );
+
+    const conflict = createFixtureProject();
+    mutateCoverage(conflict.root, (coverage) => {
+      coverage.excluded.push({
+        kind: "extension",
+        source: "pi-extensions/handoff.ts",
+        reason: "Cannot exclude an explicitly public entry.",
+      });
+    });
+    expectCatalogError(
+      conflict.root,
+      conflict.catalogPath,
+      "coverage-public-conflict",
+    );
+  });
+
+  test("discovers extension names containing test unless they are test files", () => {
+    const fixture = createFixtureProject();
+    writeFileSync(
+      join(fixture.root, "pi-extensions", "status-test-helper.ts"),
+      "export const helper = true;\n",
+    );
+    writeFileSync(
+      join(fixture.root, "pi-extensions", "status.test.ts"),
+      "throw new Error('test files are not public candidates');\n",
+    );
+
+    expectCatalogError(
+      fixture.root,
+      fixture.catalogPath,
+      "coverage-unclassified",
+    );
+  });
+
+  test("rejects malformed coverage rather than widening publication", () => {
+    const fixture = createFixtureProject();
+    const coveragePath = join(fixture.root, "dotagents", "coverage.json");
+    const coverage = readJson<Record<string, unknown>>(coveragePath);
+    coverage.autoPublish = true;
+    writeJson(coveragePath, coverage);
+
+    const error = expectCatalogError(
+      fixture.root,
+      fixture.catalogPath,
+      "schema-invalid",
+    );
+    assert.equal(error.context.artifact, "coverage");
+  });
+
+  test("binds package entries to exact configured and project locators", () => {
+    const missing = createFixtureProject();
+    configureGitPackage(missing, undefined, false);
+    expectCatalogError(
+      missing.root,
+      missing.catalogPath,
+      "package-not-configured",
+    );
+
+    const mismatch = createFixtureProject();
+    configureGitPackage(mismatch);
+    mutateCatalog(mismatch.catalogPath, (catalog) => {
+      catalog.projects[0].installedLocator =
+        "git:github.com/example/different-project";
+    });
+    expectCatalogError(
+      mismatch.root,
+      mismatch.catalogPath,
+      "project-locator-mismatch",
+    );
+  });
+
+  test("allows mixed package surfaces only when project provenance is shared", () => {
+    const fixture = createFixtureProject();
+    const locator = "git:github.com/example/handoff";
+    configureGitPackage(fixture, locator);
+    mutateCatalog(fixture.catalogPath, (catalog) => {
+      const skill = structuredClone(catalog.entries[0]);
+      Object.assign(skill, {
+        id: "skill/handoff",
+        slug: "handoff",
+        name: "Handoff skill",
+        kind: "skill",
+        publication: "listed",
+        activation: ["model-invoked"],
+      });
+      Reflect.deleteProperty(skill, "detailPath");
+      Reflect.deleteProperty(skill, "evidencePath");
+      catalog.entries.push(skill);
+    });
+    assert.equal(validateCatalog(fixture).catalog.entries.length, 2);
+
+    const splitProject = createFixtureProject();
+    configureGitPackage(splitProject, locator);
+    mutateCatalog(splitProject.catalogPath, (catalog) => {
+      const project = structuredClone(catalog.projects[0]);
+      project.id = "project/handoff-skill";
+      catalog.projects.push(project);
+      catalog.licenses[0].scope = {
+        type: "external-projects",
+        projectIds: ["project/handoff", "project/handoff-skill"],
+      };
+      const skill = structuredClone(catalog.entries[0]);
+      Object.assign(skill, {
+        id: "skill/handoff",
+        projectId: "project/handoff-skill",
+        slug: "handoff",
+        name: "Handoff skill",
+        kind: "skill",
+        publication: "listed",
+        activation: ["model-invoked"],
+      });
+      Reflect.deleteProperty(skill, "detailPath");
+      Reflect.deleteProperty(skill, "evidencePath");
+      catalog.entries.push(skill);
+    });
+    expectCatalogError(
+      splitProject.root,
+      splitProject.catalogPath,
+      "package-project-split",
+    );
+
+    const differentLocator = "git:github.com/example/other";
+    setPackages(fixture.root, [locator, differentLocator]);
+    mutateCatalog(fixture.catalogPath, (catalog) => {
+      catalog.entries[1].source = { locator: differentLocator };
+    });
+    expectCatalogError(
+      fixture.root,
+      fixture.catalogPath,
+      "mixed-project-source",
+    );
+  });
+
+  test("requires coherent provenance, license review dates, and revisions", () => {
+    const fork = createFixtureProject();
+    mutateCatalog(fork.catalogPath, (catalog) => {
+      catalog.projects[0].relationship = "fork";
+    });
+    expectCatalogError(fork.root, fork.catalogPath, "provenance-invalid");
+
+    const revision = createFixtureProject();
+    const evidencePath = join(
+      revision.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const evidence = readJson<{
+      verifiedAgainst: { value: string };
+    }>(evidencePath);
+    evidence.verifiedAgainst.value = otherRevision;
+    writeJson(evidencePath, evidence);
+    expectCatalogError(
+      revision.root,
+      revision.catalogPath,
+      "revision-mismatch",
+    );
+
+    const license = createFixtureProject();
+    mutateCatalog(license.catalogPath, (catalog) => {
+      catalog.licenses[0].reviewedOn = "2026-99-99";
+    });
+    expectCatalogError(
+      license.root,
+      license.catalogPath,
+      "license-review-invalid",
+    );
+
+    const listedPackage = createFixtureProject();
+    configureGitPackage(listedPackage);
+    mutateCatalog(listedPackage.catalogPath, (catalog) => {
+      catalog.projects[0].relationship = "original";
+      Reflect.deleteProperty(catalog.projects[0], "reviewedRevision");
+      catalog.entries[0].publication = "listed";
+      Reflect.deleteProperty(catalog.entries[0], "detailPath");
+      Reflect.deleteProperty(catalog.entries[0], "evidencePath");
+    });
+    rmSync(join(listedPackage.root, "dotagents", "details"), {
+      recursive: true,
+    });
+    rmSync(join(listedPackage.root, "dotagents", "evidence"), {
+      recursive: true,
+    });
+    expectCatalogError(
+      listedPackage.root,
+      listedPackage.catalogPath,
+      "revision-missing",
+    );
+  });
+
+  test("rejects detail Markdown, raw HTML, and arbitrary URLs", () => {
+    const cases = [
+      "Read [private notes](https://example.com/private).",
+      "<script>alert('unsafe')</script>",
+      "## Hidden presentation heading",
+      "- Hidden presentation list",
+    ];
+
+    for (const content of cases) {
+      const fixture = createFixtureProject();
+      const detailPath = join(
+        fixture.root,
+        "dotagents",
+        "details",
+        "extensions",
+        "handoff.json",
+      );
+      const detail = readJson<{ whatItDoes: string[] }>(detailPath);
+      detail.whatItDoes[0] = content;
+      writeJson(detailPath, detail);
+      expectCatalogError(
+        fixture.root,
+        fixture.catalogPath,
+        "detail-content-invalid",
+      );
+    }
+  });
+
+  test("rejects private local files as public evidence", () => {
+    const fixture = createFixtureProject();
+    const privateSource = join(fixture.root, ".pi", "private.ts");
+    mkdirSync(dirname(privateSource), { recursive: true });
+    writeFileSync(privateSource, "export const privateState = true;\n");
+    const evidencePath = join(
+      fixture.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const evidence = readJson<{
+      claims: Array<{ sourcePath: string; sourceLines: string }>;
+    }>(evidencePath);
+    evidence.claims[0].sourcePath = ".pi/private.ts";
+    writeJson(evidencePath, evidence);
+
+    expectCatalogError(
+      fixture.root,
+      fixture.catalogPath,
+      "evidence-source-invalid",
+    );
+  });
+
+  test("binds external evidence URLs to reviewed immutable revision", () => {
+    const fixture = createFixtureProject();
+    configureGitPackage(fixture);
+    const evidencePath = join(
+      fixture.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const evidence = readJson<{
+      claims: Array<{ sourceUrl: string }>;
+    }>(evidencePath);
+    evidence.claims[0].sourceUrl = `https://github.com/example/handoff/blob/${otherRevision}/src/index.ts#L10-L20`;
+    writeJson(evidencePath, evidence);
+
+    expectCatalogError(
+      fixture.root,
+      fixture.catalogPath,
+      "evidence-revision-mismatch",
+    );
+  });
+
+  test("rejects private and machine-local patterns in public artifacts", () => {
+    const catalogLeak = createFixtureProject();
+    mutateCatalog(catalogLeak.catalogPath, (catalog) => {
+      catalog.metadata.tagline = "Local source at /Users/alice/private.";
+    });
+    expectCatalogError(
+      catalogLeak.root,
+      catalogLeak.catalogPath,
+      "private-content",
+    );
+
+    const readmeLeak = createFixtureProject();
+    writeFileSync(
+      join(readmeLeak.root, "dotagents", "README.md"),
+      "Internal runtime: .pi/subagents/session.jsonl\n",
+    );
+    expectCatalogError(
+      readmeLeak.root,
+      readmeLeak.catalogPath,
+      "private-content",
     );
   });
 });

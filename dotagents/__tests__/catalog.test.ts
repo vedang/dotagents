@@ -75,6 +75,10 @@ describe("Dotagents JSON schemas", () => {
       compileSchema("evidence.schema.json"),
       readFixture("valid-evidence.json"),
     );
+    assertValid(
+      compileSchema("coverage.schema.json"),
+      readFixture("valid-coverage.json"),
+    );
   });
 
   test("close catalog, detail, and evidence objects to unknown fields", () => {
@@ -96,6 +100,16 @@ describe("Dotagents JSON schemas", () => {
     assertInvalid(
       compileSchema("evidence.schema.json"),
       evidence,
+      "additionalProperties",
+    );
+
+    const coverage = cloneFixture<Record<string, unknown>>(
+      "valid-coverage.json",
+    );
+    coverage.discovered = ["private/session"];
+    assertInvalid(
+      compileSchema("coverage.schema.json"),
+      coverage,
       "additionalProperties",
     );
   });

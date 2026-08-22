@@ -7,6 +7,7 @@ import {
 } from "node:fs";
 import {
   dirname,
+  extname,
   isAbsolute,
   join,
   normalize,
@@ -43,8 +44,17 @@ export class CatalogValidationError extends Error {
   }
 }
 
+type ProjectRelationship = "original" | "fork" | "adopted";
+
 type Project = {
   id: string;
+  installedLocator: string;
+  canonicalUrl: string;
+  upstreamUrl?: string;
+  relationship: ProjectRelationship;
+  originalAuthors: string[];
+  currentMaintainers: string[];
+  reviewedRevision?: string;
 };
 
 type LocalLicenseScope = {
@@ -61,9 +71,13 @@ type License = {
   id: string;
   evidence: { type: "path" | "url"; value: string };
   scope: LocalLicenseScope | ExternalLicenseScope;
+  reviewedBy: string;
+  reviewedOn: string;
 };
 
 type EntryKind = "extension" | "skill" | "prompt";
+type CandidateKind = EntryKind | "package";
+type Delivery = "local-file" | "git-package" | "npm-package";
 
 type Entry = {
   id: string;
@@ -71,11 +85,32 @@ type Entry = {
   licenseRef: string;
   slug: string;
   kind: EntryKind;
-  delivery: "local-file" | "git-package" | "npm-package";
+  delivery: Delivery;
   source: { path?: string; locator?: string };
   publication: "featured" | "listed";
   detailPath?: string;
   evidencePath?: string;
+};
+
+type Exclusion = {
+  kind: CandidateKind;
+  source: string;
+  reason: string;
+};
+
+type Coverage = {
+  schemaVersion: 1;
+  excluded: Exclusion[];
+};
+
+type Candidate = {
+  kind: CandidateKind;
+  source: string;
+};
+
+type DiscoveredCandidates = {
+  candidates: Candidate[];
+  packageLocators: ReadonlySet<string>;
 };
 
 export type Catalog = {
@@ -95,6 +130,9 @@ export type Detail = {
 export type Evidence = {
   schemaVersion: 1;
   entryId: string;
+  verifiedAgainst: { type: "commit"; value: string };
+  reviewedBy: string;
+  reviewedOn: string;
   claims: Array<{
     sourcePath?: string;
     sourceLines?: string;
@@ -127,14 +165,39 @@ const kindDirectories: Readonly<Record<EntryKind, string>> = {
   prompt: "prompts",
 };
 
+const privateContentPatterns: readonly RegExp[] = [
+  /\/Users\/[^/\s]+/u,
+  /\/home\/[^/\s]+/u,
+  /[A-Za-z]:\\Users\\/u,
+  /file:\/\//iu,
+  /session_analysis/u,
+  /\.pi\/subagents/u,
+  /\.pi-subagents/u,
+];
+
+const extensionExclusionPattern =
+  /^(?:(?:test|spec|config)|.+[._-](?:test|spec|config))\.ts$/iu;
+const markdownPattern =
+  /^(?:\s{0,3}(?:#{1,6}\s+|(?:[-*+]|>)\s+|\d+[.)]\s+|```|~~~))|```|~~~|!?\[[^\]]*\]\([^)]*\)|https?:\/\/|`[^`\n]+`/imu;
+const htmlPattern = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s+[^<>]*)?>/u;
+const evidenceSourcePrefixes = [
+  "pi-extensions/",
+  "skills/",
+  "specific_skills/",
+  "prompts/",
+] as const;
+
 const schemaRoot = resolve(import.meta.dirname, "..");
 const ajv = new Ajv2020({ allErrors: true, strict: true });
 const validateCatalogSchema = compileSchema("catalog.schema.json");
 const validateDetailSchema = compileSchema("detail.schema.json");
 const validateEvidenceSchema = compileSchema("evidence.schema.json");
+const validateCoverageSchema = compileSchema("coverage.schema.json");
 
 // [tag:dotagents_catalog_contract] Producer and consumer validators must reject
 // unknown structure, broken references, and paths escaping the trusted root.
+// [tag:dotagents_publish_boundary] Discovery coverage records exclusions only;
+// catalog entries are the explicit allowlist for public publication.
 export function validateCatalog(
   options: CatalogValidationOptions,
 ): CatalogValidationResult {
@@ -159,14 +222,17 @@ export function validateCatalog(
     "catalog",
     state,
   );
+  assertNoPrivatePublicContent(state);
 
   const projects = uniqueIndex(catalog.projects, "project", state);
   const licenses = uniqueIndex(catalog.licenses, "license", state);
   const entries = uniqueIndex(catalog.entries, "entry", state);
   assertUniqueRoutes(catalog.entries, state);
   assertEntryReferences(catalog.entries, projects, licenses, state);
+  assertProjectProvenance(catalog.projects, state);
   assertLicenseEvidencePaths(catalog.licenses, state);
   assertEntryPathsAndLicenseScopes(catalog.entries, licenses, state);
+  assertLicenseScopeReferences(catalog.licenses, projects, state);
 
   const details = new Map<string, Detail>();
   const evidence = new Map<string, Evidence>();
@@ -218,9 +284,12 @@ export function validateCatalog(
       entry.id,
     );
 
+    assertDetailContent(detail, entry.id, state);
     assertDetailReferences(detail, entry.id, entries, state);
     assertEvidenceReferences(dossier, entry.id, state);
-    assertEvidenceSourcePaths(dossier, entry.id, state);
+    assertEvidenceReview(dossier, entry.id, state);
+    assertFeaturedRevision(dossier, entry, projects, state);
+    assertEvidenceSourcePaths(dossier, entry, projects, state);
     details.set(entry.id, detail);
     evidence.set(entry.id, dossier);
   }
@@ -237,6 +306,15 @@ export function validateCatalog(
     "evidence",
     state,
   );
+
+  const discovered = discoverCandidates(state);
+  assertProjectEntrySources(
+    catalog.entries,
+    projects,
+    discovered.packageLocators,
+    state,
+  );
+  assertCoverage(catalog.entries, discovered.candidates, state);
 
   return { catalog, details, evidence };
 }
@@ -397,11 +475,45 @@ function assertEntryReferences(
   }
 }
 
+function assertProjectProvenance(
+  projects: Project[],
+  state: ValidationState,
+): void {
+  for (const project of projects) {
+    if (project.relationship === "fork" && !project.upstreamUrl) {
+      throw catalogError(
+        "provenance-invalid",
+        `${project.id} fork has no upstream URL`,
+        state.catalogPath,
+        { projectId: project.id },
+      );
+    }
+    if (
+      project.relationship !== "original" &&
+      project.reviewedRevision === undefined
+    ) {
+      throw catalogError(
+        "provenance-invalid",
+        `${project.id} ${project.relationship} has no reviewed revision`,
+        state.catalogPath,
+        { projectId: project.id },
+      );
+    }
+  }
+}
+
 function assertLicenseEvidencePaths(
   licenses: License[],
   state: ValidationState,
 ): void {
   for (const license of licenses) {
+    assertCalendarDate(
+      license.reviewedOn,
+      "license-review-invalid",
+      `license ${license.id} review date is invalid`,
+      state,
+      { licenseId: license.id },
+    );
     if (license.evidence.type === "path") {
       assertRepositoryFile(
         license.evidence.value,
@@ -417,6 +529,28 @@ function assertLicenseEvidencePaths(
           "license path prefix",
           state,
           license.id,
+        );
+      }
+    }
+  }
+}
+
+function assertLicenseScopeReferences(
+  licenses: License[],
+  projects: ReadonlyMap<string, Project>,
+  state: ValidationState,
+): void {
+  for (const license of licenses) {
+    if (license.scope.type !== "external-projects") {
+      continue;
+    }
+    for (const projectId of license.scope.projectIds) {
+      if (!projects.has(projectId)) {
+        throw catalogError(
+          "unknown-project",
+          `${license.id} scope references missing project ${projectId}`,
+          state.catalogPath,
+          { licenseId: license.id, identity: projectId },
         );
       }
     }
@@ -473,6 +607,108 @@ function assertEntryPathsAndLicenseScopes(
           licenseId: license.id,
           identity: entry.projectId,
         },
+      );
+    }
+  }
+}
+
+function assertProjectEntrySources(
+  entries: Entry[],
+  projects: ReadonlyMap<string, Project>,
+  packageLocators: ReadonlySet<string>,
+  state: ValidationState,
+): void {
+  const entriesByProject = new Map<string, Entry[]>();
+  const projectByPackageLocator = new Map<string, string>();
+  for (const entry of entries) {
+    const projectEntries = entriesByProject.get(entry.projectId) ?? [];
+    projectEntries.push(entry);
+    entriesByProject.set(entry.projectId, projectEntries);
+
+    const locator =
+      entry.delivery === "local-file" ? undefined : entry.source.locator;
+    const existingProjectId = locator
+      ? projectByPackageLocator.get(locator)
+      : undefined;
+    if (locator && existingProjectId && existingProjectId !== entry.projectId) {
+      throw catalogError(
+        "package-project-split",
+        `${locator} is modeled by more than one project`,
+        state.catalogPath,
+        { locator, projectIds: [existingProjectId, entry.projectId] },
+      );
+    }
+    if (locator) {
+      projectByPackageLocator.set(locator, entry.projectId);
+    }
+  }
+
+  for (const [projectId, projectEntries] of entriesByProject) {
+    const deliveries = new Set(projectEntries.map((entry) => entry.delivery));
+    if (deliveries.size > 1) {
+      throw catalogError(
+        "mixed-project-delivery",
+        `${projectId} mixes local and package delivery`,
+        state.catalogPath,
+        { projectId },
+      );
+    }
+
+    const delivery = projectEntries[0]?.delivery;
+    if (delivery === "local-file") {
+      continue;
+    }
+
+    const project = projects.get(projectId);
+    if (!project?.reviewedRevision) {
+      throw catalogError(
+        "revision-missing",
+        `${projectId} package has no reviewed revision`,
+        state.catalogPath,
+        { projectId },
+      );
+    }
+
+    const locators = new Set(
+      projectEntries.map((entry) => entry.source.locator ?? ""),
+    );
+    if (locators.size !== 1) {
+      throw catalogError(
+        "mixed-project-source",
+        `${projectId} package surfaces use different source locators`,
+        state.catalogPath,
+        { projectId },
+      );
+    }
+
+    const kinds = new Set(projectEntries.map((entry) => entry.kind));
+    if (kinds.size !== projectEntries.length) {
+      throw catalogError(
+        "duplicate-project-surface",
+        `${projectId} repeats a package surface kind`,
+        state.catalogPath,
+        { projectId },
+      );
+    }
+
+    const locator = projectEntries[0]?.source.locator;
+    if (!locator) {
+      continue;
+    }
+    if (project.installedLocator !== locator) {
+      throw catalogError(
+        "project-locator-mismatch",
+        `${projectId} installed locator does not match ${locator}`,
+        state.catalogPath,
+        { projectId, locator, installedLocator: project.installedLocator },
+      );
+    }
+    if (!packageLocators.has(locator)) {
+      throw catalogError(
+        "package-not-configured",
+        `${projectId} package locator is absent from pi-settings.json: ${locator}`,
+        state.catalogPath,
+        { projectId, locator },
       );
     }
   }
@@ -628,6 +864,42 @@ function assertExistingFile(
   return canonicalPath;
 }
 
+function assertDetailContent(
+  detail: Detail,
+  entryId: string,
+  state: ValidationState,
+): void {
+  for (const [field, value] of Object.entries(detail)) {
+    for (const string of stringsIn(value)) {
+      if (
+        markdownPattern.test(string) ||
+        (field !== "commands" && htmlPattern.test(string))
+      ) {
+        throw catalogError(
+          "detail-content-invalid",
+          `${entryId} detail contains Markdown, HTML, or arbitrary URL content`,
+          state.catalogPath,
+          { entryId, field, value: string },
+        );
+      }
+    }
+  }
+}
+
+function* stringsIn(value: unknown): Generator<string> {
+  if (typeof value === "string") {
+    yield value;
+  } else if (Array.isArray(value)) {
+    for (const item of value) {
+      yield* stringsIn(item);
+    }
+  } else if (value !== null && typeof value === "object") {
+    for (const nestedValue of Object.values(value)) {
+      yield* stringsIn(nestedValue);
+    }
+  }
+}
+
 function assertDetailReferences(
   detail: Detail,
   entryId: string,
@@ -661,14 +933,101 @@ function assertEvidenceReferences(
   }
 }
 
-function assertEvidenceSourcePaths(
+function assertEvidenceReview(
   evidence: Evidence,
   entryId: string,
   state: ValidationState,
 ): void {
+  assertCalendarDate(
+    evidence.reviewedOn,
+    "evidence-review-invalid",
+    `${entryId} evidence review date is invalid`,
+    state,
+    { entryId },
+  );
+}
+
+function assertFeaturedRevision(
+  evidence: Evidence,
+  entry: Entry,
+  projects: ReadonlyMap<string, Project>,
+  state: ValidationState,
+): void {
+  const project = projects.get(entry.projectId);
+  if (!project?.reviewedRevision) {
+    throw catalogError(
+      "revision-missing",
+      `${entry.id} featured claim has no project reviewed revision`,
+      state.catalogPath,
+      { entryId: entry.id, projectId: entry.projectId },
+    );
+  }
+  if (evidence.verifiedAgainst.value !== project.reviewedRevision) {
+    throw catalogError(
+      "revision-mismatch",
+      `${entry.id} evidence revision differs from ${project.id}`,
+      state.catalogPath,
+      {
+        entryId: entry.id,
+        projectId: project.id,
+        evidenceRevision: evidence.verifiedAgainst.value,
+        reviewedRevision: project.reviewedRevision,
+      },
+    );
+  }
+}
+
+function assertEvidenceSourcePaths(
+  evidence: Evidence,
+  entry: Entry,
+  projects: ReadonlyMap<string, Project>,
+  state: ValidationState,
+): void {
+  const project = projects.get(entry.projectId);
   for (const claim of evidence.claims) {
     if (claim.sourcePath) {
-      assertRepositoryFile(claim.sourcePath, "evidence source", state, entryId);
+      if (entry.delivery !== "local-file") {
+        throw catalogError(
+          "evidence-source-invalid",
+          `${entry.id} package claim must use an immutable source URL`,
+          state.catalogPath,
+          { entryId: entry.id, sourcePath: claim.sourcePath },
+        );
+      }
+      if (
+        !evidenceSourcePrefixes.some((prefix) =>
+          pathHasPrefix(claim.sourcePath ?? "", prefix),
+        )
+      ) {
+        throw catalogError(
+          "evidence-source-invalid",
+          `${entry.id} local evidence is outside allowed public source roots`,
+          state.catalogPath,
+          { entryId: entry.id, sourcePath: claim.sourcePath },
+        );
+      }
+      assertRepositoryFile(
+        claim.sourcePath,
+        "evidence source",
+        state,
+        entry.id,
+      );
+    }
+    if (
+      claim.sourceUrl &&
+      project?.reviewedRevision &&
+      !claim.sourceUrl.includes(`/${project.reviewedRevision}/`)
+    ) {
+      throw catalogError(
+        "evidence-revision-mismatch",
+        `${entry.id} evidence URL does not use ${project.reviewedRevision}`,
+        state.catalogPath,
+        {
+          entryId: entry.id,
+          projectId: project.id,
+          sourceUrl: claim.sourceUrl,
+        },
+      );
     }
   }
 }
@@ -691,7 +1050,285 @@ function assertNoOrphans(
   }
 }
 
+function discoverCandidates(state: ValidationState): DiscoveredCandidates {
+  const candidates = [
+    ...discoverTopLevelFiles(
+      join(state.root, "pi-extensions"),
+      "extension",
+      (name) =>
+        extname(name) === ".ts" && !extensionExclusionPattern.test(name),
+      state,
+    ),
+    ...discoverSkillFiles(join(state.root, "skills"), state),
+    ...discoverSkillFiles(join(state.root, "specific_skills"), state),
+    ...discoverTopLevelFiles(
+      join(state.root, "prompts"),
+      "prompt",
+      (name) => extname(name) === ".md",
+      state,
+    ),
+  ];
+  const packageLocators = readPackageLocators(state);
+  for (const locator of packageLocators) {
+    candidates.push({ kind: "package", source: locator });
+  }
+  return { candidates, packageLocators };
+}
+
+function discoverTopLevelFiles(
+  directory: string,
+  kind: EntryKind,
+  include: (name: string) => boolean,
+  state: ValidationState,
+): Candidate[] {
+  if (!existsSync(directory)) {
+    return [];
+  }
+
+  const candidates: Candidate[] = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    if (!include(entry.name) || !(entry.isFile() || entry.isSymbolicLink())) {
+      continue;
+    }
+    const path = join(directory, entry.name);
+    assertDiscoveredFile(path, state);
+    candidates.push({ kind, source: repositoryRelativePath(path, state) });
+  }
+  return candidates;
+}
+
+function discoverSkillFiles(
+  directory: string,
+  state: ValidationState,
+): Candidate[] {
+  if (!existsSync(directory)) {
+    return [];
+  }
+
+  const candidates: Candidate[] = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    if (!(entry.isDirectory() || entry.isSymbolicLink())) {
+      continue;
+    }
+    const path = join(directory, entry.name, "SKILL.md");
+    if (!existsSync(path)) {
+      continue;
+    }
+    assertDiscoveredFile(path, state);
+    candidates.push({
+      kind: "skill",
+      source: repositoryRelativePath(path, state),
+    });
+  }
+  return candidates;
+}
+
+function assertDiscoveredFile(path: string, state: ValidationState): void {
+  const canonicalPath = assertExistingFile(path, "discovery candidate", state);
+  if (!isWithin(state.root, canonicalPath)) {
+    throw catalogError(
+      "path-outside-root",
+      `discovery candidate resolves outside repository root: ${path}`,
+      state.catalogPath,
+      { path, resolvedPath: canonicalPath },
+    );
+  }
+}
+
+function repositoryRelativePath(path: string, state: ValidationState): string {
+  return relative(state.root, path).split(sep).join("/");
+}
+
+function readPackageLocators(state: ValidationState): ReadonlySet<string> {
+  const settingsPath = join(state.root, "pi-settings.json");
+  let settings: unknown;
+  try {
+    settings = JSON.parse(readFileSync(settingsPath, "utf8"));
+  } catch (error) {
+    throw catalogError(
+      "package-config-invalid",
+      `pi-settings.json packages are not readable: ${settingsPath}`,
+      state.catalogPath,
+      { path: settingsPath },
+      error,
+    );
+  }
+
+  if (
+    settings === null ||
+    typeof settings !== "object" ||
+    !Array.isArray((settings as { packages?: unknown }).packages) ||
+    !(settings as { packages: unknown[] }).packages.every(
+      (locator) => typeof locator === "string" && locator.length > 0,
+    )
+  ) {
+    throw catalogError(
+      "package-config-invalid",
+      "pi-settings.json#/packages must be an array of non-empty strings",
+      state.catalogPath,
+      { path: settingsPath },
+    );
+  }
+
+  const locators = new Set<string>();
+  for (const locator of (settings as { packages: string[] }).packages) {
+    if (locators.has(locator)) {
+      throw catalogError(
+        "package-config-invalid",
+        `pi-settings.json repeats package locator: ${locator}`,
+        state.catalogPath,
+        { path: settingsPath, locator },
+      );
+    }
+    locators.add(locator);
+  }
+  return locators;
+}
+
+function assertCoverage(
+  entries: Entry[],
+  candidates: Candidate[],
+  state: ValidationState,
+): void {
+  const coveragePath = join(dirname(state.catalogFilePath), "coverage.json");
+  const coverage = readSchemaJson<Coverage>(
+    coveragePath,
+    validateCoverageSchema,
+    "coverage",
+    state,
+  );
+  const candidatesByKey = new Map<string, Candidate>();
+  for (const candidate of candidates) {
+    const key = candidateKey(candidate);
+    if (candidatesByKey.has(key)) {
+      throw catalogError(
+        "discovery-duplicate",
+        `discovery found candidate more than once: ${candidate.source}`,
+        state.catalogPath,
+        { kind: candidate.kind, source: candidate.source },
+      );
+    }
+    candidatesByKey.set(key, candidate);
+  }
+
+  const publicEntriesByCandidate = new Map<string, Entry[]>();
+  for (const entry of entries) {
+    const candidate = candidateForEntry(entry);
+    const key = candidateKey(candidate);
+    if (!candidatesByKey.has(key)) {
+      throw catalogError(
+        "coverage-public-unknown",
+        `${entry.id} source is outside discovery universe: ${candidate.source}`,
+        state.catalogPath,
+        { entryId: entry.id, kind: candidate.kind, source: candidate.source },
+      );
+    }
+    const publicEntries = publicEntriesByCandidate.get(key) ?? [];
+    publicEntries.push(entry);
+    publicEntriesByCandidate.set(key, publicEntries);
+  }
+
+  const excludedKeys = new Set<string>();
+  for (const exclusion of coverage.excluded) {
+    const key = candidateKey(exclusion);
+    if (!candidatesByKey.has(key)) {
+      throw catalogError(
+        "coverage-unknown-candidate",
+        `coverage excludes undiscovered candidate: ${exclusion.source}`,
+        state.catalogPath,
+        { kind: exclusion.kind, source: exclusion.source },
+      );
+    }
+    if (excludedKeys.has(key)) {
+      throw catalogError(
+        "coverage-duplicate",
+        `coverage excludes candidate more than once: ${exclusion.source}`,
+        state.catalogPath,
+        { kind: exclusion.kind, source: exclusion.source },
+      );
+    }
+    if (publicEntriesByCandidate.has(key)) {
+      throw catalogError(
+        "coverage-public-conflict",
+        `coverage excludes public candidate: ${exclusion.source}`,
+        state.catalogPath,
+        { kind: exclusion.kind, source: exclusion.source },
+      );
+    }
+    excludedKeys.add(key);
+  }
+
+  for (const [key, candidate] of candidatesByKey) {
+    if (!publicEntriesByCandidate.has(key) && !excludedKeys.has(key)) {
+      throw catalogError(
+        "coverage-unclassified",
+        `discovered candidate has no public entry or exclusion: ${candidate.source}`,
+        state.catalogPath,
+        { kind: candidate.kind, source: candidate.source },
+      );
+    }
+  }
+}
+
+function candidateForEntry(entry: Entry): Candidate {
+  if (entry.delivery === "local-file") {
+    return {
+      kind: entry.kind,
+      source: normalizeCatalogPath(entry.source.path ?? ""),
+    };
+  }
+  return { kind: "package", source: entry.source.locator ?? "" };
+}
+
+function candidateKey(candidate: Pick<Candidate, "kind" | "source">): string {
+  return `${candidate.kind}\0${candidate.source}`;
+}
+
+function assertNoPrivatePublicContent(state: ValidationState): void {
+  const dotagentsRoot = dirname(state.catalogFilePath);
+  const paths = [
+    state.catalogFilePath,
+    ...[
+      "README.md",
+      "catalog.schema.json",
+      "detail.schema.json",
+      "evidence.schema.json",
+      "coverage.schema.json",
+      "coverage.json",
+    ]
+      .map((name) => join(dotagentsRoot, name))
+      .filter((path) => path !== state.catalogFilePath && existsSync(path)),
+    ...listFiles(join(dotagentsRoot, "details")),
+    ...listFiles(join(dotagentsRoot, "evidence")),
+  ];
+
+  for (const path of paths) {
+    const canonicalPath = assertExistingFile(path, "public artifact", state);
+    if (!isWithin(state.root, canonicalPath)) {
+      throw catalogError(
+        "path-outside-root",
+        `public artifact resolves outside repository root: ${path}`,
+        state.catalogPath,
+        { path, resolvedPath: canonicalPath },
+      );
+    }
+    const content = readFileSync(path, "utf8");
+    if (privateContentPatterns.some((pattern) => pattern.test(content))) {
+      throw catalogError(
+        "private-content",
+        `public artifact contains private or machine-local content: ${path}`,
+        state.catalogPath,
+        { path },
+      );
+    }
+  }
+}
+
 function listJsonFiles(directory: string): string[] {
+  return listFiles(directory).filter((path) => path.endsWith(".json"));
+}
+
+function listFiles(directory: string): string[] {
   if (!existsSync(directory)) {
     return [];
   }
@@ -700,15 +1337,34 @@ function listJsonFiles(directory: string): string[] {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name);
     if (entry.isDirectory()) {
-      paths.push(...listJsonFiles(path));
-    } else if (
-      (entry.isFile() || entry.isSymbolicLink()) &&
-      path.endsWith(".json")
-    ) {
+      paths.push(...listFiles(path));
+    } else if (entry.isFile() || entry.isSymbolicLink()) {
       paths.push(path);
     }
   }
   return paths.sort();
+}
+
+function assertCalendarDate(
+  value: string,
+  code: string,
+  message: string,
+  state: ValidationState,
+  context: Record<string, unknown>,
+): void {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/u.exec(value);
+  if (!match) {
+    throw catalogError(code, message, state.catalogPath, context);
+  }
+  const [, year, month, day] = match;
+  const date = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+  if (
+    date.getUTCFullYear() !== Number(year) ||
+    date.getUTCMonth() !== Number(month) - 1 ||
+    date.getUTCDate() !== Number(day)
+  ) {
+    throw catalogError(code, message, state.catalogPath, context);
+  }
 }
 
 function isWithin(root: string, candidate: string): boolean {
