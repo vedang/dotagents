@@ -261,6 +261,18 @@ describe("Dotagents catalog validator", () => {
     }
   });
 
+  test("rejects route slugs with traversal, separators, or dot segments", () => {
+    const unsafeSlugs = ["../index", "/handoff", "a/b", ".", "handoff/"];
+
+    for (const slug of unsafeSlugs) {
+      const { root, catalogPath } = createFixtureProject();
+      mutateCatalog(catalogPath, (catalog) => {
+        catalog.entries[0].slug = slug;
+      });
+      expectCatalogError(root, catalogPath, "schema-invalid");
+    }
+  });
+
   test("rejects broken project, license, related-entry, and evidence references", () => {
     const project = createFixtureProject();
     mutateCatalog(project.catalogPath, (catalog) => {

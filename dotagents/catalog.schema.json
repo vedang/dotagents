@@ -41,6 +41,10 @@
       "type": "string",
       "minLength": 1
     },
+    "routeSlug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
     "httpsUrl": {
       "type": "string",
       "pattern": "^https://[^\\s]+$"
@@ -285,7 +289,7 @@
           "$ref": "#/$defs/nonEmptyString"
         },
         "slug": {
-          "$ref": "#/$defs/nonEmptyString"
+          "$ref": "#/$defs/routeSlug"
         },
         "name": {
           "$ref": "#/$defs/nonEmptyString"
