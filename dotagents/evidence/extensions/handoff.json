@@ -19,14 +19,19 @@
       "sourceLines": "152-160"
     },
     {
-      "claim": "Preserves the latest compaction summary and retained branch entries for handoff context.",
+      "claim": "After the latest compaction, preserves its summary and retained branch entries for handoff context.",
       "sourcePath": "pi-extensions/handoff.ts",
       "sourceLines": "64-93"
     },
     {
-      "claim": "Sends serialized selected context and the requested goal to the configured model.",
+      "claim": "With no compaction, preserves every branch entry convertible to a model message for handoff context.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "125-179"
+      "sourceLines": "64-75"
+    },
+    {
+      "claim": "Serializes the resulting branch context and sends it with the requested goal to the configured model.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "118-160"
     },
     {
       "claim": "Lets the user edit the generated prompt before opening a linked replacement session.",

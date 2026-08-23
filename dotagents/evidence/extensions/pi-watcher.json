@@ -37,8 +37,16 @@
       "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/watcher.ts#L65-L104"
     },
     {
-      "claim": "Cleans handled marker comments with source containment checks.",
-      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/cleanup.ts#L161-L177"
+      "claim": "Rejects cleanup paths whose lexical resolution leaves the current working directory.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/cleanup.ts#L33-L50"
+    },
+    {
+      "claim": "Requires cleanup targets to be non-symlink files whose canonical paths remain inside the canonical current working directory before reads and writes.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/cleanup.ts#L77-L116"
+    },
+    {
+      "claim": "Runs configured cleanup for completed batch files through lexical resolution, guarded reads, parsing, and guarded writes.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/cleanup.ts#L161-L199"
     },
     {
       "claim": "Runs marker cleanup after the triggered turn settles.",

@@ -261,7 +261,7 @@
       "activation": ["user-command"],
       "compatibility": [
         "Interactive Pi session",
-        "Selected model and credentials",
+        "Selected model available through Pi's model runtime",
         "Session replacement UI"
       ],
       "useAreas": ["context-transfer", "session-management"],

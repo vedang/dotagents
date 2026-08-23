@@ -19,9 +19,9 @@
       "sourceLines": "17-24"
     },
     {
-      "claim": "Returns a rewrite, an explanation of material changes, and a checklist.",
+      "claim": "Returns a rewrite and an explanation of material changes.",
       "sourcePath": "prompts/sharpen-communication.md",
-      "sourceLines": "26-44"
+      "sourceLines": "26-39"
     }
   ]
 }

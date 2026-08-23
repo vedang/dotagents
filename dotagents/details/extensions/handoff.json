@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "whatItDoes": [
     "The handoff command turns useful conversation context into an editable prompt and opens a linked fresh session.",
-    "It carries selected context and an explicit goal, not live process state or a complete transcript."
+    "Before generation, it sends every convertible message from an un-compacted branch; after compaction, it sends the latest summary and retained entries instead. It does not transfer live process state."
   ],
   "whenToReachForIt": {
     "invocation": "Type /handoff followed by the next session goal.",
@@ -28,14 +28,14 @@
     },
     {
       "entryId": "extension/pi-subagents",
-      "relationship": "Subagents keep bounded work inside one run; handoff moves selected context into a fresh session."
+      "relationship": "Subagents keep bounded work inside one run; handoff asks a model to select context for a fresh session."
     }
   ],
   "questions": [
     {
       "question": "What should I review before continuing?",
       "answer": [
-        "Handoff is model-generated and intentionally selective, so review the draft; it does not transfer live process state, and it sends selected conversation context to the configured model."
+        "Review the model-generated draft before continuing. Handoff sends every convertible message from an un-compacted branch to the configured model; after compaction, it sends the latest summary and retained entries. It does not transfer live process state."
       ]
     }
   ],

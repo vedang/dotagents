@@ -23,7 +23,7 @@
   },
   "whatItAdds": [
     "A named operator recipe for structured communication revision.",
-    "A rewrite, change explanation, and final review checklist."
+    "A rewrite and explanation of material changes."
   ],
   "howItFits": [
     {
@@ -41,7 +41,7 @@
   ],
   "workingIf": [
     "The revised communication states its main point and desired outcome early.",
-    "The response explains material changes and flags assumptions requiring review."
+    "The response explains material changes and asks clarifying questions first when context is needed."
   ],
   "setupNotes": [
     "Written and maintained by Vedang under the WTFPL.",
