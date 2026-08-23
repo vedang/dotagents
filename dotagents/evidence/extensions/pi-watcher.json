@@ -9,7 +9,7 @@
   "reviewedOn": "2026-08-22",
   "claims": [
     {
-      "claim": "Recognizes plain, exclamation, and question marker token forms.",
+      "claim": "Recognizes period, exclamation, and question marker token forms.",
       "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/parser.ts#L35-L38"
     },
     {
@@ -29,7 +29,7 @@
       "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/cleanup.ts#L161-L177"
     },
     {
-      "claim": "Runs marker cleanup after the triggered turn settles successfully.",
+      "claim": "Runs marker cleanup after the triggered turn settles.",
       "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/index.ts#L582-L600"
     }
   ]

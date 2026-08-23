@@ -45,7 +45,7 @@
   ],
   "workingIf": [
     "Saving a supported actionable marker creates one focused follow-up turn.",
-    "After successful settlement, handled marker comments are removed only within the guarded source path."
+    "After settlement, handled marker comments are removed only within the guarded source path."
   ],
   "setupNotes": [
     "Created and maintained by Vedang under the WTFPL.",

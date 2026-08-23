@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "whatItDoes": [
     "Pi Subagents adds controlled delegation, scripted multi-agent workflows, background execution, and recovery surfaces to Pi.",
-    "Each child runs under an explicit model, tool, context, and execution contract chosen by the parent workflow."
+    "Child model, tools, context, and execution settings resolve from parent overrides plus agent or package defaults."
   ],
   "whenToReachForIt": {
     "invocation": "Ask the model to use the subagent tool or invoke one of the package's operator commands.",
@@ -49,7 +49,7 @@
   ],
   "workingIf": [
     "The parent receives a completed child result or a recoverable background status.",
-    "Child tools and context match the contract supplied at launch."
+    "Child tools and context match the resolved launch contract."
   ],
   "setupNotes": [
     "Created and maintained by Nico Bailon; installed directly from the original MIT-licensed project.",
