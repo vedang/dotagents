@@ -723,6 +723,43 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
+  test("binds license scope type to local or package delivery", () => {
+    const packageWithLocalLicense = createFixtureProject();
+    const locator = "git:github.com/example/handoff";
+    configureGitPackage(packageWithLocalLicense, locator);
+    mutateCatalog(packageWithLocalLicense.catalogPath, (catalog) => {
+      catalog.entries[0].source.path = "skills/handoff/SKILL.md";
+      catalog.licenses[0].scope = {
+        type: "local-paths",
+        pathPrefixes: ["skills/handoff/"],
+      };
+    });
+    mutateCoverage(packageWithLocalLicense.root, (coverage) => {
+      if (coverage.packageSurfaces) {
+        coverage.packageSurfaces[0].surfaces[0].path =
+          "skills/handoff/SKILL.md";
+      }
+    });
+    expectCatalogError(
+      packageWithLocalLicense.root,
+      packageWithLocalLicense.catalogPath,
+      "license-delivery-mismatch",
+    );
+
+    const localWithExternalLicense = createFixtureProject();
+    mutateCatalog(localWithExternalLicense.catalogPath, (catalog) => {
+      catalog.licenses[0].scope = {
+        type: "external-projects",
+        projectIds: ["project/handoff"],
+      };
+    });
+    expectCatalogError(
+      localWithExternalLicense.root,
+      localWithExternalLicense.catalogPath,
+      "license-delivery-mismatch",
+    );
+  });
+
   test("classifies every audited package surface independently", () => {
     const locator = "git:github.com/example/handoff";
     const unclassified = createFixtureProject();
@@ -1294,9 +1331,19 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
-  test("binds external evidence URLs to reviewed immutable revision", () => {
+  test("binds local evidence to the entry source authority", () => {
     const fixture = createFixtureProject();
-    configureGitPackage(fixture);
+    const unrelatedSource = join(fixture.root, "prompts", "unrelated.md");
+    mkdirSync(dirname(unrelatedSource), { recursive: true });
+    writeFileSync(unrelatedSource, "Unrelated prompt source.\n");
+    mutateCoverage(fixture.root, (coverage) => {
+      coverage.excluded.push({
+        kind: "prompt",
+        source: "prompts/unrelated.md",
+        reason: "Synthetic unrelated source for authority validation.",
+      });
+    });
+
     const evidencePath = join(
       fixture.root,
       "dotagents",
@@ -1305,16 +1352,99 @@ describe("Dotagents catalog validator", () => {
       "handoff.json",
     );
     const evidence = readJson<{
-      claims: Array<{ sourceUrl: string }>;
+      claims: Array<{ sourcePath: string }>;
     }>(evidencePath);
-    evidence.claims[0].sourceUrl = `https://github.com/example/handoff/blob/${otherRevision}/src/index.ts#L10-L20`;
+    evidence.claims[0].sourcePath = "prompts/unrelated.md";
     writeJson(evidencePath, evidence);
 
     expectCatalogError(
       fixture.root,
       fixture.catalogPath,
+      "evidence-source-mismatch",
+    );
+
+    const remoteForLocal = createFixtureProject();
+    const remoteEvidencePath = join(
+      remoteForLocal.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const remoteEvidence = readJson<{
+      claims: Array<Record<string, unknown>>;
+    }>(remoteEvidencePath);
+    remoteEvidence.claims[0] = {
+      claim: "Remote evidence must not replace local source authority.",
+      sourceUrl: `https://github.com/vedang/dotagents/blob/${fixtureRevision}/pi-extensions/handoff.ts#L1`,
+    };
+    writeJson(remoteEvidencePath, remoteEvidence);
+    expectCatalogError(
+      remoteForLocal.root,
+      remoteForLocal.catalogPath,
+      "evidence-source-invalid",
+    );
+  });
+
+  test("binds external evidence URLs to project authority and revision", () => {
+    const wrongRevision = createFixtureProject();
+    configureGitPackage(wrongRevision);
+    const wrongRevisionEvidencePath = join(
+      wrongRevision.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const wrongRevisionEvidence = readJson<{
+      claims: Array<{ sourceUrl: string }>;
+    }>(wrongRevisionEvidencePath);
+    wrongRevisionEvidence.claims[0].sourceUrl = `https://github.com/example/handoff/blob/${otherRevision}/src/index.ts#L10-L20`;
+    writeJson(wrongRevisionEvidencePath, wrongRevisionEvidence);
+    expectCatalogError(
+      wrongRevision.root,
+      wrongRevision.catalogPath,
       "evidence-revision-mismatch",
     );
+
+    const wrongAuthority = createFixtureProject();
+    configureGitPackage(wrongAuthority);
+    const wrongAuthorityEvidencePath = join(
+      wrongAuthority.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const wrongAuthorityEvidence = readJson<{
+      claims: Array<{ sourceUrl: string }>;
+    }>(wrongAuthorityEvidencePath);
+    wrongAuthorityEvidence.claims[0].sourceUrl = `https://attacker.example/blob/${fixtureRevision}/fake.ts#L1`;
+    writeJson(wrongAuthorityEvidencePath, wrongAuthorityEvidence);
+    expectCatalogError(
+      wrongAuthority.root,
+      wrongAuthority.catalogPath,
+      "evidence-authority-mismatch",
+    );
+
+    const approvedUpstream = createFixtureProject();
+    configureGitPackage(approvedUpstream);
+    mutateCatalog(approvedUpstream.catalogPath, (catalog) => {
+      catalog.projects[0].upstreamUrl = "https://github.com/upstream/handoff";
+    });
+    const approvedUpstreamEvidencePath = join(
+      approvedUpstream.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const approvedUpstreamEvidence = readJson<{
+      claims: Array<{ sourceUrl: string }>;
+    }>(approvedUpstreamEvidencePath);
+    approvedUpstreamEvidence.claims[0].sourceUrl = `https://github.com/upstream/handoff/blob/${fixtureRevision}/src/index.ts#L10-L20`;
+    writeJson(approvedUpstreamEvidencePath, approvedUpstreamEvidence);
+    assert.equal(validateCatalog(approvedUpstream).catalog.entries.length, 1);
   });
 
   test("rejects private and machine-local patterns in public artifacts", () => {

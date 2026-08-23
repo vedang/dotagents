@@ -11,6 +11,7 @@ import {
   isAbsolute,
   join,
   normalize,
+  posix,
   relative,
   resolve,
   sep,
@@ -608,6 +609,21 @@ function assertEntryPathsAndLicenseScopes(
     if (!license) {
       continue;
     }
+    const expectedScopeType =
+      entry.delivery === "local-file" ? "local-paths" : "external-projects";
+    if (license.scope.type !== expectedScopeType) {
+      throw catalogError(
+        "license-delivery-mismatch",
+        `${entry.id} ${entry.delivery} delivery cannot use ${license.scope.type} license scope`,
+        state.catalogPath,
+        {
+          entryId: entry.id,
+          licenseId: license.id,
+          delivery: entry.delivery,
+          scopeType: license.scope.type,
+        },
+      );
+    }
     if (license.scope.type === "local-paths") {
       if (
         !sourcePath ||
@@ -1101,6 +1117,24 @@ function assertEvidenceSourcePaths(
           { entryId: entry.id, sourcePath: claim.sourcePath },
         );
       }
+      assertSafeRelativePath(
+        claim.sourcePath,
+        "evidence source",
+        state,
+        entry.id,
+      );
+      if (!entryOwnsLocalEvidencePath(entry, claim.sourcePath)) {
+        throw catalogError(
+          "evidence-source-mismatch",
+          `${entry.id} local evidence is outside its source authority`,
+          state.catalogPath,
+          {
+            entryId: entry.id,
+            entrySource: entry.source.path,
+            sourcePath: claim.sourcePath,
+          },
+        );
+      }
       assertRepositoryFile(
         claim.sourcePath,
         "evidence source",
@@ -1108,23 +1142,99 @@ function assertEvidenceSourcePaths(
         entry.id,
       );
     }
-    if (
-      claim.sourceUrl &&
-      project?.reviewedRevision &&
-      !claim.sourceUrl.includes(`/${project.reviewedRevision}/`)
-    ) {
-      throw catalogError(
-        "evidence-revision-mismatch",
-        `${entry.id} evidence URL does not use ${project.reviewedRevision}`,
-        state.catalogPath,
-        {
-          entryId: entry.id,
-          projectId: project.id,
-          sourceUrl: claim.sourceUrl,
-        },
-      );
+    if (claim.sourceUrl) {
+      if (entry.delivery === "local-file") {
+        throw catalogError(
+          "evidence-source-invalid",
+          `${entry.id} local claim must use a repository source path`,
+          state.catalogPath,
+          { entryId: entry.id, sourceUrl: claim.sourceUrl },
+        );
+      }
+      if (
+        project?.reviewedRevision &&
+        !claim.sourceUrl.includes(`/${project.reviewedRevision}/`)
+      ) {
+        throw catalogError(
+          "evidence-revision-mismatch",
+          `${entry.id} evidence URL does not use ${project.reviewedRevision}`,
+          state.catalogPath,
+          {
+            entryId: entry.id,
+            projectId: project.id,
+            sourceUrl: claim.sourceUrl,
+          },
+        );
+      }
+      if (
+        project?.reviewedRevision &&
+        !isApprovedProjectSourceUrl(
+          claim.sourceUrl,
+          project,
+          project.reviewedRevision,
+        )
+      ) {
+        throw catalogError(
+          "evidence-authority-mismatch",
+          `${entry.id} evidence URL is outside ${project.id} source authority`,
+          state.catalogPath,
+          {
+            entryId: entry.id,
+            projectId: project.id,
+            sourceUrl: claim.sourceUrl,
+          },
+        );
+      }
     }
   }
+}
+
+function entryOwnsLocalEvidencePath(entry: Entry, sourcePath: string): boolean {
+  const entrySource = normalizeCatalogPath(entry.source.path ?? "");
+  const evidenceSource = normalizeCatalogPath(sourcePath);
+  if (evidenceSource === entrySource) {
+    return true;
+  }
+  return (
+    entry.kind === "skill" &&
+    posix.basename(entrySource) === "SKILL.md" &&
+    pathHasPrefix(evidenceSource, posix.dirname(entrySource))
+  );
+}
+
+function isApprovedProjectSourceUrl(
+  sourceUrl: string,
+  project: Project,
+  reviewedRevision: string,
+): boolean {
+  let source: URL;
+  try {
+    source = new URL(sourceUrl);
+  } catch {
+    return false;
+  }
+
+  for (const projectUrl of [project.canonicalUrl, project.upstreamUrl]) {
+    if (!projectUrl) {
+      continue;
+    }
+    let authority: URL;
+    try {
+      authority = new URL(projectUrl);
+    } catch {
+      continue;
+    }
+    const repositoryPath = authority.pathname.replace(/\/+$/u, "");
+    const immutableTreePrefix = `${repositoryPath}/blob/${reviewedRevision}/`;
+    if (
+      source.protocol === "https:" &&
+      source.origin === authority.origin &&
+      source.pathname.startsWith(immutableTreePrefix)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function assertNoOrphans(
