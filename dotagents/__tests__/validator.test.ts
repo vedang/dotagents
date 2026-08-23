@@ -1335,6 +1335,7 @@ describe("Dotagents catalog validator", () => {
       ["whatItDoes", "<![CDATA[hidden markup]]>"],
       ["whatItDoes", "Read example.com/private."],
       ["commands", "<script>alert('unsafe')</script>"],
+      ["commands", "<svg/onload=alert('unsafe')>"],
     ];
 
     for (const [field, content] of cases) {
