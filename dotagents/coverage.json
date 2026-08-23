@@ -220,11 +220,6 @@
       "kind": "package",
       "source": "npm:pi-intercom",
       "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "npm:pi-web-access",
-      "reason": "Not selected for the launch catalog."
     }
   ]
 }
