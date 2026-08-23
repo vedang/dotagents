@@ -779,15 +779,17 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
-  test("rejects detail Markdown, raw HTML, and arbitrary URLs", () => {
-    const cases = [
-      "Read [private notes](https://example.com/private).",
-      "<script>alert('unsafe')</script>",
-      "## Hidden presentation heading",
-      "- Hidden presentation list",
+  test("rejects Markdown, HTML, and arbitrary URIs in every detail field", () => {
+    const cases: Array<["whatItDoes" | "commands", string]> = [
+      ["whatItDoes", "Read [private notes](https://example.com/private)."],
+      ["whatItDoes", "Use **hidden emphasis** here."],
+      ["whatItDoes", "Email mailto:private@example.com."],
+      ["whatItDoes", "## Hidden presentation heading"],
+      ["whatItDoes", "- Hidden presentation list"],
+      ["commands", "<script>alert('unsafe')</script>"],
     ];
 
-    for (const content of cases) {
+    for (const [field, content] of cases) {
       const fixture = createFixtureProject();
       const detailPath = join(
         fixture.root,
@@ -796,8 +798,11 @@ describe("Dotagents catalog validator", () => {
         "extensions",
         "handoff.json",
       );
-      const detail = readJson<{ whatItDoes: string[] }>(detailPath);
-      detail.whatItDoes[0] = content;
+      const detail = readJson<{
+        whatItDoes: string[];
+        commands: string[];
+      }>(detailPath);
+      detail[field][0] = content;
       writeJson(detailPath, detail);
       expectCatalogError(
         fixture.root,

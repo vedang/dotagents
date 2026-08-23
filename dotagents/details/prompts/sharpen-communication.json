@@ -48,5 +48,5 @@
     "The prompt requires explicit invocation in a harness that supports named templates and argument interpolation.",
     "Behavior claims were reviewed against the pinned Dotagents revision."
   ],
-  "commands": ["/sharpen-communication <message>"]
+  "commands": ["/sharpen-communication MESSAGE"]
 }

@@ -48,5 +48,5 @@
     "The installed source is the local handoff extension in Dotagents.",
     "It requires an interactive Pi session, a selected model with credentials, and replacement-session UI support."
   ],
-  "commands": ["/handoff <goal>"]
+  "commands": ["/handoff GOAL"]
 }

@@ -178,8 +178,10 @@ const privateContentPatterns: readonly RegExp[] = [
 const extensionExclusionPattern =
   /^(?:(?:test|spec|config)|.+[._-](?:test|spec|config))\.ts$/iu;
 const markdownPattern =
-  /^(?:\s{0,3}(?:#{1,6}\s+|(?:[-*+]|>)\s+|\d+[.)]\s+|```|~~~))|```|~~~|!?\[[^\]]*\]\([^)]*\)|https?:\/\/|`[^`\n]+`/imu;
+  /^(?:\s{0,3}(?:#{1,6}\s+|(?:[-*+]|>)\s+|\d+[.)]\s+|(?:[-*_]\s*){3,}|```|~~~))|```|~~~|!?\[[^\]\n]*\](?:\([^\n)]*\)|\[[^\]\n]*\])|`[^`\n]+`|\*\*(?=\S)(?:(?!\*\*).)*\S\*\*|__(?=\S)(?:(?!__).)*\S__|~~(?=\S)(?:(?!~~).)*\S~~|(?<!\*)\*(?!\*)(?=\S)[^*\n]*\S\*(?!\*)|(?<![\w_])_(?!_)(?=\S)[^_\n]*\S_(?![\w_])/imu;
 const htmlPattern = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s+[^<>]*)?>/u;
+const uriPattern =
+  /(?:\b[A-Za-z][A-Za-z0-9+.-]*:\/\/|\b(?:data|file|git|javascript|mailto|sms|ssh|tel|urn|vbscript):|\/\/|www\.)[^\s<>"']+/iu;
 const evidenceSourcePrefixes = [
   "pi-extensions/",
   "skills/",
@@ -907,7 +909,8 @@ function assertDetailContent(
     for (const string of stringsIn(value)) {
       if (
         markdownPattern.test(string) ||
-        (field !== "commands" && htmlPattern.test(string))
+        htmlPattern.test(string) ||
+        uriPattern.test(string)
       ) {
         throw catalogError(
           "detail-content-invalid",
