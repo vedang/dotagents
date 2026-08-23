@@ -70,6 +70,8 @@ type ExternalLicenseScope = {
 
 type License = {
   id: string;
+  scheme: "spdx" | "custom";
+  identifier: string;
   evidence: { type: "path" | "url"; value: string };
   scope: LocalLicenseScope | ExternalLicenseScope;
   reviewedBy: string;
@@ -207,6 +209,8 @@ const evidenceSourcePrefixes = [
   "specific_skills/",
   "prompts/",
 ] as const;
+const immutableBlobRevisionPattern = /\/blob\/([0-9a-f]{40}|[0-9a-f]{64})\//u;
+const supportedSpdxIdentifiers: ReadonlySet<string> = new Set(["MIT", "WTFPL"]);
 
 const schemaRoot = resolve(import.meta.dirname, "..");
 const ajv = new Ajv2020({ allErrors: true, strict: true });
@@ -254,6 +258,7 @@ export function validateCatalog(
   assertLicenseEvidencePaths(catalog.licenses, state);
   assertEntryPathsAndLicenseScopes(catalog.entries, licenses, state);
   assertLicenseScopeReferences(catalog.licenses, projects, state);
+  assertLicenseEvidenceUrls(catalog.licenses, catalog.entries, projects, state);
 
   const details = new Map<string, Detail>();
   const evidence = new Map<string, Evidence>();
@@ -540,6 +545,17 @@ function assertLicenseEvidencePaths(
       state,
       { licenseId: license.id },
     );
+    if (
+      license.scheme === "spdx" &&
+      !supportedSpdxIdentifiers.has(license.identifier)
+    ) {
+      throw catalogError(
+        "license-identifier-invalid",
+        `${license.id} uses unsupported SPDX identifier ${license.identifier}`,
+        state.catalogPath,
+        { licenseId: license.id, identifier: license.identifier },
+      );
+    }
     if (license.evidence.type === "path") {
       assertRepositoryFile(
         license.evidence.value,
@@ -580,6 +596,63 @@ function assertLicenseScopeReferences(
         );
       }
     }
+  }
+}
+
+function assertLicenseEvidenceUrls(
+  licenses: License[],
+  entries: Entry[],
+  projects: ReadonlyMap<string, Project>,
+  state: ValidationState,
+): void {
+  for (const license of licenses) {
+    if (license.evidence.type !== "url") {
+      continue;
+    }
+    const evidenceRevision = immutableBlobRevision(license.evidence.value);
+    if (!evidenceRevision) {
+      throw catalogError(
+        "license-evidence-revision-invalid",
+        `${license.id} URL evidence must identify an immutable commit`,
+        state.catalogPath,
+        { licenseId: license.id, evidenceUrl: license.evidence.value },
+      );
+    }
+
+    for (const entry of entries) {
+      if (entry.licenseRef !== license.id) {
+        continue;
+      }
+      const project = projects.get(entry.projectId);
+      if (
+        project &&
+        !isApprovedProjectSourceUrl(
+          license.evidence.value,
+          project,
+          evidenceRevision,
+        )
+      ) {
+        throw catalogError(
+          "license-evidence-authority-invalid",
+          `${license.id} URL evidence is outside ${project.id} repository authority`,
+          state.catalogPath,
+          {
+            licenseId: license.id,
+            entryId: entry.id,
+            projectId: project.id,
+            evidenceUrl: license.evidence.value,
+          },
+        );
+      }
+    }
+  }
+}
+
+function immutableBlobRevision(value: string): string | undefined {
+  try {
+    return new URL(value).pathname.match(immutableBlobRevisionPattern)?.[1];
+  } catch {
+    return undefined;
   }
 }
 

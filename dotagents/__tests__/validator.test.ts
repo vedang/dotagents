@@ -723,6 +723,83 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
+  test("rejects mutable or untrusted license evidence and unsupported SPDX identifiers", () => {
+    const untrusted = createFixtureProject();
+    configureGitPackage(untrusted);
+    mutateCatalog(untrusted.catalogPath, (catalog) => {
+      catalog.licenses[0].evidence = {
+        type: "url",
+        value: `https://attacker.example/handoff/blob/${fixtureRevision}/LICENSE`,
+      };
+    });
+    expectCatalogError(
+      untrusted.root,
+      untrusted.catalogPath,
+      "license-evidence-authority-invalid",
+    );
+
+    const partiallyTrusted = createFixtureProject();
+    mutateCatalog(partiallyTrusted.catalogPath, (catalog) => {
+      catalog.licenses[0].evidence = {
+        type: "url",
+        value: `https://github.com/vedang/dotagents/blob/${fixtureRevision}/LICENSE.txt`,
+      };
+      const project = structuredClone(catalog.projects[0]);
+      Object.assign(project, {
+        id: "project/other",
+        installedLocator: "pi-extensions/other.ts",
+        canonicalUrl: "https://github.com/example/other",
+      });
+      catalog.projects.push(project);
+
+      const entry = structuredClone(catalog.entries[0]);
+      Object.assign(entry, {
+        id: "extension/other",
+        projectId: "project/other",
+        slug: "other",
+        publication: "listed",
+        limitation: "Fixture limitation.",
+        source: { path: "pi-extensions/other.ts" },
+      });
+      Reflect.deleteProperty(entry, "detailPath");
+      Reflect.deleteProperty(entry, "evidencePath");
+      catalog.entries.push(entry);
+    });
+    cpSync(
+      join(partiallyTrusted.root, "pi-extensions", "handoff.ts"),
+      join(partiallyTrusted.root, "pi-extensions", "other.ts"),
+    );
+    expectCatalogError(
+      partiallyTrusted.root,
+      partiallyTrusted.catalogPath,
+      "license-evidence-authority-invalid",
+    );
+
+    const mutable = createFixtureProject();
+    configureGitPackage(mutable);
+    mutateCatalog(mutable.catalogPath, (catalog) => {
+      catalog.licenses[0].evidence = {
+        type: "url",
+        value: "https://github.com/example/handoff/blob/main/LICENSE",
+      };
+    });
+    expectCatalogError(
+      mutable.root,
+      mutable.catalogPath,
+      "license-evidence-revision-invalid",
+    );
+
+    const invalidSpdx = createFixtureProject();
+    mutateCatalog(invalidSpdx.catalogPath, (catalog) => {
+      catalog.licenses[0].identifier = "WTFPL-2.0";
+    });
+    expectCatalogError(
+      invalidSpdx.root,
+      invalidSpdx.catalogPath,
+      "schema-invalid",
+    );
+  });
+
   test("binds license scope type to local or package delivery", () => {
     const packageWithLocalLicense = createFixtureProject();
     const locator = "git:github.com/example/handoff";

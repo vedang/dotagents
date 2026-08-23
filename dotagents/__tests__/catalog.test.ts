@@ -180,6 +180,24 @@ describe("Dotagents JSON schemas", () => {
     }
   });
 
+  test("accepts only reviewed launch SPDX identifiers", () => {
+    const validate = compileSchema("catalog.schema.json");
+    for (const identifier of ["MIT", "WTFPL"]) {
+      const catalog = cloneFixture<MutableCatalog>("valid-catalog.json");
+      catalog.licenses[0].identifier = identifier;
+      assertValid(validate, catalog);
+    }
+
+    const custom = cloneFixture<MutableCatalog>("valid-catalog.json");
+    custom.licenses[0].scheme = "custom";
+    custom.licenses[0].identifier = "Reviewed custom terms";
+    assertValid(validate, custom);
+
+    const unsupported = cloneFixture<MutableCatalog>("valid-catalog.json");
+    unsupported.licenses[0].identifier = "WTFPL-2.0";
+    assertInvalid(validate, unsupported, "enum");
+  });
+
   test("constrain contract enums and constants", () => {
     const validateCatalog = compileSchema("catalog.schema.json");
     const cases: Array<(catalog: MutableCatalog) => void> = [

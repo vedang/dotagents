@@ -176,6 +176,25 @@
     "license": {
       "type": "object",
       "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scheme": {
+                "const": "spdx"
+              }
+            },
+            "required": ["scheme"]
+          },
+          "then": {
+            "properties": {
+              "identifier": {
+                "enum": ["MIT", "WTFPL"]
+              }
+            }
+          }
+        }
+      ],
       "required": [
         "id",
         "scheme",
