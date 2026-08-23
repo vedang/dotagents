@@ -39,7 +39,7 @@
     {
       "question": "What remains the model's responsibility?",
       "answer": [
-        "The model authors the HTML, output goes to a fixed local directory, browser opening is best-effort, and this reviewed fork trails newer upstream changes."
+        "The model authors the HTML, output goes to a fixed local directory, and browser opening is best-effort."
       ]
     }
   ],

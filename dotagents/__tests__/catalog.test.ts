@@ -301,7 +301,7 @@ describe("Dotagents JSON schemas", () => {
       "extension/mac-system-theme":
         "macOS-only; AppleScript failures fall back to light, and appearance is polled every two seconds.",
       "extension/notify":
-        "Terminal support is heuristic, notification failures are not surfaced, and this local copy still triggers on `agent_end` rather than newer upstream settled semantics.",
+        "Terminal support is heuristic, notification failures are not surfaced, and this local copy triggers on `agent_end`.",
       "extension/status-line":
         "Display state is process-local, uses a fixed status key, and is a compact activity indicator rather than durable telemetry.",
     });

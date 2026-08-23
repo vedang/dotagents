@@ -318,7 +318,7 @@
         "path": "pi-extensions/notify.ts"
       },
       "summary": "Sends a fixed ‘ready for input’ notification through Windows, Kitty, or OSC-compatible terminal protocols.",
-      "limitation": "Terminal support is heuristic, notification failures are not surfaced, and this local copy still triggers on `agent_end` rather than newer upstream settled semantics.",
+      "limitation": "Terminal support is heuristic, notification failures are not surfaced, and this local copy triggers on `agent_end`.",
       "activation": ["automatic", "hook"],
       "compatibility": [
         "Windows Terminal and PowerShell",
