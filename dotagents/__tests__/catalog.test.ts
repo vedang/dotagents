@@ -248,7 +248,41 @@ describe("Dotagents JSON schemas", () => {
 
     removeProperty(listed.entries[0], "detailPath");
     removeProperty(listed.entries[0], "evidencePath");
+    listed.entries[0].limitation = "Review output before relying on it.";
     assertValid(validate, listed);
+  });
+
+  test("require approved limitation wording for listed entries", () => {
+    const validate = compileSchema("catalog.schema.json");
+    const listed = cloneFixture<MutableCatalog>("valid-catalog.json");
+    listed.entries[0].publication = "listed";
+    removeProperty(listed.entries[0], "detailPath");
+    removeProperty(listed.entries[0], "evidencePath");
+    assertInvalid(validate, listed, "required");
+
+    listed.entries[0].limitation = "Review output before relying on it.";
+    assertValid(validate, listed);
+
+    const catalog = readJson(join(dotagentsRoot, "catalog.json")) as {
+      entries: Array<{
+        id: string;
+        limitation?: string;
+        publication: "featured" | "listed";
+      }>;
+    };
+    const actual = Object.fromEntries(
+      catalog.entries
+        .filter((entry) => entry.publication === "listed")
+        .map((entry) => [entry.id, entry.limitation]),
+    );
+    assert.deepEqual(actual, {
+      "extension/mac-system-theme":
+        "macOS-only; AppleScript failures fall back to light, and appearance is polled every two seconds.",
+      "extension/notify":
+        "Terminal support is heuristic, notification failures are not surfaced, and this local copy still triggers on `agent_end` rather than newer upstream settled semantics.",
+      "extension/status-line":
+        "Display state is process-local, uses a fixed status key, and is a compact activity indicator rather than durable telemetry.",
+    });
   });
 
   test("keep details structured as plain strings and arrays", () => {

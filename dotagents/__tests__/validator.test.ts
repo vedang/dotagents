@@ -593,6 +593,7 @@ describe("Dotagents catalog validator", () => {
     const listedWithDetail = createFixtureProject();
     mutateCatalog(listedWithDetail.catalogPath, (catalog) => {
       catalog.entries[0].publication = "listed";
+      catalog.entries[0].limitation = "Fixture limitation.";
     });
     expectCatalogError(
       listedWithDetail.root,
@@ -754,6 +755,7 @@ describe("Dotagents catalog validator", () => {
         name: "Handoff skill",
         kind: "skill",
         publication: "listed",
+        limitation: "Fixture limitation.",
         activation: ["model-invoked"],
       });
       Reflect.deleteProperty(skill, "detailPath");
@@ -780,6 +782,7 @@ describe("Dotagents catalog validator", () => {
         name: "Handoff skill",
         kind: "skill",
         publication: "listed",
+        limitation: "Fixture limitation.",
         activation: ["model-invoked"],
       });
       Reflect.deleteProperty(skill, "detailPath");
@@ -846,6 +849,7 @@ describe("Dotagents catalog validator", () => {
       catalog.projects[0].relationship = "original";
       Reflect.deleteProperty(catalog.projects[0], "reviewedRevision");
       catalog.entries[0].publication = "listed";
+      catalog.entries[0].limitation = "Fixture limitation.";
       Reflect.deleteProperty(catalog.entries[0], "detailPath");
       Reflect.deleteProperty(catalog.entries[0], "evidencePath");
     });

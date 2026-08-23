@@ -300,6 +300,7 @@
         "path": "pi-extensions/mac-system-theme.ts"
       },
       "summary": "Keeps interactive Pi sessions aligned with macOS light or dark appearance.",
+      "limitation": "macOS-only; AppleScript failures fall back to light, and appearance is polled every two seconds.",
       "activation": ["automatic", "hook"],
       "compatibility": ["macOS", "osascript", "Interactive Pi UI"],
       "useAreas": ["appearance", "desktop-integration"],
@@ -317,6 +318,7 @@
         "path": "pi-extensions/notify.ts"
       },
       "summary": "Sends a fixed ‘ready for input’ notification through Windows, Kitty, or OSC-compatible terminal protocols.",
+      "limitation": "Terminal support is heuristic, notification failures are not surfaced, and this local copy still triggers on `agent_end` rather than newer upstream settled semantics.",
       "activation": ["automatic", "hook"],
       "compatibility": [
         "Windows Terminal and PowerShell",
@@ -338,6 +340,7 @@
         "path": "pi-extensions/status-line.ts"
       },
       "summary": "Shows ready, running, and completed turn states in Pi’s themed footer.",
+      "limitation": "Display state is process-local, uses a fixed status key, and is a compact activity indicator rather than durable telemetry.",
       "activation": ["automatic", "hook"],
       "compatibility": ["Interactive Pi status and theme APIs"],
       "useAreas": ["status", "session-feedback"],

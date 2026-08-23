@@ -88,6 +88,7 @@ type Entry = {
   delivery: Delivery;
   source: { path?: string; locator?: string };
   publication: "featured" | "listed";
+  limitation?: string;
   detailPath?: string;
   evidencePath?: string;
 };

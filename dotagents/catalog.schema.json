@@ -318,6 +318,9 @@
         "summary": {
           "$ref": "#/$defs/nonEmptyString"
         },
+        "limitation": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
         "activation": {
           "type": "array",
           "minItems": 1,
@@ -427,6 +430,24 @@
               "detailPath": false,
               "evidencePath": false
             }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publication": {
+                "const": "listed"
+              }
+            },
+            "required": ["publication"]
+          },
+          "then": {
+            "properties": {
+              "limitation": {
+                "$ref": "#/$defs/nonEmptyString"
+              }
+            },
+            "required": ["limitation"]
           }
         }
       ]
