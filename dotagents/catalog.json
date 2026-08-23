@@ -405,7 +405,7 @@
         "locator": "git:github.com/vedang/pi-watcher",
         "path": "src/index.ts"
       },
-      "summary": "Turns `AI!`, `AI?`, and context markers in editor comments into focused Pi follow-up turns.",
+      "summary": "`AI!` and `AI?` trigger focused Pi follow-up turns from editor comments; `AI.` supplies context without triggering a turn.",
       "activation": ["automatic", "user-command"],
       "compatibility": [
         "Interactive Pi",
