@@ -1002,7 +1002,6 @@ rules:
     type: command
     label: Package mutation
     action: block
-    enabled: false
     reason: package mutation blocked by active rule
     match:
       commandAny:
@@ -1399,7 +1398,6 @@ rules:
     type: command
     label: uv add/remove
     action: block
-    enabled: false
     reason: uv package mutation blocked by active rule
     match:
       command: uv
@@ -1410,7 +1408,6 @@ rules:
     type: command
     label: uv pip install
     action: block
-    enabled: false
     reason: uv pip install blocked by active rule
     match:
       command: uv
