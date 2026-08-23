@@ -3,7 +3,7 @@
   "entryId": "extension/handoff",
   "verifiedAgainst": {
     "type": "commit",
-    "value": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    "value": "d6b23a1d2fa2e8a53896916b23d85ede334e9066"
   },
   "reviewedBy": "Vedang Manerikar",
   "reviewedOn": "2026-08-22",
@@ -14,9 +14,9 @@
       "sourceLines": "95-113"
     },
     {
-      "claim": "Retrieves credentials for the selected model and rejects a failed lookup or missing API key.",
+      "claim": "Delegates generation to the host model registry with abort signaling, disabled cache retention, and a unique session ID.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "139-147"
+      "sourceLines": "152-160"
     },
     {
       "claim": "Preserves the latest compaction summary and retained branch entries for handoff context.",
@@ -26,12 +26,12 @@
     {
       "claim": "Sends serialized selected context and the requested goal to the configured model.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "124-179"
+      "sourceLines": "125-179"
     },
     {
       "claim": "Lets the user edit the generated prompt before opening a linked replacement session.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "192-220"
+      "sourceLines": "190-211"
     }
   ]
 }

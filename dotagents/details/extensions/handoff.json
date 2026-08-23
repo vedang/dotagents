@@ -46,7 +46,7 @@
   "setupNotes": [
     "Adopted from the MIT-licensed Pi example originally implemented by Mario Zechner; maintained here by Vedang.",
     "The installed source is the local handoff extension in Dotagents.",
-    "It requires an interactive Pi session, a selected model with credentials, and replacement-session UI support."
+    "It requires an interactive Pi session, a selected model available through Pi's model runtime, and replacement-session UI support."
   ],
   "commands": ["/handoff GOAL"]
 }
