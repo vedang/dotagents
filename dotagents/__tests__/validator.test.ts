@@ -446,6 +446,85 @@ describe("Dotagents catalog validator", () => {
     expectCatalogError(fixture.root, fixture.catalogPath, "path-not-found");
   });
 
+  test("rejects public artifact root symlinks before enumeration", () => {
+    const outsideRoot = mkdtempSync(join(tmpdir(), "dotagents-artifacts-"));
+    temporaryRoots.push(outsideRoot);
+
+    const outward = createFixtureProject();
+    const outwardDetails = join(outward.root, "dotagents", "details");
+    const outwardTarget = join(outsideRoot, "details");
+    cpSync(outwardDetails, outwardTarget, { recursive: true });
+    rmSync(outwardDetails, { recursive: true });
+    symlinkSync(outwardTarget, outwardDetails);
+    const outwardError = expectCatalogError(
+      outward.root,
+      outward.catalogPath,
+      "path-outside-root",
+    );
+    assert.equal(outwardError.context.path, "dotagents/details");
+
+    const inRoot = createFixtureProject();
+    const inRootEvidence = join(inRoot.root, "dotagents", "evidence");
+    const inRootTarget = join(inRoot.root, "internal", "evidence");
+    mkdirSync(dirname(inRootTarget), { recursive: true });
+    cpSync(inRootEvidence, inRootTarget, { recursive: true });
+    rmSync(inRootEvidence, { recursive: true });
+    symlinkSync(inRootTarget, inRootEvidence);
+    const inRootError = expectCatalogError(
+      inRoot.root,
+      inRoot.catalogPath,
+      "symlink-path",
+    );
+    assert.equal(inRootError.context.path, "dotagents/evidence");
+  });
+
+  test("rejects empty and dangling public artifact root symlinks", () => {
+    const cases = [
+      {
+        section: "details",
+        target: "outside-empty",
+        code: "path-outside-root",
+      },
+      { section: "evidence", target: "inside-empty", code: "symlink-path" },
+      { section: "details", target: "dangling", code: "path-not-found" },
+    ] as const;
+
+    for (const { section, target, code } of cases) {
+      const fixture = createFixtureProject();
+      mutateCatalog(fixture.catalogPath, (catalog) => {
+        catalog.entries[0].publication = "listed";
+        catalog.entries[0].limitation = "Fixture limitation.";
+        Reflect.deleteProperty(catalog.entries[0], "detailPath");
+        Reflect.deleteProperty(catalog.entries[0], "evidencePath");
+      });
+      rmSync(join(fixture.root, "dotagents", "details"), {
+        recursive: true,
+      });
+      rmSync(join(fixture.root, "dotagents", "evidence"), {
+        recursive: true,
+      });
+
+      const sectionPath = join(fixture.root, "dotagents", section);
+      let targetPath: string;
+      if (target === "outside-empty") {
+        const outsideRoot = mkdtempSync(
+          join(tmpdir(), "dotagents-empty-artifacts-"),
+        );
+        temporaryRoots.push(outsideRoot);
+        targetPath = outsideRoot;
+      } else {
+        targetPath = join(fixture.root, "internal", target);
+        if (target === "inside-empty") {
+          mkdirSync(targetPath, { recursive: true });
+        }
+      }
+      symlinkSync(targetPath, sectionPath);
+
+      const error = expectCatalogError(fixture.root, fixture.catalogPath, code);
+      assert.equal(error.context.path, `dotagents/${section}`);
+    }
+  });
+
   test("rejects in-root symlinks crossing detail and evidence sections", () => {
     const detail = createFixtureProject();
     const detailPath = join(

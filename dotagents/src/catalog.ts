@@ -1124,7 +1124,11 @@ function assertNoOrphans(
   artifact: "detail" | "evidence",
   state: ValidationState,
 ): void {
-  for (const path of listFiles(directory)) {
+  for (const path of listRepositoryFiles(
+    directory,
+    `${artifact} artifact root`,
+    state,
+  )) {
     const repositoryPath = repositoryRelativePath(path, state);
     if (!path.endsWith(".json")) {
       throw catalogError(
@@ -1399,8 +1403,16 @@ function assertNoPrivatePublicContent(state: ValidationState): void {
     ]
       .map((name) => join(dotagentsRoot, name))
       .filter((path) => path !== state.catalogFilePath && existsSync(path)),
-    ...listFiles(join(dotagentsRoot, "details")),
-    ...listFiles(join(dotagentsRoot, "evidence")),
+    ...listRepositoryFiles(
+      join(dotagentsRoot, "details"),
+      "detail artifact root",
+      state,
+    ),
+    ...listRepositoryFiles(
+      join(dotagentsRoot, "evidence"),
+      "evidence artifact root",
+      state,
+    ),
   ];
 
   for (const path of paths) {
@@ -1425,11 +1437,19 @@ function assertNoPrivatePublicContent(state: ValidationState): void {
   }
 }
 
-function listFiles(directory: string): string[] {
-  if (!existsSync(directory)) {
+function listRepositoryFiles(
+  directory: string,
+  artifact: string,
+  state: ValidationState,
+): string[] {
+  if (!lstatSync(directory, { throwIfNoEntry: false })) {
     return [];
   }
+  assertRepositoryDirectory(directory, artifact, state);
+  return listFiles(directory);
+}
 
+function listFiles(directory: string): string[] {
   const paths: string[] = [];
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name);
