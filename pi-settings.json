@@ -42,6 +42,7 @@
     "git:github.com/vedang/pi-adr",
     "git:github.com/vedang/pi-boomerang",
     "git:github.com/vedang/pi-btw",
+    "git:github.com/vedang/pi-exa",
     "git:github.com/vedang/pi-prompt-history",
     "git:github.com/vedang/pi-quizme",
     "git:github.com/vedang/pi-ralph-loop",
@@ -60,16 +61,12 @@
       "scout": {
         "model": "openai-codex/gpt-5.6-luna",
         "thinking": "minimal",
-        "fallbackModels": [
-          "deepseek/deepseek-v4-pro:low"
-        ]
+        "fallbackModels": ["deepseek/deepseek-v4-pro:low"]
       },
       "worker": {
         "model": "openai-codex/gpt-5.6-terra",
         "thinking": "xhigh",
-        "fallbackModels": [
-          "deepseek/deepseek-v4-pro:high"
-        ]
+        "fallbackModels": ["deepseek/deepseek-v4-pro:high"]
       },
       "reviewer": {
         "model": "openai-codex/gpt-5.6-sol",
