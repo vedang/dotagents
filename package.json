@@ -14,7 +14,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@mariozechner/pi-ai": "^0.57.1",
+    "@earendil-works/pi-agent-core": "^0.84.2",
+    "@earendil-works/pi-ai": "^0.84.2",
+    "@earendil-works/pi-coding-agent": "^0.84.2",
     "@mariozechner/pi-coding-agent": "^0.57.1",
     "@types/node": "^24.12.0",
     "ajv": "^8.18.0",

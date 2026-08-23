@@ -3,14 +3,21 @@
 // endpoint port + token from Wel's data dir at runtime; if Wel is not running
 // (files missing) every call simply no-ops. Never throws into Pi.
 import { readFileSync } from "node:fs";
+import type {
+  ExtensionAPI,
+  ExtensionContext,
+} from "@earendil-works/pi-coding-agent";
 
 const ENDPOINT_FILE = "/Users/nejo/Library/Application Support/Wel/ai-endpoint";
 const TOKEN_FILE = "/Users/nejo/Library/Application Support/Wel/ai-token";
 
-export default function (pi) {
-  let welSession = null; // Wel session id for this Pi process, or null
+export default function (pi: ExtensionAPI) {
+  let welSession: string | null = null; // Wel session id for this Pi process, or null
 
-  async function post(path, body) {
+  async function post(
+    path: string,
+    body: Record<string, string>,
+  ): Promise<Record<string, unknown> | null> {
     try {
       const port = readFileSync(ENDPOINT_FILE, "utf8").trim();
       const token = readFileSync(TOKEN_FILE, "utf8").trim();
@@ -25,35 +32,35 @@ export default function (pi) {
         signal: AbortSignal.timeout(3000),
       });
       if (!res.ok) return null;
-      return await res.json().catch(() => ({}));
+      const data: unknown = await res.json().catch(() => ({}));
+      return typeof data === "object" && data !== null && !Array.isArray(data)
+        ? (data as Record<string, unknown>)
+        : {};
     } catch {
       return null;
     }
   }
 
-  function projectFrom(ctx) {
-    return (
-      String((ctx && ctx.cwd) || "")
-        .split("/")
-        .filter(Boolean)
-        .pop() || "pi"
-    );
+  function projectFrom(ctx: ExtensionContext) {
+    return ctx.cwd.split("/").filter(Boolean).pop() || "pi";
   }
 
-  async function start(ctx) {
+  async function start(ctx: ExtensionContext) {
     if (welSession) return;
     const res = await post("/ai/session/start", {
       tool: "pi",
       description: projectFrom(ctx),
     });
-    if (res && res.session_id) welSession = res.session_id;
+    if (typeof res?.session_id === "string") welSession = res.session_id;
   }
 
   // Accrue to the live Wel session; if it was swept closed during a long idle
   // gap the heartbeat is rejected (non-2xx -> null), so drop it and start fresh.
-  async function heartbeat(ctx) {
+  async function heartbeat(ctx: ExtensionContext) {
     if (welSession) {
-      const ok = await post("/ai/session/heartbeat", { session_id: welSession });
+      const ok = await post("/ai/session/heartbeat", {
+        session_id: welSession,
+      });
       if (ok) return;
       welSession = null;
     }
