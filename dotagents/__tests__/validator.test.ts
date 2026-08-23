@@ -875,6 +875,29 @@ describe("Dotagents catalog validator", () => {
     }
   });
 
+  test("rejects backslashes in repository evidence paths", () => {
+    const fixture = createFixtureProject();
+    const ambiguousSourcePath = "pi-extensions\\private.ts";
+    writeFileSync(
+      join(fixture.root, ambiguousSourcePath),
+      "export const privateState = true;\n",
+    );
+    const evidencePath = join(
+      fixture.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const evidence = readJson<{
+      claims: Array<{ sourcePath: string; sourceLines: string }>;
+    }>(evidencePath);
+    evidence.claims[0].sourcePath = ambiguousSourcePath;
+    writeJson(evidencePath, evidence);
+
+    expectCatalogError(fixture.root, fixture.catalogPath, "unsafe-path");
+  });
+
   test("rejects private local files as public evidence", () => {
     const fixture = createFixtureProject();
     const privateSource = join(fixture.root, ".pi", "private.ts");

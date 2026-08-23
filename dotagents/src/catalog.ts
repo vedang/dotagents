@@ -815,13 +815,14 @@ function assertSafeRelativePath(
   const segments = path.split(/[\\/]+/);
   if (
     path.includes("\0") ||
+    path.includes("\\") ||
     isAbsolute(path) ||
     win32.isAbsolute(path) ||
     segments.includes("..")
   ) {
     throw catalogError(
       "unsafe-path",
-      `${artifact} must be a non-traversing repository-relative path: ${path}`,
+      `${artifact} must be a slash-separated, non-traversing repository-relative path: ${path}`,
       state.catalogPath,
       { artifact, path, ...(identity ? { identity } : {}) },
     );
