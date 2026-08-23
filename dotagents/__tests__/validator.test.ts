@@ -1020,6 +1020,38 @@ describe("Dotagents catalog validator", () => {
     }
   });
 
+  test("rejects decoy projects that spoof package inventory revisions", () => {
+    const locator = "git:github.com/example/handoff";
+    const fixture = createFixtureProject();
+    configureGitPackage(fixture, locator);
+
+    mutateCatalog(fixture.catalogPath, (catalog) => {
+      const publicProject = catalog.projects[0];
+      publicProject.reviewedRevision = otherRevision;
+      const decoyProject = structuredClone(publicProject);
+      decoyProject.id = "project/decoy";
+      decoyProject.reviewedRevision = fixtureRevision;
+      catalog.projects.unshift(decoyProject);
+    });
+
+    const evidencePath = join(
+      fixture.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const evidence = readJson<{
+      verifiedAgainst: { value: string };
+      claims: Array<{ sourceUrl: string }>;
+    }>(evidencePath);
+    evidence.verifiedAgainst.value = otherRevision;
+    evidence.claims[0].sourceUrl = `https://github.com/example/handoff/blob/${otherRevision}/src/index.ts#L10-L20`;
+    writeJson(evidencePath, evidence);
+
+    expectCatalogError(fixture.root, fixture.catalogPath, "orphan-project");
+  });
+
   test("rejects duplicate public source identities", () => {
     const local = createFixtureProject();
     mutateCatalog(local.catalogPath, (catalog) => {

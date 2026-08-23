@@ -334,7 +334,7 @@ export function validateCatalog(
   );
 
   const discovered = discoverCandidates(state);
-  assertProjectEntrySources(
+  const packageProjectsByLocator = assertProjectEntrySources(
     catalog.entries,
     projects,
     discovered.packageLocators,
@@ -342,7 +342,7 @@ export function validateCatalog(
   );
   assertCoverage(
     catalog.entries,
-    catalog.projects,
+    packageProjectsByLocator,
     discovered.candidates,
     state,
   );
@@ -731,9 +731,10 @@ function assertProjectEntrySources(
   projects: ReadonlyMap<string, Project>,
   packageLocators: ReadonlySet<string>,
   state: ValidationState,
-): void {
+): ReadonlyMap<string, Project> {
   const entriesByProject = new Map<string, Entry[]>();
   const projectByPackageLocator = new Map<string, string>();
+  const packageProjectsByLocator = new Map<string, Project>();
   for (const entry of entries) {
     const projectEntries = entriesByProject.get(entry.projectId) ?? [];
     projectEntries.push(entry);
@@ -754,6 +755,17 @@ function assertProjectEntrySources(
     }
     if (locator) {
       projectByPackageLocator.set(locator, entry.projectId);
+    }
+  }
+
+  for (const projectId of projects.keys()) {
+    if (!entriesByProject.has(projectId)) {
+      throw catalogError(
+        "orphan-project",
+        `project has no public catalog entry: ${projectId}`,
+        state.catalogPath,
+        { projectId },
+      );
     }
   }
 
@@ -815,7 +827,10 @@ function assertProjectEntrySources(
         { projectId, locator },
       );
     }
+    packageProjectsByLocator.set(locator, project);
   }
+
+  return packageProjectsByLocator;
 }
 
 function pathHasPrefix(path: string, prefix: string): boolean {
@@ -1484,7 +1499,7 @@ function readPackageLocators(state: ValidationState): ReadonlySet<string> {
 
 function assertCoverage(
   entries: Entry[],
-  projects: Project[],
+  packageProjectsByLocator: ReadonlyMap<string, Project>,
   candidates: Candidate[],
   state: ValidationState,
 ): void {
@@ -1502,7 +1517,7 @@ function assertCoverage(
   );
   const packageSurfaces = indexPackageSurfaces(
     coverage.packageSurfaces,
-    projects,
+    packageProjectsByLocator,
     packageLocators,
     state,
   );
@@ -1632,7 +1647,7 @@ function assertCoverage(
 
 function indexPackageSurfaces(
   inventories: PackageSurfaceInventory[],
-  projects: Project[],
+  packageProjectsByLocator: ReadonlyMap<string, Project>,
   packageLocators: ReadonlySet<string>,
   state: ValidationState,
 ): ReadonlyMap<string, PackageSurfaceInventory> {
@@ -1655,9 +1670,7 @@ function indexPackageSurfaces(
       );
     }
 
-    const project = projects.find(
-      ({ installedLocator }) => installedLocator === inventory.locator,
-    );
+    const project = packageProjectsByLocator.get(inventory.locator);
     if (!project) {
       throw catalogError(
         "package-surface-inventory-unknown",
