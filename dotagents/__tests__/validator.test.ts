@@ -383,6 +383,69 @@ describe("Dotagents catalog validator", () => {
     expectCatalogError(license.root, license.catalogPath, "symlink-path");
   });
 
+  test("rejects symlinked package and discovery authority inputs", () => {
+    const outsideRoot = mkdtempSync(join(tmpdir(), "dotagents-authority-"));
+    temporaryRoots.push(outsideRoot);
+    const outsideSettings = join(outsideRoot, "pi-settings.json");
+    writeJson(outsideSettings, { packages: [] });
+
+    const outwardSettings = createFixtureProject();
+    const outwardSettingsPath = join(outwardSettings.root, "pi-settings.json");
+    unlinkSync(outwardSettingsPath);
+    symlinkSync(outsideSettings, outwardSettingsPath);
+    expectCatalogError(
+      outwardSettings.root,
+      outwardSettings.catalogPath,
+      "path-outside-root",
+    );
+
+    const inRootSettings = createFixtureProject();
+    const inRootSettingsPath = join(inRootSettings.root, "pi-settings.json");
+    const inRootSettingsTarget = join(
+      inRootSettings.root,
+      "internal",
+      "pi-settings.json",
+    );
+    writeJson(inRootSettingsTarget, { packages: [] });
+    unlinkSync(inRootSettingsPath);
+    symlinkSync(inRootSettingsTarget, inRootSettingsPath);
+    expectCatalogError(
+      inRootSettings.root,
+      inRootSettings.catalogPath,
+      "symlink-path",
+    );
+
+    const outwardDiscovery = createFixtureProject();
+    const outsidePrompts = join(outsideRoot, "prompts");
+    mkdirSync(outsidePrompts);
+    symlinkSync(outsidePrompts, join(outwardDiscovery.root, "prompts"));
+    expectCatalogError(
+      outwardDiscovery.root,
+      outwardDiscovery.catalogPath,
+      "path-outside-root",
+    );
+
+    const inRootDiscovery = createFixtureProject();
+    const inRootSkillsTarget = join(inRootDiscovery.root, "internal", "skills");
+    mkdirSync(inRootSkillsTarget, { recursive: true });
+    symlinkSync(inRootSkillsTarget, join(inRootDiscovery.root, "skills"));
+    expectCatalogError(
+      inRootDiscovery.root,
+      inRootDiscovery.catalogPath,
+      "symlink-path",
+    );
+  });
+
+  test("rejects dangling discovery authority links", () => {
+    const fixture = createFixtureProject();
+    symlinkSync(
+      join(fixture.root, "missing-prompts"),
+      join(fixture.root, "prompts"),
+    );
+
+    expectCatalogError(fixture.root, fixture.catalogPath, "path-not-found");
+  });
+
   test("rejects in-root symlinks crossing detail and evidence sections", () => {
     const detail = createFixtureProject();
     const detailPath = join(

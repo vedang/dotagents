@@ -874,6 +874,49 @@ function assertExistingFile(
   return canonicalPath;
 }
 
+function assertRepositoryDirectory(
+  directory: string,
+  artifact: string,
+  state: ValidationState,
+): void {
+  const lexicalPath = resolve(directory);
+  let canonicalPath: string;
+  try {
+    canonicalPath = realpathSync(lexicalPath);
+  } catch (error) {
+    throw catalogError(
+      "path-not-found",
+      `${artifact} directory cannot be resolved: ${directory}`,
+      state.catalogPath,
+      { artifact, path: repositoryRelativePath(directory, state) },
+      error,
+    );
+  }
+
+  if (!isWithin(state.root, canonicalPath)) {
+    throw catalogError(
+      "path-outside-root",
+      `${artifact} directory resolves outside repository root: ${directory}`,
+      state.catalogPath,
+      {
+        artifact,
+        path: repositoryRelativePath(directory, state),
+        resolvedPath: canonicalPath,
+      },
+    );
+  }
+  if (!lstatSync(canonicalPath).isDirectory()) {
+    throw catalogError(
+      "path-not-directory",
+      `${artifact} path is not a directory: ${directory}`,
+      state.catalogPath,
+      { artifact, path: repositoryRelativePath(directory, state) },
+    );
+  }
+
+  assertNoSymlinkComponents(lexicalPath, artifact, state);
+}
+
 function assertNoSymlinkComponents(
   path: string,
   artifact: string,
@@ -1118,9 +1161,10 @@ function discoverTopLevelFiles(
   include: (name: string) => boolean,
   state: ValidationState,
 ): Candidate[] {
-  if (!existsSync(directory)) {
+  if (!lstatSync(directory, { throwIfNoEntry: false })) {
     return [];
   }
+  assertRepositoryDirectory(directory, "discovery root", state);
 
   const candidates: Candidate[] = [];
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
@@ -1138,9 +1182,10 @@ function discoverSkillFiles(
   directory: string,
   state: ValidationState,
 ): Candidate[] {
-  if (!existsSync(directory)) {
+  if (!lstatSync(directory, { throwIfNoEntry: false })) {
     return [];
   }
+  assertRepositoryDirectory(directory, "discovery root", state);
 
   const candidates: Candidate[] = [];
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
@@ -1177,7 +1222,11 @@ function repositoryRelativePath(path: string, state: ValidationState): string {
 }
 
 function readPackageLocators(state: ValidationState): ReadonlySet<string> {
-  const settingsPath = join(state.root, "pi-settings.json");
+  const settingsPath = assertRepositoryFile(
+    "pi-settings.json",
+    "package config",
+    state,
+  );
   let settings: unknown;
   try {
     settings = JSON.parse(readFileSync(settingsPath, "utf8"));
