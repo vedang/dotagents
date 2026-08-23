@@ -351,6 +351,71 @@ describe("Dotagents catalog validator", () => {
     expectCatalogError(chained.root, chained.catalogPath, "path-outside-root");
   });
 
+  test("rejects in-root symlinks crossing source and license scope", () => {
+    const source = createFixtureProject();
+    const sourcePath = join(source.root, "pi-extensions", "handoff.ts");
+    const internalSource = join(source.root, "internal", "handoff.ts");
+    mkdirSync(dirname(internalSource), { recursive: true });
+    writeFileSync(internalSource, "export const internal = true;\n");
+    unlinkSync(sourcePath);
+    symlinkSync(internalSource, sourcePath);
+    expectCatalogError(source.root, source.catalogPath, "symlink-path");
+
+    const license = createFixtureProject();
+    const licensePath = join(license.root, "LICENSE.txt");
+    const internalLicense = join(license.root, "internal", "LICENSE.txt");
+    mkdirSync(dirname(internalLicense), { recursive: true });
+    writeFileSync(internalLicense, "Internal terms.\n");
+    unlinkSync(licensePath);
+    symlinkSync(internalLicense, licensePath);
+    expectCatalogError(license.root, license.catalogPath, "symlink-path");
+  });
+
+  test("rejects in-root symlinks crossing detail and evidence sections", () => {
+    const detail = createFixtureProject();
+    const detailPath = join(
+      detail.root,
+      "dotagents",
+      "details",
+      "extensions",
+      "handoff.json",
+    );
+    const detailTarget = join(
+      detail.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff-detail.data",
+    );
+    writeJson(detailTarget, readJson(detailPath));
+    unlinkSync(detailPath);
+    symlinkSync(detailTarget, detailPath);
+    expectCatalogError(detail.root, detail.catalogPath, "symlink-path");
+
+    const evidence = createFixtureProject();
+    const evidencePath = join(
+      evidence.root,
+      "dotagents",
+      "evidence",
+      "extensions",
+      "handoff.json",
+    );
+    const evidenceTarget = join(
+      evidence.root,
+      "dotagents",
+      "details",
+      "extensions",
+      "handoff-evidence.data",
+    );
+    writeJson(
+      evidenceTarget,
+      readJson(join(fixturesRoot, "valid-evidence.json")),
+    );
+    unlinkSync(evidencePath);
+    symlinkSync(evidenceTarget, evidencePath);
+    expectCatalogError(evidence.root, evidence.catalogPath, "symlink-path");
+  });
+
   test("rejects missing and orphan featured detail or evidence files", () => {
     const missingDetail = createFixtureProject();
     rmSync(

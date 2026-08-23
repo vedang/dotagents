@@ -861,7 +861,41 @@ function assertExistingFile(
       { artifact, path, ...(identity ? { identity } : {}) },
     );
   }
+
+  const lexicalPath = resolve(path);
+  if (
+    isWithin(state.root, lexicalPath) &&
+    isWithin(state.root, canonicalPath)
+  ) {
+    assertNoSymlinkComponents(lexicalPath, artifact, state, identity);
+  }
   return canonicalPath;
+}
+
+function assertNoSymlinkComponents(
+  path: string,
+  artifact: string,
+  state: ValidationState,
+  identity?: string,
+): void {
+  let currentPath = state.root;
+  for (const segment of relative(state.root, path).split(sep).filter(Boolean)) {
+    currentPath = join(currentPath, segment);
+    if (lstatSync(currentPath).isSymbolicLink()) {
+      const repositoryPath = repositoryRelativePath(path, state);
+      throw catalogError(
+        "symlink-path",
+        `${artifact} path must not contain symbolic links: ${repositoryPath}`,
+        state.catalogPath,
+        {
+          artifact,
+          path: repositoryPath,
+          symlink: repositoryRelativePath(currentPath, state),
+          ...(identity ? { identity } : {}),
+        },
+      );
+    }
+  }
 }
 
 function assertDetailContent(
