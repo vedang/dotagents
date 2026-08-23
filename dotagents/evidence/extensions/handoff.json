@@ -3,7 +3,7 @@
   "entryId": "extension/handoff",
   "verifiedAgainst": {
     "type": "commit",
-    "value": "d6b23a1d2fa2e8a53896916b23d85ede334e9066"
+    "value": "c62070608e339560fb676f939fe38b74a42bdc9f"
   },
   "reviewedBy": "Vedang Manerikar",
   "reviewedOn": "2026-08-22",
@@ -11,37 +11,32 @@
     {
       "claim": "Registers the handoff command and validates interactive UI, selected model, and goal input.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "95-113"
+      "sourceLines": "47-65"
+    },
+    {
+      "claim": "Uses Pi's host context selection and session-entry conversion to build the model-visible handoff context.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "67-71"
+    },
+    {
+      "claim": "Serializes the host-selected context and sends it with the requested goal to the configured model.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "78-113"
     },
     {
       "claim": "Delegates generation to the host model registry with abort signaling, disabled cache retention, and a unique session ID.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "152-160"
-    },
-    {
-      "claim": "After the latest compaction, preserves its summary and retained branch entries for handoff context.",
-      "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "64-93"
-    },
-    {
-      "claim": "With no compaction, preserves every branch entry convertible to a model message for handoff context.",
-      "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "64-75"
-    },
-    {
-      "claim": "Serializes the resulting branch context and sends it with the requested goal to the configured model.",
-      "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "118-160"
+      "sourceLines": "105-113"
     },
     {
       "claim": "Reads the current session file for optional parent tracking.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "125-128"
+      "sourceLines": "81"
     },
     {
       "claim": "Lets the user edit the generated prompt before opening a replacement session and passes the captured session-file value as the parent-session option.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "190-211"
+      "sourceLines": "143-160"
     }
   ]
 }

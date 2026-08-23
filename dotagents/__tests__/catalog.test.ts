@@ -303,6 +303,81 @@ describe("Dotagents JSON schemas", () => {
     });
   });
 
+  test("keep the approved Handoff context contract pinned exactly", () => {
+    const approvedRevision = "c62070608e339560fb676f939fe38b74a42bdc9f";
+    const catalog = readJson(join(dotagentsRoot, "catalog.json")) as {
+      projects: Array<{ id: string; reviewedRevision?: string }>;
+    };
+    const detail = readJson(
+      join(dotagentsRoot, "details", "extensions", "handoff.json"),
+    ) as {
+      whatItDoes: string[];
+      questions: Array<{ answer: string[] }>;
+    };
+    const evidence = readJson(
+      join(dotagentsRoot, "evidence", "extensions", "handoff.json"),
+    ) as {
+      claims: Array<{
+        claim: string;
+        sourceLines?: string;
+        sourcePath?: string;
+      }>;
+      verifiedAgainst: { value: string };
+    };
+
+    assert.equal(
+      catalog.projects.find(({ id }) => id === "project/handoff")
+        ?.reviewedRevision,
+      approvedRevision,
+    );
+    assert.equal(evidence.verifiedAgainst.value, approvedRevision);
+    assert.equal(
+      detail.whatItDoes[1],
+      "Before generation, it asks Pi for the current model context and converts the selected entries through Pi's host context pipeline. It does not transfer live process state.",
+    );
+    assert.equal(
+      detail.questions[0]?.answer[0],
+      "Review the model-generated draft before continuing: its output is intentionally selective. Handoff asks Pi for the current model context, converts the selected entries through Pi's host context pipeline, and sends the serialized result to the configured model. It does not transfer live process state.",
+    );
+    assert.deepEqual(evidence.claims, [
+      {
+        claim:
+          "Registers the handoff command and validates interactive UI, selected model, and goal input.",
+        sourcePath: "pi-extensions/handoff.ts",
+        sourceLines: "47-65",
+      },
+      {
+        claim:
+          "Uses Pi's host context selection and session-entry conversion to build the model-visible handoff context.",
+        sourcePath: "pi-extensions/handoff.ts",
+        sourceLines: "67-71",
+      },
+      {
+        claim:
+          "Serializes the host-selected context and sends it with the requested goal to the configured model.",
+        sourcePath: "pi-extensions/handoff.ts",
+        sourceLines: "78-113",
+      },
+      {
+        claim:
+          "Delegates generation to the host model registry with abort signaling, disabled cache retention, and a unique session ID.",
+        sourcePath: "pi-extensions/handoff.ts",
+        sourceLines: "105-113",
+      },
+      {
+        claim: "Reads the current session file for optional parent tracking.",
+        sourcePath: "pi-extensions/handoff.ts",
+        sourceLines: "81",
+      },
+      {
+        claim:
+          "Lets the user edit the generated prompt before opening a replacement session and passes the captured session-file value as the parent-session option.",
+        sourcePath: "pi-extensions/handoff.ts",
+        sourceLines: "143-160",
+      },
+    ]);
+  });
+
   test("keep details structured as plain strings and arrays", () => {
     const validate = compileSchema("detail.schema.json");
     assertInvalid(

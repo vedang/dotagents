@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "whatItDoes": [
     "The handoff command turns useful conversation context into an editable prompt and opens a fresh session. When session persistence is enabled, the replacement links back to the current session.",
-    "Before generation, it sends every convertible message from an un-compacted branch; after compaction, it sends the latest summary and retained entries instead. It does not transfer live process state."
+    "Before generation, it asks Pi for the current model context and converts the selected entries through Pi's host context pipeline. It does not transfer live process state."
   ],
   "whenToReachForIt": {
     "invocation": "Type /handoff followed by the next session goal.",
@@ -35,7 +35,7 @@
     {
       "question": "What should I review before continuing?",
       "answer": [
-        "Review the model-generated draft before continuing. Handoff sends every convertible message from an un-compacted branch to the configured model; after compaction, it sends the latest summary and retained entries. It does not transfer live process state."
+        "Review the model-generated draft before continuing: its output is intentionally selective. Handoff asks Pi for the current model context, converts the selected entries through Pi's host context pipeline, and sends the serialized result to the configured model. It does not transfer live process state."
       ]
     }
   ],
