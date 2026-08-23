@@ -956,6 +956,11 @@ describe("Dotagents catalog validator", () => {
       ["whatItDoes", "<!DOCTYPE html>"],
       ["whatItDoes", "    const hidden = true;"],
       ["whatItDoes", "Hidden setext heading\n====================="],
+      ["whatItDoes", ">quoted without a separating space"],
+      ["whatItDoes", "| Name | Status |\n| --- | --- |"],
+      ["whatItDoes", "[note]: /internal"],
+      ["whatItDoes", '<?xml version="1.0"?>'],
+      ["whatItDoes", "<![CDATA[hidden markup]]>"],
       ["whatItDoes", "Read example.com/private."],
       ["commands", "<script>alert('unsafe')</script>"],
     ];
