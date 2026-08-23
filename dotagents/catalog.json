@@ -356,7 +356,7 @@
       "delivery": "git-package",
       "source": {
         "locator": "git:github.com/nicobailon/pi-subagents",
-        "path": "src/extension/index.ts"
+        "path": "index.ts"
       },
       "summary": "Adds controlled subagent delegation, scripted multi-agent workflows, background execution, and recovery surfaces to Pi.",
       "activation": ["model-invoked", "tool", "user-command"],
@@ -381,7 +381,7 @@
         "locator": "git:github.com/vedang/visual-explainer",
         "path": "plugins/visual-explainer/extension.ts"
       },
-      "summary": "Plans and writes self-contained HTML visual explanations for architecture, changes, plans, data, and technical concepts.",
+      "summary": "Adds a sequential prepare-and-render tool that guides visual explanation planning, validates complete HTML documents, and writes them inside a fixed diagrams directory.",
       "activation": ["model-invoked", "tool"],
       "compatibility": [
         "Pi package APIs",

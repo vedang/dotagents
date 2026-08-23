@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "whatItDoes": [
-    "Visual Explainer plans and writes self-contained HTML explanations for architecture, changes, plans, data, and technical concepts.",
+    "Visual Explainer registers a sequential prepare-and-render tool that guides visual explanation planning and writes supplied complete HTML documents.",
     "Its workflow separates preparation from rendering and requires a complete HTML document before writing output."
   ],
   "whenToReachForIt": {
@@ -13,7 +13,7 @@
       },
       {
         "when": "A plan or diff needs a reviewable visual recap",
-        "use": "Turn the relevant evidence into a self-contained artifact."
+        "use": "Turn the relevant evidence into a complete HTML artifact."
       },
       {
         "when": "Data or technical concepts need an audience-specific explanation",
@@ -45,7 +45,7 @@
   ],
   "workingIf": [
     "Preparation returns a bounded explanation plan before rendering.",
-    "Rendering writes one complete self-contained HTML document inside the diagrams directory."
+    "Rendering writes one complete HTML document inside the diagrams directory."
   ],
   "setupNotes": [
     "Created by Nico Bailon; Vedang maintains the installed MIT-licensed fork and its visual-learning additions.",

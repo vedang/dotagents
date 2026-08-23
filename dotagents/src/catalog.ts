@@ -93,20 +93,34 @@ type Entry = {
   evidencePath?: string;
 };
 
+type PackageSurface = {
+  kind: EntryKind;
+  path: string;
+};
+
+type PackageSurfaceInventory = {
+  locator: string;
+  reviewedRevision: string;
+  surfaces: PackageSurface[];
+};
+
 type Exclusion = {
   kind: CandidateKind;
   source: string;
+  surfacePath?: string;
   reason: string;
 };
 
 type Coverage = {
   schemaVersion: 1;
+  packageSurfaces: PackageSurfaceInventory[];
   excluded: Exclusion[];
 };
 
 type Candidate = {
   kind: CandidateKind;
   source: string;
+  surfacePath?: string;
 };
 
 type DiscoveredCandidates = {
@@ -320,7 +334,12 @@ export function validateCatalog(
     discovered.packageLocators,
     state,
   );
-  assertCoverage(catalog.entries, discovered.candidates, state);
+  assertCoverage(
+    catalog.entries,
+    catalog.projects,
+    discovered.candidates,
+    state,
+  );
 
   return { catalog, details, evidence };
 }
@@ -682,16 +701,6 @@ function assertProjectEntrySources(
       throw catalogError(
         "mixed-project-source",
         `${projectId} package surfaces use different source locators`,
-        state.catalogPath,
-        { projectId },
-      );
-    }
-
-    const kinds = new Set(projectEntries.map((entry) => entry.kind));
-    if (kinds.size !== projectEntries.length) {
-      throw catalogError(
-        "duplicate-project-surface",
-        `${projectId} repeats a package surface kind`,
         state.catalogPath,
         { projectId },
       );
@@ -1292,6 +1301,7 @@ function readPackageLocators(state: ValidationState): ReadonlySet<string> {
 
 function assertCoverage(
   entries: Entry[],
+  projects: Project[],
   candidates: Candidate[],
   state: ValidationState,
 ): void {
@@ -1302,22 +1312,66 @@ function assertCoverage(
     "coverage",
     state,
   );
+  const packageLocators = new Set(
+    candidates
+      .filter((candidate) => candidate.kind === "package")
+      .map((candidate) => candidate.source),
+  );
+  const packageSurfaces = indexPackageSurfaces(
+    coverage.packageSurfaces,
+    projects,
+    packageLocators,
+    state,
+  );
+  const expandedCandidates = candidates.flatMap((candidate) => {
+    const inventory =
+      candidate.kind === "package"
+        ? packageSurfaces.get(candidate.source)
+        : undefined;
+    if (!inventory) {
+      return [candidate];
+    }
+    return inventory.surfaces.map((surface) => ({
+      kind: surface.kind,
+      source: inventory.locator,
+      surfacePath: surface.path,
+    }));
+  });
+
   const candidatesByKey = new Map<string, Candidate>();
-  for (const candidate of candidates) {
+  for (const candidate of expandedCandidates) {
     const key = candidateKey(candidate);
     if (candidatesByKey.has(key)) {
       throw catalogError(
         "discovery-duplicate",
         `discovery found candidate more than once: ${candidate.source}`,
         state.catalogPath,
-        { kind: candidate.kind, source: candidate.source },
+        candidateContext(candidate),
       );
     }
     candidatesByKey.set(key, candidate);
   }
 
-  const publicEntriesByCandidate = new Map<string, Entry[]>();
+  const publicEntriesByCandidate = new Map<string, Entry>();
   for (const entry of entries) {
+    if (entry.delivery !== "local-file") {
+      const locator = entry.source.locator ?? "";
+      if (!packageSurfaces.has(locator)) {
+        throw catalogError(
+          "package-surface-inventory-missing",
+          `${entry.id} package has no audited surface inventory: ${locator}`,
+          state.catalogPath,
+          { entryId: entry.id, locator },
+        );
+      }
+      assertSafePackageSurfacePath(
+        entry.source.path ?? "",
+        locator,
+        state,
+        entry.id,
+      );
+    }
+
     const candidate = candidateForEntry(entry);
     const key = candidateKey(candidate);
     if (!candidatesByKey.has(key)) {
@@ -1325,23 +1379,41 @@ function assertCoverage(
         "coverage-public-unknown",
         `${entry.id} source is outside discovery universe: ${candidate.source}`,
         state.catalogPath,
-        { entryId: entry.id, kind: candidate.kind, source: candidate.source },
+        { entryId: entry.id, ...candidateContext(candidate) },
       );
     }
-    const publicEntries = publicEntriesByCandidate.get(key) ?? [];
-    publicEntries.push(entry);
-    publicEntriesByCandidate.set(key, publicEntries);
+    const duplicate = publicEntriesByCandidate.get(key);
+    if (duplicate) {
+      throw catalogError(
+        "coverage-public-duplicate",
+        `${entry.id} duplicates public source identity from ${duplicate.id}`,
+        state.catalogPath,
+        {
+          entryId: entry.id,
+          duplicateEntryId: duplicate.id,
+          ...candidateContext(candidate),
+        },
+      );
+    }
+    publicEntriesByCandidate.set(key, entry);
   }
 
   const excludedKeys = new Set<string>();
   for (const exclusion of coverage.excluded) {
+    if (exclusion.surfacePath !== undefined) {
+      assertSafePackageSurfacePath(
+        exclusion.surfacePath,
+        exclusion.source,
+        state,
+      );
+    }
     const key = candidateKey(exclusion);
     if (!candidatesByKey.has(key)) {
       throw catalogError(
         "coverage-unknown-candidate",
         `coverage excludes undiscovered candidate: ${exclusion.source}`,
         state.catalogPath,
-        { kind: exclusion.kind, source: exclusion.source },
+        candidateContext(exclusion),
       );
     }
     if (excludedKeys.has(key)) {
@@ -1349,7 +1421,7 @@ function assertCoverage(
         "coverage-duplicate",
         `coverage excludes candidate more than once: ${exclusion.source}`,
         state.catalogPath,
-        { kind: exclusion.kind, source: exclusion.source },
+        candidateContext(exclusion),
       );
     }
     if (publicEntriesByCandidate.has(key)) {
@@ -1357,7 +1429,7 @@ function assertCoverage(
         "coverage-public-conflict",
         `coverage excludes public candidate: ${exclusion.source}`,
         state.catalogPath,
-        { kind: exclusion.kind, source: exclusion.source },
+        candidateContext(exclusion),
       );
     }
     excludedKeys.add(key);
@@ -1369,9 +1441,109 @@ function assertCoverage(
         "coverage-unclassified",
         `discovered candidate has no public entry or exclusion: ${candidate.source}`,
         state.catalogPath,
-        { kind: candidate.kind, source: candidate.source },
+        candidateContext(candidate),
       );
     }
+  }
+}
+
+function indexPackageSurfaces(
+  inventories: PackageSurfaceInventory[],
+  projects: Project[],
+  packageLocators: ReadonlySet<string>,
+  state: ValidationState,
+): ReadonlyMap<string, PackageSurfaceInventory> {
+  const byLocator = new Map<string, PackageSurfaceInventory>();
+  for (const inventory of inventories) {
+    if (byLocator.has(inventory.locator)) {
+      throw catalogError(
+        "package-surface-inventory-duplicate",
+        `package surface inventory repeats locator: ${inventory.locator}`,
+        state.catalogPath,
+        { locator: inventory.locator },
+      );
+    }
+    if (!packageLocators.has(inventory.locator)) {
+      throw catalogError(
+        "package-surface-inventory-unknown",
+        `package surface inventory locator is absent from pi-settings.json: ${inventory.locator}`,
+        state.catalogPath,
+        { locator: inventory.locator },
+      );
+    }
+
+    const project = projects.find(
+      ({ installedLocator }) => installedLocator === inventory.locator,
+    );
+    if (!project) {
+      throw catalogError(
+        "package-surface-inventory-unknown",
+        `package surface inventory has no public catalog project: ${inventory.locator}`,
+        state.catalogPath,
+        { locator: inventory.locator },
+      );
+    }
+    if (project.reviewedRevision !== inventory.reviewedRevision) {
+      throw catalogError(
+        "package-surface-revision-mismatch",
+        `package surface inventory revision differs from ${project.id}`,
+        state.catalogPath,
+        {
+          locator: inventory.locator,
+          projectId: project.id,
+          reviewedRevision: project.reviewedRevision,
+          inventoryRevision: inventory.reviewedRevision,
+        },
+      );
+    }
+
+    const surfaceKeys = new Set<string>();
+    for (const surface of inventory.surfaces) {
+      assertSafePackageSurfacePath(surface.path, inventory.locator, state);
+      const key = `${surface.kind}\0${surface.path}`;
+      if (surfaceKeys.has(key)) {
+        throw catalogError(
+          "package-surface-duplicate",
+          `package surface inventory repeats ${surface.kind}: ${surface.path}`,
+          state.catalogPath,
+          {
+            locator: inventory.locator,
+            kind: surface.kind,
+            path: surface.path,
+          },
+        );
+      }
+      surfaceKeys.add(key);
+    }
+
+    byLocator.set(inventory.locator, inventory);
+  }
+  return byLocator;
+}
+
+function assertSafePackageSurfacePath(
+  path: string,
+  locator: string,
+  state: ValidationState,
+  entryId?: string,
+): void {
+  const segments = path.split("/");
+  if (
+    path.includes("\0") ||
+    path.includes("\\") ||
+    isAbsolute(path) ||
+    win32.isAbsolute(path) ||
+    /^[A-Za-z]:/u.test(path) ||
+    segments.some(
+      (segment) => segment.length === 0 || segment === "." || segment === "..",
+    )
+  ) {
+    throw catalogError(
+      "package-surface-path-invalid",
+      `package surface must be a slash-separated, non-traversing relative path: ${path}`,
+      state.catalogPath,
+      { locator, path, ...(entryId ? { entryId } : {}) },
+    );
   }
 }
 
@@ -1382,11 +1554,27 @@ function candidateForEntry(entry: Entry): Candidate {
       source: normalizeCatalogPath(entry.source.path ?? ""),
     };
   }
-  return { kind: "package", source: entry.source.locator ?? "" };
+  return {
+    kind: entry.kind,
+    source: entry.source.locator ?? "",
+    surfacePath: entry.source.path ?? "",
+  };
 }
 
-function candidateKey(candidate: Pick<Candidate, "kind" | "source">): string {
-  return `${candidate.kind}\0${candidate.source}`;
+function candidateKey(
+  candidate: Pick<Candidate, "kind" | "source" | "surfacePath">,
+): string {
+  return `${candidate.kind}\0${candidate.source}\0${candidate.surfacePath ?? ""}`;
+}
+
+function candidateContext(
+  candidate: Pick<Candidate, "kind" | "source" | "surfacePath">,
+): Record<string, string> {
+  return {
+    kind: candidate.kind,
+    source: candidate.source,
+    ...(candidate.surfacePath ? { surfacePath: candidate.surfacePath } : {}),
+  };
 }
 
 function assertNoPrivatePublicContent(state: ValidationState): void {

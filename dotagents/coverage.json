@@ -1,6 +1,188 @@
 {
   "schemaVersion": 1,
+  "packageSurfaces": [
+    {
+      "locator": "git:github.com/nicobailon/pi-subagents",
+      "reviewedRevision": "b6161f661723a6c223d1bf46e4d883f703b44aca",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "index.ts"
+        },
+        {
+          "kind": "skill",
+          "path": "skills/pi-subagents/SKILL.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "prompts/gather-context-and-clarify.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "prompts/parallel-cleanup.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "prompts/parallel-research.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "prompts/parallel-review.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "prompts/review-loop.md"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/visual-explainer",
+      "reviewedRevision": "0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "plugins/visual-explainer/extension.ts"
+        },
+        {
+          "kind": "skill",
+          "path": "plugins/visual-explainer/SKILL.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "plugins/visual-explainer/commands/diff-review.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "plugins/visual-explainer/commands/fact-check.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "plugins/visual-explainer/commands/generate-slides.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "plugins/visual-explainer/commands/generate-visual-plan.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "plugins/visual-explainer/commands/generate-web-diagram.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "plugins/visual-explainer/commands/plan-review.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "plugins/visual-explainer/commands/project-recap.md"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-watcher",
+      "reviewedRevision": "501fa8054ede04afdbe5284c310118d6c871f0f6",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-ralph-loop",
+      "reviewedRevision": "49c6bde25385392d0999155708a141028d5d80f2",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        }
+      ]
+    }
+  ],
   "excluded": [
+    {
+      "kind": "skill",
+      "source": "git:github.com/nicobailon/pi-subagents",
+      "surfacePath": "skills/pi-subagents/SKILL.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/nicobailon/pi-subagents",
+      "surfacePath": "prompts/gather-context-and-clarify.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/nicobailon/pi-subagents",
+      "surfacePath": "prompts/parallel-cleanup.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/nicobailon/pi-subagents",
+      "surfacePath": "prompts/parallel-research.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/nicobailon/pi-subagents",
+      "surfacePath": "prompts/parallel-review.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/nicobailon/pi-subagents",
+      "surfacePath": "prompts/review-loop.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "git:github.com/vedang/visual-explainer",
+      "surfacePath": "plugins/visual-explainer/SKILL.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/visual-explainer",
+      "surfacePath": "plugins/visual-explainer/commands/diff-review.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/visual-explainer",
+      "surfacePath": "plugins/visual-explainer/commands/fact-check.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/visual-explainer",
+      "surfacePath": "plugins/visual-explainer/commands/generate-slides.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/visual-explainer",
+      "surfacePath": "plugins/visual-explainer/commands/generate-visual-plan.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/visual-explainer",
+      "surfacePath": "plugins/visual-explainer/commands/generate-web-diagram.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/visual-explainer",
+      "surfacePath": "plugins/visual-explainer/commands/plan-review.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/visual-explainer",
+      "surfacePath": "plugins/visual-explainer/commands/project-recap.md",
+      "reason": "Bundled package surface is not selected for the launch catalog."
+    },
     {
       "kind": "extension",
       "source": "pi-extensions/wel.ts",

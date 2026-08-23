@@ -42,9 +42,18 @@ type MutableCatalog = {
 
 type MutableCoverage = {
   schemaVersion: number;
+  packageSurfaces?: Array<{
+    locator: string;
+    reviewedRevision: string;
+    surfaces: Array<{
+      kind: "extension" | "skill" | "prompt";
+      path: string;
+    }>;
+  }>;
   excluded: Array<{
     kind: "extension" | "skill" | "prompt" | "package";
     source: string;
+    surfacePath?: string;
     reason: string;
   }>;
 };
@@ -140,7 +149,17 @@ function configureGitPackage(
       projectIds: ["project/handoff"],
     };
     catalog.entries[0].delivery = "git-package";
-    catalog.entries[0].source = { locator };
+    catalog.entries[0].source = { locator, path: "index.ts" };
+  });
+
+  mutateCoverage(fixture.root, (coverage) => {
+    coverage.packageSurfaces = [
+      {
+        locator,
+        reviewedRevision: fixtureRevision,
+        surfaces: [{ kind: "extension", path: "index.ts" }],
+      },
+    ];
   });
 
   const evidencePath = join(
@@ -704,6 +723,237 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
+  test("classifies every audited package surface independently", () => {
+    const locator = "git:github.com/example/handoff";
+    const unclassified = createFixtureProject();
+    configureGitPackage(unclassified, locator);
+    mutateCatalog(unclassified.catalogPath, (catalog) => {
+      catalog.entries[0].source.path = "index.ts";
+    });
+    mutateCoverage(unclassified.root, (coverage) => {
+      coverage.packageSurfaces = [
+        {
+          locator,
+          reviewedRevision: fixtureRevision,
+          surfaces: [
+            { kind: "extension", path: "index.ts" },
+            { kind: "skill", path: "skills/handoff/SKILL.md" },
+            { kind: "prompt", path: "prompts/handoff.md" },
+          ],
+        },
+      ];
+    });
+    expectCatalogError(
+      unclassified.root,
+      unclassified.catalogPath,
+      "coverage-unclassified",
+    );
+
+    const collapsed = createFixtureProject();
+    configureGitPackage(collapsed, locator);
+    mutateCoverage(collapsed.root, (coverage) => {
+      coverage.packageSurfaces?.[0].surfaces.push({
+        kind: "skill",
+        path: "skills/handoff/SKILL.md",
+      });
+      coverage.excluded.push({
+        kind: "package",
+        source: locator,
+        reason: "A locator-level exclusion cannot cover concrete surfaces.",
+      });
+    });
+    expectCatalogError(
+      collapsed.root,
+      collapsed.catalogPath,
+      "coverage-unknown-candidate",
+    );
+
+    const classified = createFixtureProject();
+    configureGitPackage(classified, locator);
+    mutateCatalog(classified.catalogPath, (catalog) => {
+      catalog.entries[0].source.path = "index.ts";
+    });
+    mutateCoverage(classified.root, (coverage) => {
+      coverage.packageSurfaces = [
+        {
+          locator,
+          reviewedRevision: fixtureRevision,
+          surfaces: [
+            { kind: "extension", path: "index.ts" },
+            { kind: "skill", path: "skills/handoff/SKILL.md" },
+            { kind: "prompt", path: "prompts/handoff.md" },
+          ],
+        },
+      ];
+      coverage.excluded.push(
+        {
+          kind: "skill",
+          source: locator,
+          surfacePath: "skills/handoff/SKILL.md",
+          reason: "Bundled package surface is not selected for publication.",
+        },
+        {
+          kind: "prompt",
+          source: locator,
+          surfacePath: "prompts/handoff.md",
+          reason: "Bundled package surface is not selected for publication.",
+        },
+      );
+    });
+    assert.equal(validateCatalog(classified).catalog.entries.length, 1);
+  });
+
+  test("binds package surface inventory to config, revision, and safe paths", () => {
+    const locator = "git:github.com/example/handoff";
+
+    const missingInventory = createFixtureProject();
+    configureGitPackage(missingInventory, locator);
+    mutateCoverage(missingInventory.root, (coverage) => {
+      coverage.packageSurfaces = [];
+    });
+    expectCatalogError(
+      missingInventory.root,
+      missingInventory.catalogPath,
+      "package-surface-inventory-missing",
+    );
+
+    const invalidEntryPath = createFixtureProject();
+    configureGitPackage(invalidEntryPath, locator);
+    mutateCatalog(invalidEntryPath.catalogPath, (catalog) => {
+      catalog.entries[0].source.path = "../index.ts";
+    });
+    expectCatalogError(
+      invalidEntryPath.root,
+      invalidEntryPath.catalogPath,
+      "unsafe-path",
+    );
+
+    const unknownEntryPath = createFixtureProject();
+    configureGitPackage(unknownEntryPath, locator);
+    mutateCatalog(unknownEntryPath.catalogPath, (catalog) => {
+      catalog.entries[0].source.path = "other.ts";
+    });
+    expectCatalogError(
+      unknownEntryPath.root,
+      unknownEntryPath.catalogPath,
+      "coverage-public-unknown",
+    );
+
+    for (const [mutate, code] of [
+      [
+        (coverage: MutableCoverage) => {
+          coverage.packageSurfaces?.push({
+            locator: "git:github.com/example/missing",
+            reviewedRevision: fixtureRevision,
+            surfaces: [{ kind: "extension", path: "index.ts" }],
+          });
+        },
+        "package-surface-inventory-unknown",
+      ],
+      [
+        (coverage: MutableCoverage) => {
+          const inventory = coverage.packageSurfaces?.[0];
+          if (inventory) {
+            coverage.packageSurfaces?.push(structuredClone(inventory));
+          }
+        },
+        "package-surface-inventory-duplicate",
+      ],
+      [
+        (coverage: MutableCoverage) => {
+          if (coverage.packageSurfaces) {
+            coverage.packageSurfaces[0].reviewedRevision = otherRevision;
+          }
+        },
+        "package-surface-revision-mismatch",
+      ],
+      [
+        (coverage: MutableCoverage) => {
+          if (coverage.packageSurfaces) {
+            coverage.packageSurfaces[0].surfaces[0].path = "../index.ts";
+          }
+        },
+        "package-surface-path-invalid",
+      ],
+      [
+        (coverage: MutableCoverage) => {
+          if (coverage.packageSurfaces) {
+            coverage.packageSurfaces[0].surfaces.push({
+              kind: "extension",
+              path: "index.ts",
+            });
+          }
+        },
+        "package-surface-duplicate",
+      ],
+    ] as const) {
+      const fixture = createFixtureProject();
+      configureGitPackage(fixture, locator);
+      mutateCatalog(fixture.catalogPath, (catalog) => {
+        catalog.entries[0].source.path = "index.ts";
+      });
+      mutateCoverage(fixture.root, (coverage) => {
+        coverage.packageSurfaces = [
+          {
+            locator,
+            reviewedRevision: fixtureRevision,
+            surfaces: [{ kind: "extension", path: "index.ts" }],
+          },
+        ];
+        mutate(coverage);
+      });
+      expectCatalogError(fixture.root, fixture.catalogPath, code);
+    }
+  });
+
+  test("rejects duplicate public source identities", () => {
+    const local = createFixtureProject();
+    mutateCatalog(local.catalogPath, (catalog) => {
+      const duplicate = structuredClone(catalog.entries[0]);
+      duplicate.id = "extension/handoff-copy";
+      duplicate.slug = "handoff-copy";
+      duplicate.publication = "listed";
+      duplicate.limitation = "Synthetic duplicate for validation.";
+      Reflect.deleteProperty(duplicate, "detailPath");
+      Reflect.deleteProperty(duplicate, "evidencePath");
+      catalog.entries.push(duplicate);
+    });
+    expectCatalogError(
+      local.root,
+      local.catalogPath,
+      "coverage-public-duplicate",
+    );
+
+    const locator = "git:github.com/example/handoff";
+    const packaged = createFixtureProject();
+    configureGitPackage(packaged, locator);
+    mutateCatalog(packaged.catalogPath, (catalog) => {
+      catalog.entries[0].source.path = "index.ts";
+      const duplicate = structuredClone(catalog.entries[0]);
+      duplicate.id = "extension/handoff-copy";
+      duplicate.slug = "handoff-copy";
+      duplicate.publication = "listed";
+      duplicate.limitation = "Synthetic duplicate for validation.";
+      Reflect.deleteProperty(duplicate, "detailPath");
+      Reflect.deleteProperty(duplicate, "evidencePath");
+      catalog.entries.push(duplicate);
+    });
+    mutateCoverage(packaged.root, (coverage) => {
+      coverage.packageSurfaces = [
+        {
+          locator,
+          reviewedRevision: fixtureRevision,
+          surfaces: [{ kind: "extension", path: "index.ts" }],
+        },
+      ];
+    });
+    expectCatalogError(
+      packaged.root,
+      packaged.catalogPath,
+      "coverage-public-duplicate",
+    );
+  });
+
   test("requires every discovered candidate to be public or explicitly excluded", () => {
     const unclassified = createFixtureProject();
     const unclassifiedSkill = join(
@@ -833,6 +1083,7 @@ describe("Dotagents catalog validator", () => {
         slug: "handoff",
         name: "Handoff skill",
         kind: "skill",
+        source: { locator, path: "skills/handoff/SKILL.md" },
         publication: "listed",
         limitation: "Fixture limitation.",
         activation: ["model-invoked"],
@@ -840,6 +1091,12 @@ describe("Dotagents catalog validator", () => {
       Reflect.deleteProperty(skill, "detailPath");
       Reflect.deleteProperty(skill, "evidencePath");
       catalog.entries.push(skill);
+    });
+    mutateCoverage(fixture.root, (coverage) => {
+      coverage.packageSurfaces?.[0].surfaces.push({
+        kind: "skill",
+        path: "skills/handoff/SKILL.md",
+      });
     });
     assert.equal(validateCatalog(fixture).catalog.entries.length, 2);
 
@@ -860,6 +1117,7 @@ describe("Dotagents catalog validator", () => {
         slug: "handoff",
         name: "Handoff skill",
         kind: "skill",
+        source: { locator, path: "skills/handoff/SKILL.md" },
         publication: "listed",
         limitation: "Fixture limitation.",
         activation: ["model-invoked"],

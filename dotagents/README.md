@@ -3,7 +3,7 @@
 This directory is the source contract for the public guide at [vedang.me/dotagents](https://vedang.me/dotagents/).
 
 - `catalog.json` is the explicit publication allowlist.
-- `coverage.json` neutrally classifies every discovered source not selected for publication.
+- `coverage.json` inventories audited package surfaces and neutrally classifies every discovered source not selected for publication.
 - `details/` contains presentation-neutral explanations for featured entries.
 - `evidence/` maps featured behavior claims to reviewed source revisions.
 - Schema and validator files fail closed on unknown structure, unsafe paths, broken references, unreviewed claims, and private content.
