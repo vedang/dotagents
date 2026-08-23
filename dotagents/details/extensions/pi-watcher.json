@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "whatItDoes": [
-    "Pi Watcher turns AI intent, question, and context markers in editor comments into focused Pi follow-up turns.",
+    "AI! and AI? trigger focused Pi follow-up turns from editor comments; AI. supplies context without triggering a turn.",
     "Only actionable markers trigger a turn; context markers supply surrounding information."
   ],
   "whenToReachForIt": {
