@@ -211,6 +211,8 @@ const evidenceSourcePrefixes = [
 ] as const;
 const immutableBlobRevisionPattern = /\/blob\/([0-9a-f]{40}|[0-9a-f]{64})\//u;
 const supportedSpdxIdentifiers: ReadonlySet<string> = new Set(["MIT", "WTFPL"]);
+const localLicenseFileNamePattern =
+  /^(?:copying|license|notice|terms)(?:[.-][A-Za-z0-9][A-Za-z0-9._-]*)?$/iu;
 
 const schemaRoot = resolve(import.meta.dirname, "..");
 const ajv = new Ajv2020({ allErrors: true, strict: true });
@@ -258,6 +260,7 @@ export function validateCatalog(
   assertLicenseEvidencePaths(catalog.licenses, state);
   assertEntryPathsAndLicenseScopes(catalog.entries, licenses, state);
   assertLicenseScopeReferences(catalog.licenses, projects, state);
+  assertLocalLicenseEvidenceAuthorities(catalog.licenses, state);
   assertLicenseEvidenceUrls(catalog.licenses, catalog.entries, projects, state);
 
   const details = new Map<string, Detail>();
@@ -574,6 +577,57 @@ function assertLicenseEvidencePaths(
         );
       }
     }
+  }
+}
+
+function assertLocalLicenseEvidenceAuthorities(
+  licenses: License[],
+  state: ValidationState,
+): void {
+  for (const license of licenses) {
+    assertLocalLicenseEvidenceAuthority(license, state);
+  }
+}
+
+function assertLocalLicenseEvidenceAuthority(
+  license: License,
+  state: ValidationState,
+): void {
+  if (license.evidence.type !== "path") {
+    return;
+  }
+
+  const evidencePath = normalizeCatalogPath(license.evidence.value);
+  const evidenceDirectory = posix.dirname(evidencePath);
+  const isRootArtifact = evidenceDirectory === ".";
+  const isRecognizedArtifact = localLicenseFileNamePattern.test(
+    posix.basename(evidencePath),
+  );
+  const isInPublicSourceRoot = evidenceSourcePrefixes.some((prefix) =>
+    pathHasPrefix(evidencePath, prefix),
+  );
+  const coversDeclaredScope =
+    license.scope.type === "local-paths" &&
+    (isRootArtifact ||
+      license.scope.pathPrefixes.every((prefix) =>
+        pathHasPrefix(prefix, evidenceDirectory),
+      ));
+
+  if (
+    !isRecognizedArtifact ||
+    (!isRootArtifact && !isInPublicSourceRoot) ||
+    !coversDeclaredScope
+  ) {
+    throw catalogError(
+      "license-evidence-authority-invalid",
+      `${license.id} local evidence must be a recognized license artifact governing its declared public scope`,
+      state.catalogPath,
+      {
+        licenseId: license.id,
+        evidencePath: license.evidence.value,
+        scopeType: license.scope.type,
+      },
+    );
   }
 }
 

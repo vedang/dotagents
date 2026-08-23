@@ -800,6 +800,75 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
+  test("rejects local license evidence outside licensed public scope", () => {
+    const privateConfig = createFixtureProject();
+    writeJson(join(privateConfig.root, ".pi", "damage-control.yaml"), {
+      rules: [],
+    });
+    mutateCatalog(privateConfig.catalogPath, (catalog) => {
+      catalog.licenses[0].evidence = {
+        type: "path",
+        value: ".pi/damage-control.yaml",
+      };
+    });
+    expectCatalogError(
+      privateConfig.root,
+      privateConfig.catalogPath,
+      "license-evidence-authority-invalid",
+    );
+
+    const privateLicense = createFixtureProject();
+    mkdirSync(join(privateLicense.root, ".pi"), { recursive: true });
+    writeFileSync(
+      join(privateLicense.root, ".pi", "LICENSE"),
+      "Private fixture terms.\n",
+    );
+    mutateCatalog(privateLicense.catalogPath, (catalog) => {
+      catalog.licenses[0].evidence = {
+        type: "path",
+        value: ".pi/LICENSE",
+      };
+    });
+    expectCatalogError(
+      privateLicense.root,
+      privateLicense.catalogPath,
+      "license-evidence-authority-invalid",
+    );
+
+    const settings = createFixtureProject();
+    mutateCatalog(settings.catalogPath, (catalog) => {
+      catalog.licenses[0].evidence = {
+        type: "path",
+        value: "pi-settings.json",
+      };
+    });
+    expectCatalogError(
+      settings.root,
+      settings.catalogPath,
+      "license-evidence-authority-invalid",
+    );
+
+    const unrelatedLicense = createFixtureProject();
+    mkdirSync(join(unrelatedLicense.root, "skills", "private"), {
+      recursive: true,
+    });
+    writeFileSync(
+      join(unrelatedLicense.root, "skills", "private", "LICENSE"),
+      "Private fixture terms.\n",
+    );
+    mutateCatalog(unrelatedLicense.catalogPath, (catalog) => {
+      catalog.licenses[0].evidence = {
+        type: "path",
+        value: "skills/private/LICENSE",
+      };
+    });
+    expectCatalogError(
+      unrelatedLicense.root,
+      unrelatedLicense.catalogPath,
+      "license-evidence-authority-invalid",
+    );
+  });
+
   test("binds license scope type to local or package delivery", () => {
     const packageWithLocalLicense = createFixtureProject();
     const locator = "git:github.com/example/handoff";
