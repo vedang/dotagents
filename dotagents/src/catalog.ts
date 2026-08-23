@@ -835,11 +835,35 @@ function assertProjectEntrySources(
     }
 
     const delivery = projectEntries[0]?.delivery;
+    const project = projects.get(projectId);
     if (delivery === "local-file") {
+      if (!project) {
+        continue;
+      }
+      assertSafeRelativePath(
+        project.installedLocator,
+        "project installed locator",
+        state,
+        projectId,
+      );
+      for (const entry of projectEntries) {
+        if (project.installedLocator !== entry.source.path) {
+          throw catalogError(
+            "project-locator-mismatch",
+            `${projectId} installed locator does not match ${entry.source.path}`,
+            state.catalogPath,
+            {
+              projectId,
+              entryId: entry.id,
+              locator: entry.source.path,
+              installedLocator: project.installedLocator,
+            },
+          );
+        }
+      }
       continue;
     }
 
-    const project = projects.get(projectId);
     if (!project?.reviewedRevision) {
       throw catalogError(
         "revision-missing",
@@ -987,6 +1011,8 @@ function assertSafeRelativePath(
   if (
     path.includes("\0") ||
     path.includes("\\") ||
+    path === "~" ||
+    path.startsWith("~/") ||
     isAbsolute(path) ||
     win32.isAbsolute(path) ||
     segments.includes("..")

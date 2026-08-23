@@ -1287,6 +1287,41 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
+  test("binds local projects to their exact entry source", () => {
+    const mismatch = createFixtureProject();
+    mutateCatalog(mismatch.catalogPath, (catalog) => {
+      catalog.projects[0].installedLocator = "pi-extensions/private.ts";
+    });
+    expectCatalogError(
+      mismatch.root,
+      mismatch.catalogPath,
+      "project-locator-mismatch",
+    );
+  });
+
+  test("rejects machine-local and private local project locators", () => {
+    const machineLocal = createFixtureProject();
+    mutateCatalog(machineLocal.catalogPath, (catalog) => {
+      catalog.projects[0].installedLocator =
+        "~/.pi/agent/extensions/private.ts";
+    });
+    expectCatalogError(
+      machineLocal.root,
+      machineLocal.catalogPath,
+      "unsafe-path",
+    );
+
+    const privateLocator = createFixtureProject();
+    mutateCatalog(privateLocator.catalogPath, (catalog) => {
+      catalog.projects[0].installedLocator = ".pi/private.ts";
+    });
+    expectCatalogError(
+      privateLocator.root,
+      privateLocator.catalogPath,
+      "project-locator-mismatch",
+    );
+  });
+
   test("allows mixed package surfaces only when project provenance is shared", () => {
     const fixture = createFixtureProject();
     const locator = "git:github.com/example/handoff";
