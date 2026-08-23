@@ -178,10 +178,13 @@ const privateContentPatterns: readonly RegExp[] = [
 const extensionExclusionPattern =
   /^(?:(?:test|spec|config)|.+[._-](?:test|spec|config))\.ts$/iu;
 const markdownPattern =
-  /^(?:\s{0,3}(?:#{1,6}\s+|(?:[-*+]|>)\s+|\d+[.)]\s+|(?:[-*_]\s*){3,}|```|~~~))|```|~~~|!?\[[^\]\n]*\](?:\([^\n)]*\)|\[[^\]\n]*\])|`[^`\n]+`|\*\*(?=\S)(?:(?!\*\*).)*\S\*\*|__(?=\S)(?:(?!__).)*\S__|~~(?=\S)(?:(?!~~).)*\S~~|(?<!\*)\*(?!\*)(?=\S)[^*\n]*\S\*(?!\*)|(?<![\w_])_(?!_)(?=\S)[^_\n]*\S_(?![\w_])/imu;
-const htmlPattern = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s+[^<>]*)?>/u;
+  /^(?:\s{0,3}(?:#{1,6}\s+|(?:[-*+]|>)\s+|\d+[.)]\s+|(?:[-*_]\s*){3,}|```|~~~)| {4,}|\t)|```|~~~|!?\[[^\]\n]*\](?:\([^\n)]*\)|\[[^\]\n]*\])|`[^`\n]+`|\*\*(?=\S)(?:(?!\*\*).)*\S\*\*|__(?=\S)(?:(?!__).)*\S__|~~(?=\S)(?:(?!~~).)*\S~~|(?<!\*)\*(?!\*)(?=\S)[^*\n]*\S\*(?!\*)|(?<![\w_])_(?!_)(?=\S)[^_\n]*\S_(?![\w_])|^.+\n(?:=+|-+)\s*$/imu;
+const htmlPattern =
+  /(?:<!--[\s\S]*?-->|<![A-Za-z][^>]*>|<\/?[A-Za-z][A-Za-z0-9-]*(?:\s+[^<>]*)?>)/u;
 const uriPattern =
   /(?:\b[A-Za-z][A-Za-z0-9+.-]*:\/\/|\b(?:data|file|git|javascript|mailto|sms|ssh|tel|urn|vbscript):|\/\/|www\.)[^\s<>"']+/iu;
+const bareDomainPattern =
+  /\b(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,63}(?:\/[^\s<>"']*)?(?=$|[\s,;:!?()[\]{}])/u;
 const evidenceSourcePrefixes = [
   "pi-extensions/",
   "skills/",
@@ -954,7 +957,8 @@ function assertDetailContent(
       if (
         markdownPattern.test(string) ||
         htmlPattern.test(string) ||
-        uriPattern.test(string)
+        uriPattern.test(string) ||
+        bareDomainPattern.test(string)
       ) {
         throw catalogError(
           "detail-content-invalid",
@@ -1119,13 +1123,22 @@ function assertNoOrphans(
   artifact: "detail" | "evidence",
   state: ValidationState,
 ): void {
-  for (const path of listJsonFiles(directory)) {
+  for (const path of listFiles(directory)) {
+    const repositoryPath = repositoryRelativePath(path, state);
+    if (!path.endsWith(".json")) {
+      throw catalogError(
+        "artifact-extension-invalid",
+        `${artifact} artifact must be JSON: ${repositoryPath}`,
+        state.catalogPath,
+        { artifact, path: repositoryPath },
+      );
+    }
     if (!referencedPaths.has(path)) {
       throw catalogError(
         `orphan-${artifact}`,
-        `${artifact} file is not referenced by a featured entry: ${path}`,
+        `${artifact} file is not referenced by a featured entry: ${repositoryPath}`,
         state.catalogPath,
-        { artifact, path },
+        { artifact, path: repositoryPath },
       );
     }
   }
@@ -1409,10 +1422,6 @@ function assertNoPrivatePublicContent(state: ValidationState): void {
       );
     }
   }
-}
-
-function listJsonFiles(directory: string): string[] {
-  return listFiles(directory).filter((path) => path.endsWith(".json"));
 }
 
 function listFiles(directory: string): string[] {

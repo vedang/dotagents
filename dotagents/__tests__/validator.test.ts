@@ -559,6 +559,26 @@ describe("Dotagents catalog validator", () => {
     );
   });
 
+  test("rejects non-JSON files in public detail and evidence trees", () => {
+    const cases = [
+      ["details", "extensions", "notes.md"],
+      ["evidence", "extensions", "notes.txt"],
+    ] as const;
+
+    for (const [artifact, kind, name] of cases) {
+      const fixture = createFixtureProject();
+      writeFileSync(
+        join(fixture.root, "dotagents", artifact, kind, name),
+        "Unvalidated public artifact.\n",
+      );
+      expectCatalogError(
+        fixture.root,
+        fixture.catalogPath,
+        "artifact-extension-invalid",
+      );
+    }
+  });
+
   test("rejects featured/listed mismatches before reading files", () => {
     const missingReference = createFixtureProject();
     mutateCatalog(missingReference.catalogPath, (catalog) => {
@@ -849,6 +869,11 @@ describe("Dotagents catalog validator", () => {
       ["whatItDoes", "Email mailto:private@example.com."],
       ["whatItDoes", "## Hidden presentation heading"],
       ["whatItDoes", "- Hidden presentation list"],
+      ["whatItDoes", "<!-- hidden HTML comment -->"],
+      ["whatItDoes", "<!DOCTYPE html>"],
+      ["whatItDoes", "    const hidden = true;"],
+      ["whatItDoes", "Hidden setext heading\n====================="],
+      ["whatItDoes", "Read example.com/private."],
       ["commands", "<script>alert('unsafe')</script>"],
     ];
 
