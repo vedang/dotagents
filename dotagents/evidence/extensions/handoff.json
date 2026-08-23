@@ -9,9 +9,14 @@
   "reviewedOn": "2026-08-22",
   "claims": [
     {
-      "claim": "Registers the handoff command and validates interactive UI, selected model, credentials, and goal input.",
+      "claim": "Registers the handoff command and validates interactive UI, selected model, and goal input.",
       "sourcePath": "pi-extensions/handoff.ts",
-      "sourceLines": "95-123"
+      "sourceLines": "95-113"
+    },
+    {
+      "claim": "Retrieves credentials for the selected model and rejects a failed lookup or missing API key.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "139-147"
     },
     {
       "claim": "Preserves the latest compaction summary and retained branch entries for handoff context.",

@@ -17,8 +17,12 @@
       "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/loop-policy.ts#L29-L46"
     },
     {
-      "claim": "Active iterations collapse context between turns and cancel unrelated compaction.",
-      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/index.ts#L330-L370"
+      "claim": "Active iteration completion summarizes its target branch before scheduling the next iteration.",
+      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/index.ts#L326-L367"
+    },
+    {
+      "claim": "Cancels other session compaction while the loop is active.",
+      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/index.ts#L711-L716"
     },
     {
       "claim": "Registers loop start, status, stop, continue, and prompt-seeding commands.",

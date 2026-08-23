@@ -9,12 +9,16 @@
   "reviewedOn": "2026-08-22",
   "claims": [
     {
-      "claim": "Defines intent, question, and context marker variants.",
+      "claim": "Recognizes plain, exclamation, and question marker token forms.",
       "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/parser.ts#L35-L38"
     },
     {
-      "claim": "Parses marker text into actionable and contextual records.",
-      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/parser.ts#L121-L133"
+      "claim": "Maps marker text to edit, ask, or context actions.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/parser.ts#L121-L131"
+    },
+    {
+      "claim": "Parses markers into records carrying action, comment block, instruction, context inputs, source line, and path.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/parser.ts#L159-L242"
     },
     {
       "claim": "Watches debounced file changes without following symbolic links.",
