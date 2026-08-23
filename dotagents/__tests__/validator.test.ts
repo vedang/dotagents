@@ -734,7 +734,10 @@ describe("Dotagents catalog validator", () => {
     const external = createFixtureProject();
     mutateCatalog(external.catalogPath, (catalog) => {
       catalog.entries[0].delivery = "git-package";
-      catalog.entries[0].source = { locator: "git:github.com/example/handoff" };
+      catalog.entries[0].source = {
+        locator: "git:github.com/example/handoff",
+        path: "index.ts",
+      };
       catalog.licenses[0].scope = {
         type: "external-projects",
         projectIds: ["project/other"],
@@ -1409,7 +1412,10 @@ describe("Dotagents catalog validator", () => {
     const differentLocator = "git:github.com/example/other";
     setPackages(fixture.root, [locator, differentLocator]);
     mutateCatalog(fixture.catalogPath, (catalog) => {
-      catalog.entries[1].source = { locator: differentLocator };
+      catalog.entries[1].source = {
+        locator: differentLocator,
+        path: "skills/handoff/SKILL.md",
+      };
     });
     expectCatalogError(
       fixture.root,

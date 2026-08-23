@@ -234,7 +234,7 @@ describe("Dotagents JSON schemas", () => {
     assertInvalid(compileSchema("evidence.schema.json"), evidence, "const");
   });
 
-  test("bind each delivery mode to its source shape", () => {
+  test("bind each delivery mode to its complete source shape", () => {
     const validate = compileSchema("catalog.schema.json");
     const local = cloneFixture<MutableCatalog>("valid-catalog.json");
     local.entries[0].source = { locator: "git:github.com/example/handoff" };
@@ -246,11 +246,15 @@ describe("Dotagents JSON schemas", () => {
     gitPackage.entries[0].source = {
       locator: "git:github.com/example/handoff",
     };
+    assertInvalid(validate, gitPackage, "required");
+    gitPackage.entries[0].source.path = "src/index.ts";
     assertValid(validate, gitPackage);
 
     const npmPackage = cloneFixture<MutableCatalog>("valid-catalog.json");
     npmPackage.entries[0].delivery = "npm-package";
     npmPackage.entries[0].source = { locator: "npm:@example/handoff" };
+    assertInvalid(validate, npmPackage, "required");
+    npmPackage.entries[0].source.path = "dist/index.js";
     assertValid(validate, npmPackage);
   });
 

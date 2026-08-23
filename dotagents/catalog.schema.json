@@ -254,7 +254,7 @@
     "gitPackageSource": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["locator"],
+      "required": ["locator", "path"],
       "properties": {
         "locator": {
           "type": "string",
@@ -268,7 +268,7 @@
     "npmPackageSource": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["locator"],
+      "required": ["locator", "path"],
       "properties": {
         "locator": {
           "type": "string",
