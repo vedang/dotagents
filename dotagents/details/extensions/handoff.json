@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "whatItDoes": [
-    "The handoff command turns useful conversation context into an editable prompt and opens a linked fresh session.",
+    "The handoff command turns useful conversation context into an editable prompt and opens a fresh session. When session persistence is enabled, the replacement links back to the current session.",
     "Before generation, it sends every convertible message from an un-compacted branch; after compaction, it sends the latest summary and retained entries instead. It does not transfer live process state."
   ],
   "whenToReachForIt": {
@@ -9,7 +9,7 @@
     "situations": [
       {
         "when": "A long session needs a clean continuation",
-        "use": "Draft a focused brief for a linked replacement session."
+        "use": "Draft a focused brief for a replacement session; persistence preserves the parent link."
       },
       {
         "when": "A new model or context window should continue the work",
@@ -19,7 +19,7 @@
   },
   "whatItAdds": [
     "An explicit, editable context-transfer step between Pi sessions.",
-    "A linked replacement-session flow after the draft is accepted."
+    "A replacement-session flow that preserves a parent link when session persistence is enabled."
   ],
   "howItFits": [
     {
@@ -41,11 +41,12 @@
   ],
   "workingIf": [
     "An editable draft appears before session replacement.",
-    "The linked fresh session opens with enough context to act on the stated goal."
+    "The fresh session opens with enough context to act on the stated goal."
   ],
   "setupNotes": [
     "Adopted from the MIT-licensed Pi example originally implemented by Mario Zechner; maintained here by Vedang.",
     "The installed source is the local handoff extension in Dotagents.",
+    "Parent linkage requires session persistence; ephemeral mode still opens a fresh session without a parent link.",
     "It requires an interactive Pi session, a selected model available through Pi's model runtime, and replacement-session UI support."
   ],
   "commands": ["/handoff GOAL"]

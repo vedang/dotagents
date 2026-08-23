@@ -257,7 +257,7 @@
       "source": {
         "path": "pi-extensions/handoff.ts"
       },
-      "summary": "`/handoff <goal>` turns the useful parts of the current conversation into an editable prompt, then opens a linked fresh session.",
+      "summary": "`/handoff <goal>` turns the useful parts of the current conversation into an editable prompt, then opens a fresh session and links it to the current session when persistence is enabled.",
       "activation": ["user-command"],
       "compatibility": [
         "Interactive Pi session",

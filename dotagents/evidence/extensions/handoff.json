@@ -34,7 +34,12 @@
       "sourceLines": "118-160"
     },
     {
-      "claim": "Lets the user edit the generated prompt before opening a linked replacement session.",
+      "claim": "Reads the current session file for optional parent tracking.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "125-128"
+    },
+    {
+      "claim": "Lets the user edit the generated prompt before opening a replacement session and passes the captured session-file value as the parent-session option.",
       "sourcePath": "pi-extensions/handoff.ts",
       "sourceLines": "190-211"
     }

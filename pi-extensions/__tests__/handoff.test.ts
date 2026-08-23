@@ -20,7 +20,7 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   return value as T;
 }
 
-test("handoff delegates completion to the host model registry", async () => {
+function getHandoffHandler(): CommandHandler {
   let handler: CommandHandler | undefined;
   const pi = {
     registerCommand(name: string, options: CommandOptions) {
@@ -30,6 +30,11 @@ test("handoff delegates completion to the host model registry", async () => {
     },
   };
   handoff(pi as unknown as ExtensionAPI);
+  return assertDefined(handler, "handoff command should be registered");
+}
+
+test("handoff delegates completion to the host model registry", async () => {
+  const handler = getHandoffHandler();
 
   const model = { provider: "custom-provider", id: "custom-model" };
   const complete = vi.fn().mockResolvedValue({
@@ -40,43 +45,40 @@ test("handoff delegates completion to the host model registry", async () => {
   const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
 
   try {
-    await assertDefined(handler, "handoff command should be registered")(
-      "continue with focused task",
-      {
-        hasUI: true,
-        model,
-        modelRegistry: { complete },
-        sessionManager: {
-          getBranch: () => [
-            {
-              type: "message",
-              message: {
-                role: "user",
-                content: [{ type: "text", text: "original request" }],
-                timestamp: Date.now(),
-              },
+    await handler("continue with focused task", {
+      hasUI: true,
+      model,
+      modelRegistry: { complete },
+      sessionManager: {
+        getBranch: () => [
+          {
+            type: "message",
+            message: {
+              role: "user",
+              content: [{ type: "text", text: "original request" }],
+              timestamp: Date.now(),
             },
-          ],
-          getSessionFile: () => "/tmp/session.jsonl",
-        },
-        ui: {
-          custom: async (
-            render: (
-              tui: object,
-              theme: object,
-              keybindings: object,
-              done: (value: string | null) => void,
-            ) => unknown,
-          ) =>
-            new Promise<string | null>((resolve) => {
-              render({}, {}, {}, resolve);
-            }),
-          editor,
-          notify: vi.fn(),
-        },
-        newSession: vi.fn(),
-      } as unknown as Parameters<CommandHandler>[1],
-    );
+          },
+        ],
+        getSessionFile: () => "/tmp/session.jsonl",
+      },
+      ui: {
+        custom: async (
+          render: (
+            tui: object,
+            theme: object,
+            keybindings: object,
+            done: (value: string | null) => void,
+          ) => unknown,
+        ) =>
+          new Promise<string | null>((resolve) => {
+            render({}, {}, {}, resolve);
+          }),
+        editor,
+        notify: vi.fn(),
+      },
+      newSession: vi.fn(),
+    } as unknown as Parameters<CommandHandler>[1]);
   } finally {
     consoleError.mockRestore();
   }
@@ -112,4 +114,55 @@ test("handoff delegates completion to the host model registry", async () => {
     "Edit handoff prompt",
     "generated handoff prompt",
   );
+});
+
+test("handoff opens an unlinked replacement from an ephemeral session", async () => {
+  const handler = getHandoffHandler();
+  const model = { provider: "custom-provider", id: "custom-model" };
+  const complete = vi.fn().mockResolvedValue({
+    content: [{ type: "text", text: "generated handoff prompt" }],
+    stopReason: "stop",
+  });
+  const newSession = vi.fn().mockResolvedValue({ cancelled: false });
+
+  await handler("continue with focused task", {
+    hasUI: true,
+    model,
+    modelRegistry: { complete },
+    sessionManager: {
+      getBranch: () => [
+        {
+          type: "message",
+          message: {
+            role: "user",
+            content: [{ type: "text", text: "original request" }],
+            timestamp: Date.now(),
+          },
+        },
+      ],
+      getSessionFile: () => undefined,
+    },
+    ui: {
+      custom: async (
+        render: (
+          tui: object,
+          theme: object,
+          keybindings: object,
+          done: (value: string | null) => void,
+        ) => unknown,
+      ) =>
+        new Promise<string | null>((resolve) => {
+          render({}, {}, {}, resolve);
+        }),
+      editor: vi.fn().mockResolvedValue("edited handoff prompt"),
+      notify: vi.fn(),
+    },
+    newSession,
+  } as unknown as Parameters<CommandHandler>[1]);
+
+  expect(newSession).toHaveBeenCalledTimes(1);
+  expect(newSession.mock.calls[0]?.[0]).toStrictEqual({
+    parentSession: undefined,
+    withSession: expect.any(Function),
+  });
 });
