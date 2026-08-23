@@ -21,6 +21,18 @@
       "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/parser.ts#L159-L242"
     },
     {
+      "claim": "Queues watched file batches through the watcher router with configured prompt context limits.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/index.ts#L473-L490"
+    },
+    {
+      "claim": "Treats context markers as non-actionable and filters them from turn dispatch.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/router.ts#L50-L60"
+    },
+    {
+      "claim": "Dispatches a filtered marker batch by building a prompt and sending it as a user message.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/router.ts#L169-L186"
+    },
+    {
       "claim": "Watches debounced file changes without following symbolic links.",
       "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/watcher.ts#L65-L104"
     },

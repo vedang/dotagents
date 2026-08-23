@@ -13,6 +13,14 @@
       "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/prompt.ts#L19-L34"
     },
     {
+      "claim": "Attaches the configured plan and progress paths to every iteration prompt.",
+      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/prompt.ts#L52-L77"
+    },
+    {
+      "claim": "Refuses to start a second loop while one is active.",
+      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/index.ts#L128-L138"
+    },
+    {
       "claim": "The completion policy stops on the completion signal, one-shot mode, or iteration limit.",
       "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/loop-policy.ts#L29-L46"
     },

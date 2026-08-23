@@ -13,12 +13,56 @@
       "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/extension/index.ts#L1-L10"
     },
     {
-      "claim": "Registers the subagent tool and exposes the public workflow executor.",
+      "claim": "Validates runs.run and runs.all calls, then launches runs.all children as one observed parallel batch.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/workflows/scripted-workflow.ts#L276-L297"
+    },
+    {
+      "claim": "Applies discovered agent launch defaults and resolves child context from request, package, and agent preferences.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/foreground/subagent-executor.ts#L4995-L5017"
+    },
+    {
+      "claim": "Resolves child model and thinking from launch overrides plus agent configuration.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/background/async-execution.ts#L1417-L1424"
+    },
+    {
+      "claim": "Resolves tool budget and timeout from launch, agent, package, and environment settings.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/background/async-execution.ts#L1425-L1440"
+    },
+    {
+      "claim": "Builds the child tool plan from agent tool configuration and inherited capability limits.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/background/async-execution.ts#L1454-L1465"
+    },
+    {
+      "claim": "Routes slash, prompt-template, and RPC delegation bridges through public or delegated executors.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/extension/index.ts#L607-L635"
+    },
+    {
+      "claim": "Registers the subagent tool with the public execution bridge.",
       "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/extension/index.ts#L638-L684"
     },
     {
       "claim": "Registers wait and slash-command surfaces for lifecycle and operator control.",
       "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/extension/index.ts#L686-L709"
+    },
+    {
+      "claim": "Persists background run state to a status file in the run directory.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/background/subagent-runner.ts#L2218-L2222"
+    },
+    {
+      "claim": "Writes the current background status payload through a resilient persistence layer.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/background/subagent-runner.ts#L2391-L2404"
+    },
+    {
+      "claim": "Persists a recovery descriptor before starting an internal background child.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/background/async-execution.ts#L1539-L1544"
+    },
+    {
+      "claim": "Resolves resume targets from persisted run status and recovery data, rejecting stopped runs.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/background/async-resume.ts#L424-L447"
+    },
+    {
+      "claim": "Restores active background jobs from persisted run summaries and resumes watching them.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/runs/background/async-job-tracker.ts#L669-L688"
     }
   ]
 }

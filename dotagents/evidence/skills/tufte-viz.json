@@ -14,9 +14,14 @@
       "sourceLines": "1-12"
     },
     {
-      "claim": "The design workflow chooses the intended comparison and reduces non-data ink.",
+      "claim": "The design workflow identifies the intended comparison and recommends small multiples when comparison needs are high.",
       "sourcePath": "skills/tufte-viz/SKILL.md",
-      "sourceLines": "20-38"
+      "sourceLines": "20-31"
+    },
+    {
+      "claim": "The design workflow starts minimal and requires each visual element to earn its ink.",
+      "sourcePath": "skills/tufte-viz/SKILL.md",
+      "sourceLines": "33-38"
     },
     {
       "claim": "The critique workflow checks graphical integrity, chartjunk, and redundant encoding.",

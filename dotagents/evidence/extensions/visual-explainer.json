@@ -13,8 +13,16 @@
       "sourceUrl": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/plugins/visual-explainer/extension.ts#L195-L257"
     },
     {
-      "claim": "Rendering requires a complete HTML document and writes under one diagrams directory with symlink checks.",
-      "sourceUrl": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/plugins/visual-explainer/extension.ts#L260-L299"
+      "claim": "Rejects empty or path-like output names and requires a complete HTML document.",
+      "sourceUrl": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/plugins/visual-explainer/extension.ts#L120-L139"
+    },
+    {
+      "claim": "Rendering writes under one diagrams directory with output-directory and output-file symlink checks.",
+      "sourceUrl": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/plugins/visual-explainer/extension.ts#L260-L280"
+    },
+    {
+      "claim": "Browser opening is optional and reports disabled, dispatched, failed, or unsupported outcomes.",
+      "sourceUrl": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/plugins/visual-explainer/extension.ts#L281-L299"
     },
     {
       "claim": "Registers one tool with sequential prepare and render actions.",

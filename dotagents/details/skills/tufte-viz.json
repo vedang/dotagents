@@ -17,7 +17,7 @@
       },
       {
         "when": "Several related views need consistent comparison",
-        "use": "Consider small multiples and shared scales."
+        "use": "Consider small multiples when comparison needs are high."
       }
     ]
   },
