@@ -178,6 +178,11 @@
     },
     {
       "kind": "package",
+      "source": "git:github.com/vedang/pi-exa",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
       "source": "git:github.com/vedang/pi-prompt-history",
       "reason": "Not selected for the launch catalog."
     },
