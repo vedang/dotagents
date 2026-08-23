@@ -465,6 +465,30 @@ describe("Dotagents catalog validator", () => {
     expectCatalogError(fixture.root, fixture.catalogPath, "path-not-found");
   });
 
+  test("rejects dangling skill candidate links", () => {
+    const fixture = createFixtureProject();
+    const skillDirectory = join(fixture.root, "skills", "private-skill");
+    mkdirSync(skillDirectory, { recursive: true });
+    symlinkSync(
+      join(fixture.root, "missing-skill.md"),
+      join(skillDirectory, "SKILL.md"),
+    );
+
+    expectCatalogError(fixture.root, fixture.catalogPath, "path-not-found");
+  });
+
+  test("rejects dangling skill container links", () => {
+    const fixture = createFixtureProject();
+    const skillsDirectory = join(fixture.root, "specific_skills");
+    mkdirSync(skillsDirectory, { recursive: true });
+    symlinkSync(
+      join(fixture.root, "missing-skill-directory"),
+      join(skillsDirectory, "private-skill"),
+    );
+
+    expectCatalogError(fixture.root, fixture.catalogPath, "path-not-found");
+  });
+
   test("rejects public artifact root symlinks before enumeration", () => {
     const outsideRoot = mkdtempSync(join(tmpdir(), "dotagents-artifacts-"));
     temporaryRoots.push(outsideRoot);

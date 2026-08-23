@@ -1495,11 +1495,34 @@ function discoverSkillFiles(
 
   const candidates: Candidate[] = [];
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
-    if (!(entry.isDirectory() || entry.isSymbolicLink())) {
+    const skillDirectory = join(directory, entry.name);
+    const skillDirectoryStat = lstatSync(skillDirectory, {
+      throwIfNoEntry: false,
+    });
+    if (!skillDirectoryStat) {
+      throw catalogError(
+        "path-not-found",
+        `discovery candidate directory disappeared: ${skillDirectory}`,
+        state.catalogPath,
+        {
+          artifact: "discovery candidate directory",
+          path: repositoryRelativePath(skillDirectory, state),
+        },
+      );
+    }
+    if (
+      !(skillDirectoryStat.isDirectory() || skillDirectoryStat.isSymbolicLink())
+    ) {
       continue;
     }
-    const path = join(directory, entry.name, "SKILL.md");
-    if (!existsSync(path)) {
+    assertRepositoryDirectory(
+      skillDirectory,
+      "discovery candidate directory",
+      state,
+    );
+
+    const path = join(skillDirectory, "SKILL.md");
+    if (!lstatSync(path, { throwIfNoEntry: false })) {
       continue;
     }
     assertDiscoveredFile(path, state);
