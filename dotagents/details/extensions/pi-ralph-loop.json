@@ -36,7 +36,7 @@
     },
     {
       "entryId": "extension/handoff",
-      "relationship": "Handoff starts a linked fresh session; Ralph instead collapses context while preserving loop state."
+      "relationship": "Handoff starts a fresh session and links it to the current session when persistence is enabled; Ralph instead collapses context while preserving loop state."
     }
   ],
   "questions": [
