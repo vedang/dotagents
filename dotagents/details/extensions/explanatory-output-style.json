@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "This hook adds explanatory guidance before each agent run so implementation work includes short, code-specific learning notes.",
+    "It changes the run instructions rather than adding a new model capability."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Load the extension; its before-agent-start hook runs automatically.",
+    "situations": [
+      {
+        "when": "Implementation should teach codebase-specific reasoning",
+        "use": "Ask the agent to explain a few important choices around its edits."
+      },
+      {
+        "when": "A coding session needs concise educational context",
+        "use": "Keep explanation near the work without turning it into a separate tutorial."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A reusable instruction layer for brief implementation insights.",
+    "A duplicate-injection guard for repeated run setup."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/handoff",
+      "relationship": "Handoff can carry the resulting code-specific reasoning into a fresh session."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What does it not guarantee?",
+      "answer": [
+        "It changes instructions, not model capability; compliance varies and extra explanation increases prompt and response length."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Coding responses include a short insight block before and after edits.",
+    "Repeated setup does not append the same guidance twice."
+  ],
+  "setupNotes": [
+    "Vedang’s Pi hook adapts Anthropic’s explanatory-output guidance; Anthropic retains rights to its source wording.",
+    "The public explanation is independently written and does not reproduce Anthropic's operational guidance.",
+    "The installed source is a local Pi extension using the before-agent-start hook."
+  ],
+  "commands": []
+}

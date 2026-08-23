@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Ralph Loop runs a durable plan one task per iteration with feedback, commits, progress updates, context collapse, and explicit completion.",
+    "The loop controls iteration mechanics but does not grant authority to push, publish, deploy, or change product scope."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Start an existing plan with /ralph or seed a loop prompt with /ralph-prompt.",
+    "situations": [
+      {
+        "when": "A multi-step plan should survive context collapse",
+        "use": "Keep canonical plan and progress files between iterations."
+      },
+      {
+        "when": "Each iteration must finish one bounded task and run feedback",
+        "use": "Use the loop policy to re-read state and advance in order."
+      },
+      {
+        "when": "An operator needs explicit status, stop, or continue controls",
+        "use": "Use the registered loop commands without editing hidden runtime state."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A one-active-loop lifecycle with durable plan and progress paths.",
+    "Iteration prompts, context collapse, completion policy, and operator controls."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/pi-subagents",
+      "relationship": "Ralph owns iteration order while subagents can perform bounded research, implementation, or review inside one task."
+    },
+    {
+      "entryId": "extension/pi-watcher",
+      "relationship": "Watcher favors immediate editor feedback; Ralph favors planned durable execution."
+    },
+    {
+      "entryId": "extension/handoff",
+      "relationship": "Handoff starts a linked fresh session; Ralph instead collapses context while preserving loop state."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What does the loop not guarantee?",
+      "answer": [
+        "The loop depends on agent compliance and green feedback, allows only one active loop, writes durable planning state, and does not itself grant permission to publish, push, or deploy."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Each iteration re-reads the same plan and progress files, completes one task, and records focused feedback.",
+    "The loop stops on its explicit completion policy, operator stop, or iteration limit."
+  ],
+  "setupNotes": [
+    "Created and maintained by Vedang; source is public but no reuse license is declared.",
+    "The package requires Pi session navigation and compaction APIs, a writable planning directory, and a version-control workflow.",
+    "Behavior claims were reviewed against the installed Git revision."
+  ],
+  "commands": ["/ralph", "/ralph-prompt"]
+}

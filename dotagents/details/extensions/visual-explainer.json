@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Visual Explainer plans and writes self-contained HTML explanations for architecture, changes, plans, data, and technical concepts.",
+    "Its workflow separates preparation from rendering and requires a complete HTML document before writing output."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Ask the model to prepare a visual explanation, then render the completed document.",
+    "situations": [
+      {
+        "when": "Architecture or workflow relationships are hard to scan in prose",
+        "use": "Create a focused visual map with supporting explanation."
+      },
+      {
+        "when": "A plan or diff needs a reviewable visual recap",
+        "use": "Turn the relevant evidence into a self-contained artifact."
+      },
+      {
+        "when": "Data or technical concepts need an audience-specific explanation",
+        "use": "Prepare for the audience before authoring the final document."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A sequential prepare-and-render tool contract.",
+    "Validated output naming, directory containment, and optional browser opening."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/pi-subagents",
+      "relationship": "Preparation can recommend a subagent scout when more context should be gathered first."
+    },
+    {
+      "entryId": "skill/tufte-viz",
+      "relationship": "The visualization skill can critique quantitative displays inside a visual explanation."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What remains the model's responsibility?",
+      "answer": [
+        "The model authors the HTML, output goes to a fixed local directory, browser opening is best-effort, and this reviewed fork trails newer upstream changes."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Preparation returns a bounded explanation plan before rendering.",
+    "Rendering writes one complete self-contained HTML document inside the diagrams directory."
+  ],
+  "setupNotes": [
+    "Created by Nico Bailon; Vedang maintains the installed MIT-licensed fork and its visual-learning additions.",
+    "The package supports an optional browser opener and optional subagent-aware preparation.",
+    "Behavior claims were reviewed against the installed fork revision, not current upstream."
+  ],
+  "commands": []
+}

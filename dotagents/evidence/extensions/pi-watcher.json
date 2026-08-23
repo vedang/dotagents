@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-watcher",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "501fa8054ede04afdbe5284c310118d6c871f0f6"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Defines intent, question, and context marker variants.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/parser.ts#L35-L38"
+    },
+    {
+      "claim": "Parses marker text into actionable and contextual records.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/parser.ts#L121-L133"
+    },
+    {
+      "claim": "Watches debounced file changes without following symbolic links.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/watcher.ts#L65-L104"
+    },
+    {
+      "claim": "Cleans handled marker comments with source containment checks.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/cleanup.ts#L161-L177"
+    },
+    {
+      "claim": "Runs marker cleanup after the triggered turn settles successfully.",
+      "sourceUrl": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/src/index.ts#L582-L600"
+    }
+  ]
+}

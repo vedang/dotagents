@@ -25,9 +25,8 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # Use self-contained data until approved public catalog data is committed.
-      - name: Check catalog CLI fixture
-        run: make check-catalog CATALOG_ROOT=dotagents/__fixtures__/valid-project
+      - name: Check public catalog
+        run: make check-catalog
 
       - name: Run catalog tests
         run: make test-catalog

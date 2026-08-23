@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/handoff",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Registers the handoff command and validates interactive UI, selected model, credentials, and goal input.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "95-123"
+    },
+    {
+      "claim": "Preserves the latest compaction summary and retained branch entries for handoff context.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "64-93"
+    },
+    {
+      "claim": "Sends serialized selected context and the requested goal to the configured model.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "124-179"
+    },
+    {
+      "claim": "Lets the user edit the generated prompt before opening a linked replacement session.",
+      "sourcePath": "pi-extensions/handoff.ts",
+      "sourceLines": "192-220"
+    }
+  ]
+}

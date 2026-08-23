@@ -4,9 +4,11 @@
 
 This is my Agent Harness configuration. Tell your agent to clone it to `~/.config/agents` and symlink the parts you want into your harness.
 
+Public guide: [vedang.me/dotagents](https://vedang.me/dotagents/).
+
 ## Example setup (pi-coding-agent)
 
-1. `git clone https://github.com/vedang/agents ~/.config/agents`
+1. `git clone https://github.com/vedang/dotagents ~/.config/agents`
 2. `mkdir -p ~/.pi/agent`
 3. `ln -s ~/.config/agents/AGENTS.md ~/.pi/agent/AGENTS.md`
 4. `ln -s ~/.config/agents/APPEND_SYSTEM.md ~/.pi/agent/APPEND_SYSTEM.md`

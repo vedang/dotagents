@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "The handoff command turns useful conversation context into an editable prompt and opens a linked fresh session.",
+    "It carries selected context and an explicit goal, not live process state or a complete transcript."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Type /handoff followed by the next session goal.",
+    "situations": [
+      {
+        "when": "A long session needs a clean continuation",
+        "use": "Draft a focused brief for a linked replacement session."
+      },
+      {
+        "when": "A new model or context window should continue the work",
+        "use": "Carry retained context and the next goal across the boundary."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "An explicit, editable context-transfer step between Pi sessions.",
+    "A linked replacement-session flow after the draft is accepted."
+  ],
+  "howItFits": [
+    {
+      "entryId": "prompt/sharpen-communication",
+      "relationship": "The communication prompt can tighten a handoff goal before transfer."
+    },
+    {
+      "entryId": "extension/pi-subagents",
+      "relationship": "Subagents keep bounded work inside one run; handoff moves selected context into a fresh session."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What should I review before continuing?",
+      "answer": [
+        "Handoff is model-generated and intentionally selective, so review the draft; it does not transfer live process state, and it sends selected conversation context to the configured model."
+      ]
+    }
+  ],
+  "workingIf": [
+    "An editable draft appears before session replacement.",
+    "The linked fresh session opens with enough context to act on the stated goal."
+  ],
+  "setupNotes": [
+    "Adopted from the MIT-licensed Pi example originally implemented by Mario Zechner; maintained here by Vedang.",
+    "The installed source is the local handoff extension in Dotagents.",
+    "It requires an interactive Pi session, a selected model with credentials, and replacement-session UI support."
+  ],
+  "commands": ["/handoff <goal>"]
+}

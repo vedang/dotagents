@@ -27,7 +27,7 @@
       "timeoutMs": 3600000
     }
   },
-  "theme": "dark",
+  "theme": "light",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",

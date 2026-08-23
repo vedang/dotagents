@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-ralph-loop",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "49c6bde25385392d0999155708a141028d5d80f2"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "The iteration prompt requires one task, feedback, a commit, a progress update, and an explicit completion signal.",
+      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/prompt.ts#L19-L34"
+    },
+    {
+      "claim": "The completion policy stops on the completion signal, one-shot mode, or iteration limit.",
+      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/loop-policy.ts#L29-L46"
+    },
+    {
+      "claim": "Active iterations collapse context between turns and cancel unrelated compaction.",
+      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/index.ts#L330-L370"
+    },
+    {
+      "claim": "Registers loop start, status, stop, continue, and prompt-seeding commands.",
+      "sourceUrl": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/src/index.ts#L727-L840"
+    }
+  ]
+}

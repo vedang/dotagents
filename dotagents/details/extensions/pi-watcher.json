@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Watcher turns AI intent, question, and context markers in editor comments into focused Pi follow-up turns.",
+    "Only actionable markers trigger a turn; context markers supply surrounding information."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Start or inspect the watcher with /watcher, then write supported markers in a configured text file.",
+    "situations": [
+      {
+        "when": "A code review note should become a focused implementation turn",
+        "use": "Place an intent marker beside the relevant code."
+      },
+      {
+        "when": "A question belongs next to the source that prompted it",
+        "use": "Place a question marker and let the watcher carry file context into Pi."
+      },
+      {
+        "when": "Nearby comments should guide but not trigger work",
+        "use": "Use context markers alongside one actionable marker."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Debounced file watching across configured roots without following symlinks.",
+    "Marker parsing, focused turn dispatch, and guarded cleanup after settlement."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/pi-ralph-loop",
+      "relationship": "Watcher handles small editor-driven follow-ups; Ralph handles durable plan-driven iterations."
+    },
+    {
+      "entryId": "extension/explanatory-output-style",
+      "relationship": "Explanatory guidance can add code-specific learning notes to watcher-triggered implementation turns."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What can change in the source file?",
+      "answer": [
+        "Live watching is an interactive editor workflow, only actionable markers trigger a turn, and handled comments may be removed after completion."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Saving a supported actionable marker creates one focused follow-up turn.",
+    "After successful settlement, handled marker comments are removed only within the guarded source path."
+  ],
+  "setupNotes": [
+    "Created and maintained by Vedang under the WTFPL.",
+    "The package needs interactive Pi, configured roots, and supported text files.",
+    "Behavior claims were reviewed against the installed Git revision."
+  ],
+  "commands": ["/watcher"]
+}

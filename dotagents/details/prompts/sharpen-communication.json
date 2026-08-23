@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Sharpen communication reworks supplied writing around its main point, audience, intent, and desired outcome.",
+    "It preserves intended meaning while proposing structure and wording; it does not verify underlying facts or commitments."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Invoke the named prompt template explicitly and supply the communication to revise.",
+    "situations": [
+      {
+        "when": "A message buries its conclusion or request",
+        "use": "Move the main point forward and organize support beneath it."
+      },
+      {
+        "when": "A draft repeats itself or relies on weak verbs",
+        "use": "Remove redundancy and tighten phrasing without changing intent."
+      },
+      {
+        "when": "Audience, tone, or desired outcome is unclear",
+        "use": "Ask targeted questions before rewriting."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A named operator recipe for structured communication revision.",
+    "A rewrite, change explanation, and final review checklist."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/handoff",
+      "relationship": "It can tighten a handoff goal or brief before the extension transfers context."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What still needs human review?",
+      "answer": [
+        "It proposes wording rather than verifying facts or negotiation outcomes; users should review tone, nuance, and commitments before sending."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The revised communication states its main point and desired outcome early.",
+    "The response explains material changes and flags assumptions requiring review."
+  ],
+  "setupNotes": [
+    "Written and maintained by Vedang under the WTFPL.",
+    "The prompt requires explicit invocation in a harness that supports named templates and argument interpolation.",
+    "Behavior claims were reviewed against the pinned Dotagents revision."
+  ],
+  "commands": ["/sharpen-communication <message>"]
+}

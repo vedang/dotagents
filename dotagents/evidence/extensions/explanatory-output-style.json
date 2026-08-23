@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/explanatory-output-style",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Defines guidance asking for brief, code-specific educational insights around implementation work.",
+      "sourcePath": "pi-extensions/explanatory-output-style.ts",
+      "sourceLines": "12-22"
+    },
+    {
+      "claim": "Checks a sentinel before injection so the guidance is not appended twice.",
+      "sourcePath": "pi-extensions/explanatory-output-style.ts",
+      "sourceLines": "24-35"
+    },
+    {
+      "claim": "Appends the guidance through the before-agent-start hook.",
+      "sourcePath": "pi-extensions/explanatory-output-style.ts",
+      "sourceLines": "37-42"
+    }
+  ]
+}

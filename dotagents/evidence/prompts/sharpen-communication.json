@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "entryId": "prompt/sharpen-communication",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Requests bottom-line-first and mutually exclusive, collectively exhaustive structure, redundancy removal, stronger verbs, and intent preservation.",
+      "sourcePath": "prompts/sharpen-communication.md",
+      "sourceLines": "5-15"
+    },
+    {
+      "claim": "Requests targeted clarification before rewriting when key context is missing.",
+      "sourcePath": "prompts/sharpen-communication.md",
+      "sourceLines": "17-24"
+    },
+    {
+      "claim": "Returns a rewrite, an explanation of material changes, and a checklist.",
+      "sourcePath": "prompts/sharpen-communication.md",
+      "sourceLines": "26-44"
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "excluded": [
+    {
+      "kind": "extension",
+      "source": "pi-extensions/wel.ts",
+      "reason": "Personal integration is outside the public catalog boundary."
+    },
+    {
+      "kind": "skill",
+      "source": "skills/docx/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "skills/mck-consult/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "skills/pdf/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "skills/pptx/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "skills/skill-creator/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "skills/xlsx/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/agents-sdk/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/cloudflare-email-service/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/cloudflare-one-migrations/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/cloudflare-one/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/cloudflare/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/durable-objects/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/sandbox-sdk/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/stripe-best-practices/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/stripe-directory/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/stripe-projects/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/turnstile-spin/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/upgrade-stripe/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/web-perf/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/workers-best-practices/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "specific_skills/wrangler/SKILL.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "prompts/orchestration-watchdog.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/ghoseb/pi-askuserquestion",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/ghoseb/pi-damage-control",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/mattleong/pi-better-openai",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/unravel-team/dafny-estimation",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/unravel-team/denote-mono",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/unravel-team/thing.git",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/unravel-team/unravel-proposal-creator",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/caveman",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/chrome-cdp-skill",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/pi-adr",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/pi-boomerang",
+      "reason": "Excluded pending license and fork-policy resolution."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/pi-btw",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/pi-prompt-history",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/pi-quizme",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/pi-review-code",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/pi-simplify-code",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/shaping-skills",
+      "reason": "Excluded pending upstream publication permission or a license."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/Whamp/pi-read-map",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "npm:pi-interactive-shell",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "npm:pi-intercom",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "npm:pi-web-access",
+      "reason": "Not selected for the launch catalog."
+    }
+  ]
+}

@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "metadata": {
+    "title": "Dotagents",
+    "tagline": "A source-backed guide to the extensions, skills, and prompts in Vedang's agent setup.",
+    "repository": "https://github.com/vedang/dotagents"
+  },
+  "projects": [
+    {
+      "id": "project/handoff",
+      "title": "Handoff",
+      "installedLocator": "pi-extensions/handoff.ts",
+      "canonicalUrl": "https://github.com/vedang/dotagents",
+      "upstreamUrl": "https://github.com/earendil-works/pi",
+      "relationship": "adopted",
+      "originalAuthors": ["Mario Zechner"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    },
+    {
+      "id": "project/explanatory-output-style",
+      "title": "Explanatory output style",
+      "installedLocator": "pi-extensions/explanatory-output-style.ts",
+      "canonicalUrl": "https://github.com/vedang/dotagents",
+      "upstreamUrl": "https://github.com/anthropics/claude-code",
+      "relationship": "adopted",
+      "originalAuthors": ["Anthropic PBC"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    },
+    {
+      "id": "project/mac-system-theme",
+      "title": "Mac system theme",
+      "installedLocator": "pi-extensions/mac-system-theme.ts",
+      "canonicalUrl": "https://github.com/vedang/dotagents",
+      "upstreamUrl": "https://github.com/earendil-works/pi",
+      "relationship": "adopted",
+      "originalAuthors": ["Mario Zechner"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    },
+    {
+      "id": "project/notify",
+      "title": "Notify",
+      "installedLocator": "pi-extensions/notify.ts",
+      "canonicalUrl": "https://github.com/vedang/dotagents",
+      "upstreamUrl": "https://github.com/earendil-works/pi",
+      "relationship": "adopted",
+      "originalAuthors": ["Fero"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    },
+    {
+      "id": "project/status-line",
+      "title": "Status line",
+      "installedLocator": "pi-extensions/status-line.ts",
+      "canonicalUrl": "https://github.com/vedang/dotagents",
+      "upstreamUrl": "https://github.com/earendil-works/pi",
+      "relationship": "adopted",
+      "originalAuthors": ["Mario Zechner"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    },
+    {
+      "id": "project/pi-subagents",
+      "title": "Pi Subagents",
+      "installedLocator": "git:github.com/nicobailon/pi-subagents",
+      "canonicalUrl": "https://github.com/nicobailon/pi-subagents",
+      "relationship": "original",
+      "originalAuthors": ["Nico Bailon"],
+      "currentMaintainers": ["Nico Bailon"],
+      "reviewedRevision": "b6161f661723a6c223d1bf46e4d883f703b44aca"
+    },
+    {
+      "id": "project/visual-explainer",
+      "title": "Visual Explainer",
+      "installedLocator": "git:github.com/vedang/visual-explainer",
+      "canonicalUrl": "https://github.com/vedang/visual-explainer",
+      "upstreamUrl": "https://github.com/nicobailon/visual-explainer",
+      "relationship": "fork",
+      "originalAuthors": ["Nico Bailon"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c"
+    },
+    {
+      "id": "project/pi-watcher",
+      "title": "Pi Watcher",
+      "installedLocator": "git:github.com/vedang/pi-watcher",
+      "canonicalUrl": "https://github.com/vedang/pi-watcher",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "501fa8054ede04afdbe5284c310118d6c871f0f6"
+    },
+    {
+      "id": "project/pi-ralph-loop",
+      "title": "Pi Ralph Loop",
+      "installedLocator": "git:github.com/vedang/pi-ralph-loop",
+      "canonicalUrl": "https://github.com/vedang/pi-ralph-loop",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "49c6bde25385392d0999155708a141028d5d80f2"
+    },
+    {
+      "id": "project/tufte-viz",
+      "title": "Tufte visualization skill",
+      "installedLocator": "skills/tufte-viz/SKILL.md",
+      "canonicalUrl": "https://github.com/vedang/dotagents",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    },
+    {
+      "id": "project/sharpen-communication",
+      "title": "Sharpen communication prompt",
+      "installedLocator": "prompts/sharpen-communication.md",
+      "canonicalUrl": "https://github.com/vedang/dotagents",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    }
+  ],
+  "licenses": [
+    {
+      "id": "pi-examples-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/earendil-works/pi/blob/c49906ec77788625aacbdc53ebca6fbe65bd20f5/LICENSE"
+      },
+      "scope": {
+        "type": "local-paths",
+        "pathPrefixes": [
+          "pi-extensions/handoff.ts",
+          "pi-extensions/mac-system-theme.ts",
+          "pi-extensions/notify.ts",
+          "pi-extensions/status-line.ts"
+        ]
+      },
+      "publicationScope": "Independently written catalog summary plus source link and upstream attribution; retain MIT attribution.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-22"
+    },
+    {
+      "id": "anthropic-commercial",
+      "scheme": "custom",
+      "identifier": "Anthropic commercial terms",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/anthropics/claude-code/blob/5cfc0a1905ce0c0a9bd81d8a90fe6b62ff614357/LICENSE.md"
+      },
+      "scope": {
+        "type": "local-paths",
+        "pathPrefixes": ["pi-extensions/explanatory-output-style.ts"]
+      },
+      "publicationScope": "Independently written factual summary only; do not republish operational guidance.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-22"
+    },
+    {
+      "id": "dotagents-wtfpl",
+      "scheme": "spdx",
+      "identifier": "WTFPL",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/dotagents/blob/9a0af933d90ad9175eca0ff27db6624c5d6bb4fe/LICENSE.txt"
+      },
+      "scope": {
+        "type": "local-paths",
+        "pathPrefixes": [
+          "skills/tufte-viz/",
+          "prompts/sharpen-communication.md"
+        ]
+      },
+      "publicationScope": "Source link, independently written summary, and reviewed behavior claims.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-22"
+    },
+    {
+      "id": "pi-subagents-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-subagents"]
+      },
+      "publicationScope": "Source link, independently written summary, attribution, and reviewed behavior claims.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-22"
+    },
+    {
+      "id": "visual-explainer-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/visual-explainer"]
+      },
+      "publicationScope": "Source link, independently written summary, original-author/fork attribution, and reviewed behavior claims.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-22"
+    },
+    {
+      "id": "pi-watcher-wtfpl",
+      "scheme": "spdx",
+      "identifier": "WTFPL",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-watcher/blob/501fa8054ede04afdbe5284c310118d6c871f0f6/LICENSE.txt"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-watcher"]
+      },
+      "publicationScope": "Source link, independently written summary, and reviewed behavior claims.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-22"
+    },
+    {
+      "id": "pi-ralph-no-license",
+      "scheme": "custom",
+      "identifier": "All rights reserved (no license declared)",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-ralph-loop/blob/49c6bde25385392d0999155708a141028d5d80f2/package.json"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-ralph-loop"]
+      },
+      "publicationScope": "Independently written factual summary and source link only; no source reuse permission asserted.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-22"
+    }
+  ],
+  "entries": [
+    {
+      "id": "extension/handoff",
+      "projectId": "project/handoff",
+      "licenseRef": "pi-examples-mit",
+      "slug": "handoff",
+      "name": "Handoff",
+      "kind": "extension",
+      "delivery": "local-file",
+      "source": {
+        "path": "pi-extensions/handoff.ts"
+      },
+      "summary": "`/handoff <goal>` turns the useful parts of the current conversation into an editable prompt, then opens a linked fresh session.",
+      "activation": ["user-command"],
+      "compatibility": [
+        "Interactive Pi session",
+        "Selected model and credentials",
+        "Session replacement UI"
+      ],
+      "useAreas": ["context-transfer", "session-management"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/handoff.json",
+      "evidencePath": "dotagents/evidence/extensions/handoff.json"
+    },
+    {
+      "id": "extension/explanatory-output-style",
+      "projectId": "project/explanatory-output-style",
+      "licenseRef": "anthropic-commercial",
+      "slug": "explanatory-output-style",
+      "name": "Explanatory output style",
+      "kind": "extension",
+      "delivery": "local-file",
+      "source": {
+        "path": "pi-extensions/explanatory-output-style.ts"
+      },
+      "summary": "Adds explanatory guidance before each agent run so implementation work includes short, code-specific learning notes.",
+      "activation": ["automatic", "hook"],
+      "compatibility": ["Pi before_agent_start hook"],
+      "useAreas": ["learning", "implementation"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/explanatory-output-style.json",
+      "evidencePath": "dotagents/evidence/extensions/explanatory-output-style.json"
+    },
+    {
+      "id": "extension/mac-system-theme",
+      "projectId": "project/mac-system-theme",
+      "licenseRef": "pi-examples-mit",
+      "slug": "mac-system-theme",
+      "name": "Mac system theme",
+      "kind": "extension",
+      "delivery": "local-file",
+      "source": {
+        "path": "pi-extensions/mac-system-theme.ts"
+      },
+      "summary": "Keeps interactive Pi sessions aligned with macOS light or dark appearance.",
+      "activation": ["automatic", "hook"],
+      "compatibility": ["macOS", "osascript", "Interactive Pi UI"],
+      "useAreas": ["appearance", "desktop-integration"],
+      "publication": "listed"
+    },
+    {
+      "id": "extension/notify",
+      "projectId": "project/notify",
+      "licenseRef": "pi-examples-mit",
+      "slug": "notify",
+      "name": "Notify",
+      "kind": "extension",
+      "delivery": "local-file",
+      "source": {
+        "path": "pi-extensions/notify.ts"
+      },
+      "summary": "Sends a fixed ‘ready for input’ notification through Windows, Kitty, or OSC-compatible terminal protocols.",
+      "activation": ["automatic", "hook"],
+      "compatibility": [
+        "Windows Terminal and PowerShell",
+        "Kitty",
+        "OSC 777-capable terminal"
+      ],
+      "useAreas": ["notifications", "terminal-integration"],
+      "publication": "listed"
+    },
+    {
+      "id": "extension/status-line",
+      "projectId": "project/status-line",
+      "licenseRef": "pi-examples-mit",
+      "slug": "status-line",
+      "name": "Status line",
+      "kind": "extension",
+      "delivery": "local-file",
+      "source": {
+        "path": "pi-extensions/status-line.ts"
+      },
+      "summary": "Shows ready, running, and completed turn states in Pi’s themed footer.",
+      "activation": ["automatic", "hook"],
+      "compatibility": ["Interactive Pi status and theme APIs"],
+      "useAreas": ["status", "session-feedback"],
+      "publication": "listed"
+    },
+    {
+      "id": "extension/pi-subagents",
+      "projectId": "project/pi-subagents",
+      "licenseRef": "pi-subagents-mit",
+      "slug": "pi-subagents",
+      "name": "Pi Subagents",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/nicobailon/pi-subagents",
+        "path": "src/extension/index.ts"
+      },
+      "summary": "Adds controlled subagent delegation, scripted multi-agent workflows, background execution, and recovery surfaces to Pi.",
+      "activation": ["model-invoked", "tool", "user-command"],
+      "compatibility": [
+        "Pi package APIs",
+        "Child model and tool configuration"
+      ],
+      "useAreas": ["delegation", "orchestration", "background-execution"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-subagents.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-subagents.json"
+    },
+    {
+      "id": "extension/visual-explainer",
+      "projectId": "project/visual-explainer",
+      "licenseRef": "visual-explainer-mit",
+      "slug": "visual-explainer",
+      "name": "Visual Explainer",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/visual-explainer",
+        "path": "plugins/visual-explainer/extension.ts"
+      },
+      "summary": "Plans and writes self-contained HTML visual explanations for architecture, changes, plans, data, and technical concepts.",
+      "activation": ["model-invoked", "tool"],
+      "compatibility": [
+        "Pi package APIs",
+        "Optional browser opener",
+        "Optional subagent-aware preparation"
+      ],
+      "useAreas": ["visual-explanation", "architecture", "communication"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/visual-explainer.json",
+      "evidencePath": "dotagents/evidence/extensions/visual-explainer.json"
+    },
+    {
+      "id": "extension/pi-watcher",
+      "projectId": "project/pi-watcher",
+      "licenseRef": "pi-watcher-wtfpl",
+      "slug": "pi-watcher",
+      "name": "Pi Watcher",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-watcher",
+        "path": "src/index.ts"
+      },
+      "summary": "Turns `AI!`, `AI?`, and context markers in editor comments into focused Pi follow-up turns.",
+      "activation": ["automatic", "user-command"],
+      "compatibility": [
+        "Interactive Pi",
+        "Configured roots",
+        "Supported text files"
+      ],
+      "useAreas": ["editor-workflow", "focused-feedback", "file-watching"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-watcher.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-watcher.json"
+    },
+    {
+      "id": "extension/pi-ralph-loop",
+      "projectId": "project/pi-ralph-loop",
+      "licenseRef": "pi-ralph-no-license",
+      "slug": "pi-ralph-loop",
+      "name": "Pi Ralph Loop",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-ralph-loop",
+        "path": "src/index.ts"
+      },
+      "summary": "Runs a plan from durable plan/progress files one task per iteration, with feedback, commits, context collapse, and explicit completion.",
+      "activation": ["user-command"],
+      "compatibility": [
+        "Pi session navigation and compaction APIs",
+        "Writable planning directory",
+        "Version-control workflow"
+      ],
+      "useAreas": ["iterative-execution", "planning", "feedback-loops"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-ralph-loop.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-ralph-loop.json"
+    },
+    {
+      "id": "skill/tufte-viz",
+      "projectId": "project/tufte-viz",
+      "licenseRef": "dotagents-wtfpl",
+      "slug": "tufte-viz",
+      "name": "Tufte visualization",
+      "kind": "skill",
+      "delivery": "local-file",
+      "source": {
+        "path": "skills/tufte-viz/SKILL.md"
+      },
+      "summary": "Applies Tufte-inspired checks to design or critique clear, dense, honest data visualizations.",
+      "activation": ["model-invoked"],
+      "compatibility": [
+        "Agent Skills",
+        "Markdown-only",
+        "No runtime dependency"
+      ],
+      "useAreas": [
+        "data-visualization",
+        "design-critique",
+        "graphical-integrity"
+      ],
+      "publication": "featured",
+      "detailPath": "dotagents/details/skills/tufte-viz.json",
+      "evidencePath": "dotagents/evidence/skills/tufte-viz.json"
+    },
+    {
+      "id": "prompt/sharpen-communication",
+      "projectId": "project/sharpen-communication",
+      "licenseRef": "dotagents-wtfpl",
+      "slug": "sharpen-communication",
+      "name": "Sharpen communication",
+      "kind": "prompt",
+      "delivery": "local-file",
+      "source": {
+        "path": "prompts/sharpen-communication.md"
+      },
+      "summary": "Reworks supplied communication around its main point, audience, intent, and desired outcome.",
+      "activation": ["user-command"],
+      "compatibility": ["Named prompt templates", "Argument interpolation"],
+      "useAreas": ["writing", "editing", "communication"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/prompts/sharpen-communication.json",
+      "evidencePath": "dotagents/evidence/prompts/sharpen-communication.json"
+    }
+  ]
+}

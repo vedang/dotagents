@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/visual-explainer",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Preparation validates inputs and returns guidance for a context-gathering explanation flow.",
+      "sourceUrl": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/plugins/visual-explainer/extension.ts#L195-L257"
+    },
+    {
+      "claim": "Rendering requires a complete HTML document and writes under one diagrams directory with symlink checks.",
+      "sourceUrl": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/plugins/visual-explainer/extension.ts#L260-L299"
+    },
+    {
+      "claim": "Registers one tool with sequential prepare and render actions.",
+      "sourceUrl": "https://github.com/vedang/visual-explainer/blob/0d8d26471ca0d8d50ffe1eb7009c62f56c092c5c/plugins/visual-explainer/extension.ts#L303-L322"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-subagents",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "b6161f661723a6c223d1bf46e4d883f703b44aca"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Declares scripted workflow execution with asynchronous operation as the default.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/extension/index.ts#L1-L10"
+    },
+    {
+      "claim": "Registers the subagent tool and exposes the public workflow executor.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/extension/index.ts#L638-L684"
+    },
+    {
+      "claim": "Registers wait and slash-command surfaces for lifecycle and operator control.",
+      "sourceUrl": "https://github.com/nicobailon/pi-subagents/blob/b6161f661723a6c223d1bf46e4d883f703b44aca/src/extension/index.ts#L686-L709"
+    }
+  ]
+}

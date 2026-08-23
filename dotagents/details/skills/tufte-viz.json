@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "This skill applies Tufte-inspired checks to design or critique clear, dense, honest data visualizations.",
+    "It supplies a reasoning checklist, not a chart renderer or an endorsement by Edward Tufte or Graphics Press."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Ask the model to design, critique, or improve a visualization.",
+    "situations": [
+      {
+        "when": "A chart must show comparisons without distortion",
+        "use": "Choose an encoding and check graphical integrity."
+      },
+      {
+        "when": "A dashboard feels cluttered or repetitive",
+        "use": "Reduce non-data ink and redundant decoration."
+      },
+      {
+        "when": "Several related views need consistent comparison",
+        "use": "Consider small multiples and shared scales."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A model-invoked workflow for visualization design and critique.",
+    "Checks for data density, non-data ink, chartjunk, redundancy, and truthful scale."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/visual-explainer",
+      "relationship": "Visual Explainer can render an artifact after this skill sharpens its quantitative displays."
+    }
+  ],
+  "questions": [
+    {
+      "question": "How authoritative are its recommendations?",
+      "answer": [
+        "This is a reasoning checklist, not a renderer or legal/academic authority; recommendations remain context-dependent."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The recommendation names the comparison the viewer should make.",
+    "The critique identifies distortion or chartjunk and proposes a smaller, checkable correction."
+  ],
+  "setupNotes": [
+    "Written and maintained by Vedang under the WTFPL, drawing on principles published by Edward Tufte; not affiliated with or endorsed by Edward Tufte or Graphics Press.",
+    "The local Agent Skill is Markdown-only and has no runtime dependency.",
+    "Behavior claims were reviewed against the pinned Dotagents revision."
+  ],
+  "commands": []
+}

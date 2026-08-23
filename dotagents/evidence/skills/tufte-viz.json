@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "entryId": "skill/tufte-viz",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-22",
+  "claims": [
+    {
+      "claim": "Names visualization design and critique triggers plus the principles applied.",
+      "sourcePath": "skills/tufte-viz/SKILL.md",
+      "sourceLines": "1-12"
+    },
+    {
+      "claim": "The design workflow chooses the intended comparison and reduces non-data ink.",
+      "sourcePath": "skills/tufte-viz/SKILL.md",
+      "sourceLines": "20-38"
+    },
+    {
+      "claim": "The critique workflow checks graphical integrity, chartjunk, and redundant encoding.",
+      "sourcePath": "skills/tufte-viz/SKILL.md",
+      "sourceLines": "40-57"
+    }
+  ]
+}

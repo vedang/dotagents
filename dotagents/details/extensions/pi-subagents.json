@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Subagents adds controlled delegation, scripted multi-agent workflows, background execution, and recovery surfaces to Pi.",
+    "Each child runs under an explicit model, tool, context, and execution contract chosen by the parent workflow."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Ask the model to use the subagent tool or invoke one of the package's operator commands.",
+    "situations": [
+      {
+        "when": "Independent research or review lanes can run in parallel",
+        "use": "Launch bounded children and aggregate their outputs."
+      },
+      {
+        "when": "One parent should retain decisions while another agent implements or reviews",
+        "use": "Delegate the narrow role and keep final authority in the parent session."
+      },
+      {
+        "when": "Long work should continue without blocking the interactive session",
+        "use": "Run the child in the background and recover through persisted status."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "One model-invoked delegation tool with sequential and parallel workflow controls.",
+    "Background lifecycle, wait, recovery, and operator-facing command surfaces."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/handoff",
+      "relationship": "Subagents divide work inside an orchestration; handoff moves selected context to a fresh top-level session."
+    },
+    {
+      "entryId": "extension/visual-explainer",
+      "relationship": "Visual Explainer can recommend a subagent context-gathering pass before rendering."
+    },
+    {
+      "entryId": "extension/pi-ralph-loop",
+      "relationship": "Ralph governs durable task iterations; subagents provide bounded execution and review lanes within them."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What are the operating costs?",
+      "answer": [
+        "Each child consumes model time and may receive narrower context or tools; this setup reviews the installed revision, not current upstream main."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The parent receives a completed child result or a recoverable background status.",
+    "Child tools and context match the contract supplied at launch."
+  ],
+  "setupNotes": [
+    "Created and maintained by Nico Bailon; installed directly from the original MIT-licensed project.",
+    "The package is installed from its Git repository and depends on Pi package APIs plus child model and tool configuration.",
+    "Behavior claims were reviewed against the installed revision rather than a moving branch."
+  ],
+  "commands": []
+}
