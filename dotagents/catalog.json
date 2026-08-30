@@ -121,6 +121,171 @@
       "originalAuthors": ["Vedang Manerikar"],
       "currentMaintainers": ["Vedang Manerikar"],
       "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+    },
+    {
+      "id": "project/pi-askuserquestion",
+      "title": "Pi AskUserQuestion",
+      "installedLocator": "git:github.com/ghoseb/pi-askuserquestion",
+      "canonicalUrl": "https://github.com/ghoseb/pi-askuserquestion",
+      "relationship": "original",
+      "originalAuthors": ["Baishampayan Ghose"],
+      "currentMaintainers": ["Baishampayan Ghose"],
+      "reviewedRevision": "e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578"
+    },
+    {
+      "id": "project/pi-better-openai",
+      "title": "Pi Better OpenAI",
+      "installedLocator": "git:github.com/mattleong/pi-better-openai",
+      "canonicalUrl": "https://github.com/mattleong/pi-better-openai",
+      "relationship": "original",
+      "originalAuthors": ["Matt Leong"],
+      "currentMaintainers": ["Matt Leong"],
+      "reviewedRevision": "58273a6aeeb387bc61c6ec68cabd867952611bf4"
+    },
+    {
+      "id": "project/pi-boomerang",
+      "title": "Pi Boomerang",
+      "installedLocator": "git:github.com/vedang/pi-boomerang",
+      "canonicalUrl": "https://github.com/vedang/pi-boomerang",
+      "upstreamUrl": "https://github.com/nicobailon/pi-boomerang",
+      "relationship": "fork",
+      "originalAuthors": ["Nico Bailon"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca"
+    },
+    {
+      "id": "project/denote-mono",
+      "title": "Denote Mono",
+      "installedLocator": "git:github.com/unravel-team/denote-mono",
+      "canonicalUrl": "https://github.com/unravel-team/denote-mono",
+      "upstreamUrl": "https://github.com/protesilaos/denote",
+      "relationship": "adopted",
+      "originalAuthors": ["Protesilaos Stavrou"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "b1ede211d6324eb2f0d3812fd69eac020d31925e"
+    },
+    {
+      "id": "project/caveman",
+      "title": "Caveman",
+      "installedLocator": "git:github.com/vedang/caveman",
+      "canonicalUrl": "https://github.com/vedang/caveman",
+      "upstreamUrl": "https://github.com/JuliusBrussee/caveman",
+      "relationship": "fork",
+      "originalAuthors": ["Julius Brussee"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "2ae85e3ea7a0e7db89bbb71c497a68ebac952559"
+    },
+    {
+      "id": "project/chrome-cdp",
+      "title": "Chrome CDP",
+      "installedLocator": "git:github.com/vedang/chrome-cdp-skill",
+      "canonicalUrl": "https://github.com/vedang/chrome-cdp-skill",
+      "upstreamUrl": "https://github.com/pasky/chrome-cdp-skill",
+      "relationship": "fork",
+      "originalAuthors": ["Petr Baudis"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "24d2354b1041a51219d3e42013162e83b787e740"
+    },
+    {
+      "id": "project/pi-adr",
+      "title": "Pi ADR",
+      "installedLocator": "git:github.com/vedang/pi-adr",
+      "canonicalUrl": "https://github.com/unravel-team/pi-adr",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "8f10418d7fbec46c3a75e6f54b2b8a3be26d4958"
+    },
+    {
+      "id": "project/pi-btw",
+      "title": "Pi BTW",
+      "installedLocator": "git:github.com/vedang/pi-btw",
+      "canonicalUrl": "https://github.com/vedang/pi-btw",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "2996676ecde01da55c1489b62f13c1f70ceb472d"
+    },
+    {
+      "id": "project/pi-exa",
+      "title": "Pi Exa",
+      "installedLocator": "git:github.com/vedang/pi-exa",
+      "canonicalUrl": "https://github.com/vedang/pi-exa",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "34e083e304206107cc2e0c0171f378a1103a64f3"
+    },
+    {
+      "id": "project/pi-prompt-history",
+      "title": "Pi Prompt History",
+      "installedLocator": "git:github.com/vedang/pi-prompt-history",
+      "canonicalUrl": "https://github.com/vedang/pi-prompt-history",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "eedbef7afdf16a317785be469f600d71fadc9ef0"
+    },
+    {
+      "id": "project/pi-quizme",
+      "title": "Pi Quiz Me",
+      "installedLocator": "git:github.com/vedang/pi-quizme",
+      "canonicalUrl": "https://github.com/vedang/pi-quizme",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "dbb6249a78aef1dc2bfb1bf9221479903e9bf861"
+    },
+    {
+      "id": "project/pi-review-code",
+      "title": "Pi Review Code",
+      "installedLocator": "git:github.com/vedang/pi-review-code",
+      "canonicalUrl": "https://github.com/vedang/pi-review-code",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "305a398f8b6a7da2817681c2e54f69a2a1840714"
+    },
+    {
+      "id": "project/pi-simplify-code",
+      "title": "Pi Simplify Code",
+      "installedLocator": "git:github.com/vedang/pi-simplify-code",
+      "canonicalUrl": "https://github.com/vedang/pi-simplify-code",
+      "relationship": "original",
+      "originalAuthors": ["Vedang Manerikar"],
+      "currentMaintainers": ["Vedang Manerikar"],
+      "reviewedRevision": "2abab5dfff3269d1ab9be199e9d0e68a27767024"
+    },
+    {
+      "id": "project/pi-read-map",
+      "title": "Pi Read Map",
+      "installedLocator": "git:github.com/Whamp/pi-read-map",
+      "canonicalUrl": "https://github.com/Whamp/pi-read-map",
+      "upstreamUrl": "https://github.com/kcosr/codemap",
+      "relationship": "adopted",
+      "originalAuthors": ["Kevin"],
+      "currentMaintainers": ["Will Hampson"],
+      "reviewedRevision": "97b6a73305000845d22646f62c72fbf6121e16f3"
+    },
+    {
+      "id": "project/pi-interactive-shell",
+      "title": "Pi Interactive Shell",
+      "installedLocator": "npm:pi-interactive-shell",
+      "canonicalUrl": "https://github.com/nicobailon/pi-interactive-shell",
+      "relationship": "original",
+      "originalAuthors": ["Nico Bailon"],
+      "currentMaintainers": ["Nico Bailon"],
+      "reviewedRevision": "c5dac7836f6886ed001697acddc15d56fbefe199"
+    },
+    {
+      "id": "project/pi-intercom",
+      "title": "Pi Intercom",
+      "installedLocator": "npm:pi-intercom",
+      "canonicalUrl": "https://github.com/nicobailon/pi-intercom",
+      "relationship": "original",
+      "originalAuthors": ["Nico Bailon"],
+      "currentMaintainers": ["Nico Bailon"],
+      "reviewedRevision": "0685e199b7003cddbb190352f1669fe23be8b9c2"
     }
   ],
   "licenses": [
@@ -243,6 +408,278 @@
       "publicationScope": "Independently written factual summary and source link only; no source reuse permission asserted.",
       "reviewedBy": "Vedang Manerikar",
       "reviewedOn": "2026-08-22"
+    },
+    {
+      "id": "pi-askuserquestion-readme-license-notice",
+      "scheme": "custom",
+      "identifier": "MIT named in README; license text not included",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/README.md"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-askuserquestion"]
+      },
+      "publicationScope": "Independently written factual summary and source link only; no source reuse permission is inferred from the incomplete license notice.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-better-openai-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-better-openai"]
+      },
+      "publicationScope": "Source link, independently written summary, attribution, and reviewed behavior claims; retain the MIT notice for any source reuse.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-boomerang-no-license",
+      "scheme": "custom",
+      "identifier": "All rights reserved (no license declared)",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/package.json"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-boomerang"]
+      },
+      "publicationScope": "Independently written factual prose, source links, and full fork attribution only; no source reuse permission is asserted.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "denote-mono-gpl-3-only",
+      "scheme": "custom",
+      "identifier": "GPL-3.0-only",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/unravel-team/denote-mono/blob/b1ede211d6324eb2f0d3812fd69eac020d31925e/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/denote-mono"]
+      },
+      "publicationScope": "Source link, independently written factual summary, original-project attribution, and reviewed behavior claims; source redistribution must follow GPL-3.0-only.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "caveman-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/caveman/blob/2ae85e3ea7a0e7db89bbb71c497a68ebac952559/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/caveman"]
+      },
+      "publicationScope": "Source link, independently written summary, original-author and fork attribution, and reviewed behavior claims; retain MIT attribution.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "chrome-cdp-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/chrome-cdp-skill/blob/24d2354b1041a51219d3e42013162e83b787e740/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/chrome-cdp"]
+      },
+      "publicationScope": "Source link, independently written summary, original-author and fork attribution, and reviewed behavior claims; retain MIT attribution.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-adr-no-license",
+      "scheme": "custom",
+      "identifier": "All rights reserved (no license declared)",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/unravel-team/pi-adr/blob/8f10418d7fbec46c3a75e6f54b2b8a3be26d4958/package.json"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-adr"]
+      },
+      "publicationScope": "Independently written factual summary and source link only; no source reuse permission asserted.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-btw-no-license",
+      "scheme": "custom",
+      "identifier": "All rights reserved (no license declared)",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/package.json"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-btw"]
+      },
+      "publicationScope": "Independently written factual summary and source link only; no source reuse permission asserted.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-exa-no-license",
+      "scheme": "custom",
+      "identifier": "All rights reserved (no license declared)",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/package.json"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-exa"]
+      },
+      "publicationScope": "Independently written factual summary and source link only; no source reuse permission asserted.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-prompt-history-wtfpl",
+      "scheme": "spdx",
+      "identifier": "WTFPL",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/LICENSE.txt"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-prompt-history"]
+      },
+      "publicationScope": "Source link, independently written summary, and reviewed behavior claims.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-quizme-no-license",
+      "scheme": "custom",
+      "identifier": "All rights reserved (no license declared)",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/package.json"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-quizme"]
+      },
+      "publicationScope": "Independently written factual summary and source link only; no source reuse permission asserted.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-review-code-no-license",
+      "scheme": "custom",
+      "identifier": "All rights reserved (no license declared)",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/package.json"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-review-code"]
+      },
+      "publicationScope": "Independently written factual summary and source link only; no source reuse permission asserted.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-simplify-code-wtfpl",
+      "scheme": "spdx",
+      "identifier": "WTFPL",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/vedang/pi-simplify-code/blob/2abab5dfff3269d1ab9be199e9d0e68a27767024/LICENSE.txt"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-simplify-code"]
+      },
+      "publicationScope": "Source link, independently written summary, attribution, and reviewed behavior claims.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-read-map-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-read-map"]
+      },
+      "publicationScope": "Source link, independently written summary, attribution, and reviewed behavior claims; retain Will Hampson's MIT notice and Kevin's upstream Codemap MIT notice for reused portions.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "codemap-upstream-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/kcosr/codemap/blob/c8c178e21a5afef81ab543fd1f444ad3a7586ff2/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-read-map"]
+      },
+      "publicationScope": "Upstream-derived portions require Kevin's MIT notice; public catalog prose remains independently written and attributes Codemap as the foundation.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-interactive-shell-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/package.json"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-interactive-shell"]
+      },
+      "publicationScope": "Source link, independently written summary, attribution, and reviewed behavior claims; no package source text is republished.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
+    },
+    {
+      "id": "pi-intercom-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "url",
+        "value": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/LICENSE"
+      },
+      "scope": {
+        "type": "external-projects",
+        "projectIds": ["project/pi-intercom"]
+      },
+      "publicationScope": "Source link, independently written summary, attribution, and reviewed behavior and privacy-boundary claims.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-08-30"
     }
   ],
   "entries": [
@@ -492,6 +929,430 @@
       "publication": "featured",
       "detailPath": "dotagents/details/prompts/sharpen-communication.json",
       "evidencePath": "dotagents/evidence/prompts/sharpen-communication.json"
+    },
+    {
+      "id": "extension/pi-askuserquestion",
+      "projectId": "project/pi-askuserquestion",
+      "licenseRef": "pi-askuserquestion-readme-license-notice",
+      "slug": "pi-askuserquestion",
+      "name": "Pi AskUserQuestion",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/ghoseb/pi-askuserquestion",
+        "path": "src/index.ts"
+      },
+      "summary": "Adds a model-invoked question tool that collects one to four structured choices or free-text answers in Pi's interactive terminal UI.",
+      "limitation": "Requires an interactive Pi session; duplicate questions or option labels are rejected, and the tool disables itself when no UI is available.",
+      "activation": ["model-invoked", "tool"],
+      "compatibility": [
+        "Interactive Pi terminal UI",
+        "Pi extension and tool APIs",
+        "TypeBox-compatible tool schemas"
+      ],
+      "useAreas": ["clarification", "decision-making", "interactive-input"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-askuserquestion.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-askuserquestion.json"
+    },
+    {
+      "id": "extension/pi-better-openai",
+      "projectId": "project/pi-better-openai",
+      "licenseRef": "pi-better-openai-mit",
+      "slug": "pi-better-openai",
+      "name": "Pi Better OpenAI",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/mattleong/pi-better-openai",
+        "path": "index.ts"
+      },
+      "summary": "Adds OpenAI fast-mode request tiering, subscription usage feedback, footer controls, Codex image generation, and local pet rendering to Pi.",
+      "limitation": "Fast mode applies only to configured models; usage and image features require OpenAI Codex OAuth, and rendered pets need compatible terminal image support.",
+      "activation": [
+        "automatic",
+        "model-invoked",
+        "user-command",
+        "hook",
+        "tool"
+      ],
+      "compatibility": [
+        "Pi extension hooks, tools, and footer APIs",
+        "Node.js 22.19 or newer",
+        "OpenAI Codex OAuth for usage and image features",
+        "Optional terminal image support for rendered pets"
+      ],
+      "useAreas": [
+        "openai-workflows",
+        "image-generation",
+        "usage-monitoring",
+        "terminal-ui"
+      ],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-better-openai.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-better-openai.json"
+    },
+    {
+      "id": "extension/pi-boomerang",
+      "projectId": "project/pi-boomerang",
+      "licenseRef": "pi-boomerang-no-license",
+      "slug": "pi-boomerang",
+      "name": "Pi Boomerang",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-boomerang",
+        "path": "index.ts"
+      },
+      "summary": "Runs autonomous Pi tasks, then replaces their retained conversational detail with a generated session-tree summary while leaving workspace changes in place.",
+      "limitation": "Its summary is heuristic, it does not sandbox task execution or restore files, and the reviewed fork declares no source license; this guide supplies factual prose and links only.",
+      "activation": ["model-invoked", "user-command", "hook", "tool"],
+      "compatibility": [
+        "Pi extension, command, tool, and session-tree APIs",
+        "Pi prompt templates for template and chain execution",
+        "Available Pi models and skills when selected by template frontmatter"
+      ],
+      "useAreas": [
+        "autonomous-execution",
+        "context-management",
+        "prompt-orchestration"
+      ],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-boomerang.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-boomerang.json"
+    },
+    {
+      "id": "skill/llm-wiki-capture",
+      "projectId": "project/denote-mono",
+      "licenseRef": "denote-mono-gpl-3-only",
+      "slug": "llm-wiki-capture",
+      "name": "LLM Wiki Capture",
+      "kind": "skill",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/unravel-team/denote-mono",
+        "path": ".agents/skills/llm-wiki-capture/SKILL.md"
+      },
+      "summary": "Packages explicitly requested conversation knowledge into durable source material, sends it through `denote llm-wiki ingest`, and reports the resulting wiki changes.",
+      "limitation": "Capture persists material on disk and requires a configured Denote LLM Wiki environment; sensitive content needs review before ingestion.",
+      "activation": ["model-invoked"],
+      "compatibility": [
+        "Agent Skills",
+        "denote CLI with LLM Wiki configuration",
+        "Configured LLM provider",
+        "Writable persistent source directory"
+      ],
+      "useAreas": [
+        "knowledge-capture",
+        "personal-knowledge-management",
+        "documentation"
+      ],
+      "publication": "featured",
+      "detailPath": "dotagents/details/skills/llm-wiki-capture.json",
+      "evidencePath": "dotagents/evidence/skills/llm-wiki-capture.json"
+    },
+    {
+      "id": "extension/caveman",
+      "projectId": "project/caveman",
+      "licenseRef": "caveman-mit",
+      "slug": "caveman",
+      "name": "Caveman",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/caveman",
+        "path": "pi-extension/index.js"
+      },
+      "summary": "Adds selectable terse-response modes to Pi while preserving technical details and restoring explicit prose when safety or clarity requires it.",
+      "activation": ["automatic", "user-command", "hook"],
+      "compatibility": [
+        "Pi package APIs",
+        "Agent Skills",
+        "Writable user config directory for saved defaults"
+      ],
+      "useAreas": ["communication", "token-efficiency", "response-style"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/caveman.json",
+      "evidencePath": "dotagents/evidence/extensions/caveman.json"
+    },
+    {
+      "id": "skill/chrome-cdp",
+      "projectId": "project/chrome-cdp",
+      "licenseRef": "chrome-cdp-mit",
+      "slug": "chrome-cdp",
+      "name": "Chrome CDP",
+      "kind": "skill",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/chrome-cdp-skill",
+        "path": "skills/chrome-cdp/SKILL.md"
+      },
+      "summary": "After explicit user approval, guides an agent to inspect, debug, or interact with an existing local Chrome-family tab through a lightweight CDP CLI.",
+      "limitation": "Never use without explicit user approval; browser access can expose authenticated page state, and Chrome's Allow debugging prompt is an additional gate rather than consent for the agent task.",
+      "activation": ["model-invoked"],
+      "compatibility": [
+        "Agent Skills",
+        "Node.js 22+",
+        "Chrome-family browser with remote debugging enabled"
+      ],
+      "useAreas": [
+        "browser-inspection",
+        "browser-debugging",
+        "local-browser-interaction"
+      ],
+      "publication": "featured",
+      "detailPath": "dotagents/details/skills/chrome-cdp.json",
+      "evidencePath": "dotagents/evidence/skills/chrome-cdp.json"
+    },
+    {
+      "id": "skill/adr",
+      "projectId": "project/pi-adr",
+      "licenseRef": "pi-adr-no-license",
+      "slug": "adr",
+      "name": "ADR",
+      "kind": "skill",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-adr",
+        "path": "skills/adr/SKILL.md"
+      },
+      "summary": "Guides creation and maintenance of architecture decision records, with a bundled Bun CLI for deterministic filenames, links, reports, and validation.",
+      "limitation": "Helper commands require Bun, and the pinned repository declares no public source license; this catalog supplies factual notes and links only.",
+      "activation": ["model-invoked"],
+      "compatibility": ["Agent Skills", "Bun", "Markdown ADR repositories"],
+      "useAreas": [
+        "architecture-decisions",
+        "documentation",
+        "repository-maintenance"
+      ],
+      "publication": "featured",
+      "detailPath": "dotagents/details/skills/adr.json",
+      "evidencePath": "dotagents/evidence/skills/adr.json"
+    },
+    {
+      "id": "extension/pi-btw",
+      "projectId": "project/pi-btw",
+      "licenseRef": "pi-btw-no-license",
+      "slug": "pi-btw",
+      "name": "Pi BTW",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-btw",
+        "path": "src/index.ts"
+      },
+      "summary": "Runs bounded side questions in isolated read-only child sessions while the main workflow stays focused.",
+      "activation": ["user-command"],
+      "compatibility": [
+        "Interactive Pi",
+        "Pi child-session APIs",
+        "Selected model through Pi's provider runtime"
+      ],
+      "useAreas": [
+        "side-questions",
+        "read-only-investigation",
+        "background-execution"
+      ],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-btw.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-btw.json"
+    },
+    {
+      "id": "extension/pi-exa",
+      "projectId": "project/pi-exa",
+      "licenseRef": "pi-exa-no-license",
+      "slug": "pi-exa",
+      "name": "Pi Exa",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-exa",
+        "path": "src/index.ts"
+      },
+      "summary": "Adds source-oriented web search and bounded content retrieval through Exa.",
+      "activation": ["model-invoked", "tool"],
+      "compatibility": [
+        "Pi tool APIs",
+        "Node.js 22.19 or newer",
+        "Network access to Exa",
+        "Configured Exa API credentials"
+      ],
+      "useAreas": ["web-search", "source-retrieval", "research"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-exa.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-exa.json"
+    },
+    {
+      "id": "extension/pi-prompt-history",
+      "projectId": "project/pi-prompt-history",
+      "licenseRef": "pi-prompt-history-wtfpl",
+      "slug": "pi-prompt-history",
+      "name": "Pi Prompt History",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-prompt-history",
+        "path": "src/index.ts"
+      },
+      "summary": "Indexes prior user prompts locally for scoped search, reuse, and session resumption.",
+      "activation": ["user-command"],
+      "compatibility": [
+        "Interactive Pi",
+        "Pi session JSONL files",
+        "Bun SQLite or supported Node.js SQLite runtime"
+      ],
+      "useAreas": ["prompt-history", "session-navigation", "prompt-reuse"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-prompt-history.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-prompt-history.json"
+    },
+    {
+      "id": "extension/pi-quizme",
+      "projectId": "project/pi-quizme",
+      "licenseRef": "pi-quizme-no-license",
+      "slug": "pi-quizme",
+      "name": "Pi Quiz Me",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-quizme",
+        "path": "src/index.ts"
+      },
+      "summary": "Builds and grades an interactive quiz from the current Pi session branch.",
+      "activation": ["automatic", "hook", "user-command"],
+      "compatibility": [
+        "Interactive Pi",
+        "Selected model through Pi's model registry",
+        "Bundled or overridden quiz instructions"
+      ],
+      "useAreas": ["learning", "session-recap", "knowledge-check"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-quizme.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-quizme.json"
+    },
+    {
+      "id": "extension/pi-review-code",
+      "projectId": "project/pi-review-code",
+      "licenseRef": "pi-review-code-no-license",
+      "slug": "pi-review-code",
+      "name": "Pi Review Code",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-review-code",
+        "path": "src/index.ts"
+      },
+      "summary": "Builds context-rich review prompts, records findings, and launches focused fix follow-ups.",
+      "activation": ["model-invoked", "tool", "user-command"],
+      "compatibility": [
+        "Interactive Pi",
+        "Pi session tree navigation",
+        "Git or Jujutsu",
+        "Optional GitHub or GitLab command-line client"
+      ],
+      "useAreas": ["code-review", "review-planning", "finding-remediation"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-review-code.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-review-code.json"
+    },
+    {
+      "id": "extension/pi-simplify-code",
+      "projectId": "project/pi-simplify-code",
+      "licenseRef": "pi-simplify-code-wtfpl",
+      "slug": "pi-simplify-code",
+      "name": "Pi Simplify Code",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/vedang/pi-simplify-code",
+        "path": "src/index.ts"
+      },
+      "summary": "Follows eligible code-changing turns with a changed-path-aware request for behavior-preserving simplification, with automatic, disabled, confirm-first, and manual modes.",
+      "activation": ["automatic", "user-command", "hook"],
+      "compatibility": [
+        "Pi package APIs",
+        "Git or Jujutsu for full working-copy discovery"
+      ],
+      "useAreas": ["refactoring", "code-quality", "automation"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-simplify-code.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-simplify-code.json"
+    },
+    {
+      "id": "extension/pi-read-map",
+      "projectId": "project/pi-read-map",
+      "licenseRef": "codemap-upstream-mit",
+      "slug": "pi-read-map",
+      "name": "Pi Read Map",
+      "kind": "extension",
+      "delivery": "git-package",
+      "source": {
+        "locator": "git:github.com/Whamp/pi-read-map",
+        "path": "src/index.ts"
+      },
+      "summary": "Adds bounded structural maps to large read results, with language-specific symbol extraction, fallbacks, caching, and line ranges for targeted follow-up reads.",
+      "activation": ["model-invoked", "tool"],
+      "compatibility": [
+        "Pi package APIs",
+        "Node.js",
+        "Bundled parsers with optional system-tool fallbacks"
+      ],
+      "useAreas": ["code-navigation", "large-files", "context-management"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-read-map.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-read-map.json"
+    },
+    {
+      "id": "extension/pi-interactive-shell",
+      "projectId": "project/pi-interactive-shell",
+      "licenseRef": "pi-interactive-shell-mit",
+      "slug": "pi-interactive-shell",
+      "name": "Pi Interactive Shell",
+      "kind": "extension",
+      "delivery": "npm-package",
+      "source": {
+        "locator": "npm:pi-interactive-shell",
+        "path": "index.ts"
+      },
+      "summary": "Runs interactive terminal programs in observable overlays or managed background sessions, with direct control, dispatch completion, and event-driven monitoring.",
+      "activation": ["model-invoked", "tool", "user-command"],
+      "compatibility": [
+        "Pi package and TUI APIs",
+        "Node.js 22.19 or newer",
+        "zigpty-supported platform"
+      ],
+      "useAreas": ["interactive-clis", "delegation", "process-monitoring"],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-interactive-shell.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-interactive-shell.json"
+    },
+    {
+      "id": "extension/pi-intercom",
+      "projectId": "project/pi-intercom",
+      "licenseRef": "pi-intercom-mit",
+      "slug": "pi-intercom",
+      "name": "Pi Intercom",
+      "kind": "extension",
+      "delivery": "npm-package",
+      "source": {
+        "locator": "npm:pi-intercom",
+        "path": "index.ts"
+      },
+      "summary": "Routes targeted messages, questions, replies, attachments, and presence between connected Pi sessions through a same-machine broker, with explicit transcript and inbound-trigger boundaries.",
+      "activation": ["model-invoked", "tool", "user-command", "hook"],
+      "compatibility": [
+        "Pi package and TUI APIs",
+        "Same-machine local IPC",
+        "Connected Intercom-enabled Pi sessions"
+      ],
+      "useAreas": [
+        "cross-session-coordination",
+        "context-sharing",
+        "planner-worker-workflows"
+      ],
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/pi-intercom.json",
+      "evidencePath": "dotagents/evidence/extensions/pi-intercom.json"
     }
   ]
 }

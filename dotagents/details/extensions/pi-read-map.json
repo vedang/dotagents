@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Read Map replaces Pi's read tool with a compatible wrapper that adds structural outlines when a file exceeds normal read limits.",
+    "The outline reports symbols and line ranges so later reads can target relevant sections instead of scanning a large file sequentially."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Use the normal read tool on a large source or data file; no separate command is required.",
+    "situations": [
+      {
+        "when": "A file is too long or large for one ordinary read result",
+        "use": "Read it once to receive the initial content plus a structural map."
+      },
+      {
+        "when": "You need to locate symbols before spending context on implementation details",
+        "use": "Use map line ranges for narrow offset and limit reads."
+      },
+      {
+        "when": "A language-specific parser cannot handle the file",
+        "use": "Allow the extension to fall back through ctags and text-based extraction."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Language-aware structural mappers for common programming, markup, and data formats.",
+    "An in-memory cache keyed by file path and modification time.",
+    "Progressive detail reduction and symbol truncation that bound map size."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "When does map generation run?",
+      "answer": [
+        "It runs for untargeted regular text-file reads above 2,000 lines or 50 KiB. Targeted reads, recognized binary files, smaller files, and ordinary read errors stay with Pi's built-in tool."
+      ]
+    },
+    {
+      "question": "What does the map cost?",
+      "answer": [
+        "The map adds context up front. Formatting progressively removes detail and ultimately limits the symbol selection when a complete outline would exceed its budget."
+      ]
+    }
+  ],
+  "workingIf": [
+    "A large supported file returns its ordinary first chunk followed by a map in the same tool result.",
+    "A targeted read using a map line range returns only the requested section without regenerating the map."
+  ],
+  "setupNotes": [
+    "Adopted and maintained by Will Hampson from Kevin's MIT-licensed Codemap foundation, with a Clojure mapper contribution credited to Baishampayan Ghose.",
+    "The C++ and Rust mappers identify themselves as ports from Codemap. Preserve Kevin's upstream MIT notice alongside Will Hampson's project MIT notice for reused portions.",
+    "Specialized parsers are bundled for several languages; Python, Go, JSON, and ctags paths may depend on corresponding system tools.",
+    "The repository's summary-judge skill is development evaluation material and is not declared as an installed package skill.",
+    "Behavior claims were reviewed against the installed Git commit rather than a moving branch."
+  ],
+  "commands": []
+}

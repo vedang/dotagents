@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "entryId": "skill/adr",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "8f10418d7fbec46c3a75e6f54b2b8a3be26d4958"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "The skill covers creating, reviewing, updating, querying, superseding, validating, summarizing, and reporting on ADRs rather than generic documentation.",
+      "sourceUrl": "https://github.com/unravel-team/pi-adr/blob/8f10418d7fbec46c3a75e6f54b2b8a3be26d4958/skills/adr/SKILL.md#L1-L4"
+    },
+    {
+      "claim": "The workflow follows existing directory and numbering conventions, asks before creating a new location, limits each new record to one decision, and summarizes resulting paths and assumptions.",
+      "sourceUrl": "https://github.com/unravel-team/pi-adr/blob/8f10418d7fbec46c3a75e6f54b2b8a3be26d4958/skills/adr/SKILL.md#L20-L27"
+    },
+    {
+      "claim": "The writing rules preserve rejected or superseded rationale and require context, an active decision, and positive, negative, and neutral consequences.",
+      "sourceUrl": "https://github.com/unravel-team/pi-adr/blob/8f10418d7fbec46c3a75e6f54b2b8a3be26d4958/skills/adr/SKILL.md#L29-L36"
+    },
+    {
+      "claim": "The skill documents self-contained helper commands for initialization, creation, linking, listing, reports, validation, slugs, and filenames.",
+      "sourceUrl": "https://github.com/unravel-team/pi-adr/blob/8f10418d7fbec46c3a75e6f54b2b8a3be26d4958/skills/adr/SKILL.md#L38-L59"
+    },
+    {
+      "claim": "Directory discovery searches upward for `.adr-dir`, then `doc/adr`, and otherwise resolves a default under the repository root.",
+      "sourceUrl": "https://github.com/unravel-team/pi-adr/blob/8f10418d7fbec46c3a75e6f54b2b8a3be26d4958/skills/adr/scripts/lib/directory.ts#L49-L99"
+    },
+    {
+      "claim": "New ADR creation selects the next record number, refuses duplicate files or numbers, renders a template, writes exclusively, and refreshes neighbor navigation.",
+      "sourceUrl": "https://github.com/unravel-team/pi-adr/blob/8f10418d7fbec46c3a75e6f54b2b8a3be26d4958/skills/adr/scripts/lib/repository.ts#L164-L225"
+    },
+    {
+      "claim": "The CLI maps explicit commands to handlers, reports invalid commands as failures, and exposes validation with a nonzero result when issues remain.",
+      "sourceUrl": "https://github.com/unravel-team/pi-adr/blob/8f10418d7fbec46c3a75e6f54b2b8a3be26d4958/skills/adr/scripts/adr.ts#L448-L537"
+    }
+  ]
+}

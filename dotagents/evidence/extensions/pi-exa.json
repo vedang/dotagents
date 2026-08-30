@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-exa",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "34e083e304206107cc2e0c0171f378a1103a64f3"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Registers exa_search for source discovery and instructs Pi to cite URLs and treat returned material as untrusted evidence.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/index.ts#L248-L272"
+    },
+    {
+      "claim": "Registers exa_contents for highlights and optional bounded text from known source URLs.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/index.ts#L274-L302"
+    },
+    {
+      "claim": "Builds highlights-first search requests after validating known fields and cross-field constraints.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/client.ts#L160-L207"
+    },
+    {
+      "claim": "Bounds contents retrieval to validated URLs and optional character, freshness, and live-crawl limits.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/contents.ts#L75-L105"
+    },
+    {
+      "claim": "Requires configured Exa API credentials for each operation and tracks both configured and trimmed forms as secrets.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/http.ts#L107-L121"
+    },
+    {
+      "claim": "Performs one network attempt without automatic retries and rejects redirects.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/http.ts#L52-L74"
+    },
+    {
+      "claim": "Redacts configured credential text from parsed response content before validating and returning it.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/http.ts#L241-L256"
+    },
+    {
+      "claim": "Truncates model-visible output by line and byte limits, saving complete formatted output only when truncation occurs.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/index.ts#L590-L635"
+    },
+    {
+      "claim": "Creates private overflow files with mode 0600 and tracks their temporary directories for cleanup.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/index.ts#L638-L675"
+    },
+    {
+      "claim": "Removes tracked output directories on session shutdown.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/index.ts#L238-L246"
+    },
+    {
+      "claim": "Applies a final configured-credential scrub before model-visible or private overflow output is emitted.",
+      "sourceUrl": "https://github.com/vedang/pi-exa/blob/34e083e304206107cc2e0c0171f378a1103a64f3/src/index.ts#L716-L729"
+    }
+  ]
+}

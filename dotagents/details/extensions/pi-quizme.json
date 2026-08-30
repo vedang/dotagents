@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Builds a quiz from the current Pi branch, presents questions in an interactive overlay, and grades submitted answers with a model.",
+    "Can start on demand with /quizme or offer a confirmation before interactive session shutdown.",
+    "Supports project, user, and bundled quiz-instruction files, with project configuration taking precedence."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Run /quizme after meaningful session work, or accept the optional shutdown prompt.",
+    "situations": [
+      {
+        "when": "You want to check whether you understand changes made during the session",
+        "use": "Generate a session-specific mix of questions and answer them in the overlay."
+      },
+      {
+        "when": "Architecture or configuration choices should be recalled before leaving",
+        "use": "Accept the shutdown quiz and review graded explanations."
+      },
+      {
+        "when": "The default quiz style does not match the learning goal",
+        "use": "Provide a project or user override for the quiz instructions."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Model-generated session questions with structured-output repair.",
+    "An interactive answer workflow with navigation and explicit grading.",
+    "Optional diagnostic snapshots for troubleshooting when debug logging is deliberately enabled."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/explanatory-output-style",
+      "relationship": "Explanatory output adds learning notes during implementation; Quiz Me checks recall after the session has accumulated work."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What session data is used?",
+      "answer": [
+        "The extension assembles text from the current branch, including user, assistant, extension, and bounded tool-result content; it can also include a bounded assistant-thinking summary.",
+        "That assembled context and later quiz answers are sent through the selected model path for generation and grading. Review session sensitivity before starting a quiz."
+      ]
+    },
+    {
+      "question": "Does it write session content to disk?",
+      "answer": [
+        "Normal quiz operation does not use the diagnostic logger.",
+        "When the quiz debug setting is deliberately enabled, cumulative snapshots in the agent debug directory can include quiz instructions, branch data, assembled conversation text, model responses, answers, and grading output. Remove those files according to your retention policy."
+      ]
+    },
+    {
+      "question": "Is the shutdown quiz automatic?",
+      "answer": [
+        "No quiz begins until the interactive confirmation is accepted, and the extension asks at most once per loaded instance."
+      ]
+    }
+  ],
+  "workingIf": [
+    "A non-empty current branch produces an interactive set of questions.",
+    "Answers can be edited and navigated before an explicit grade action.",
+    "Grading presents a verdict and explanation per question, with a visible fallback when structured grading cannot be parsed."
+  ],
+  "setupNotes": [
+    "Requires interactive Pi and a model available through Pi's model registry.",
+    "The bundled prompt resource is an internal quiz-generation instruction, not a separately invoked Pi prompt template.",
+    "Debug logging is off unless explicitly enabled and should remain off for sensitive sessions unless diagnostics are necessary.",
+    "No source license is declared at the reviewed revision; this guide publishes only independently written factual prose and a source link."
+  ],
+  "commands": ["/quizme"]
+}

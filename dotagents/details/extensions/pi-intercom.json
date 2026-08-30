@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Intercom routes targeted messages, questions, replies, attachments, and presence information between connected Pi sessions on the same machine.",
+    "A local broker resolves the selected recipient while each session provides tool and overlay controls for user-driven or agent-driven coordination."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Use the intercom tool for agent coordination, or open /intercom to choose a connected session and compose a message.",
+    "situations": [
+      {
+        "when": "One Pi session has findings another active session needs",
+        "use": "Send a non-blocking direct message to the recipient's name or session ID."
+      },
+      {
+        "when": "A worker cannot proceed without a decision",
+        "use": "Ask the owner session and continue after the correlated reply arrives."
+      },
+      {
+        "when": "A delegated child needs a supervisor decision or structured answers",
+        "use": "Use the child-only supervisor bridge when Pi Subagents supplied the required metadata."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Direct send, ask, reply, pending, cancel, session-list, and connection-status actions.",
+    "Local session presence plus a compose overlay and keyboard shortcut.",
+    "Configurable inbound turn triggering and a bounded in-memory reconnect mailbox in the broker."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/pi-subagents",
+      "relationship": "Pi Subagents owns child execution; Pi Intercom can provide a scoped child-to-supervisor bridge when launch metadata identifies the supervisor."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What are the privacy boundaries?",
+      "answer": [
+        "Normal routing stays on the same machine through a Unix socket or Windows named pipe; Windows TCP is explicit and loopback-only. This is a local transport boundary, not end-to-end encryption.",
+        "Message text and attachments pass through the local broker, enter the recipient's agent-visible context, and are recorded in Pi session history. Do not use Intercom as a secrets vault or send content the recipient session should not retain.",
+        "The broker runtime directory and files use owner-restricted modes on Unix-like systems, but processes running as the same local account remain inside the trust boundary."
+      ]
+    },
+    {
+      "question": "Can an incoming message start model work automatically?",
+      "answer": [
+        "Yes. The inbound policy can trigger all messages, replies only, or none. Busy interactive sessions receive steering delivery instead of an immediate turn."
+      ]
+    },
+    {
+      "question": "Are messages broadcast?",
+      "answer": [
+        "No. The broker routes a normal message to one resolved target. Ambiguous names fail, so session IDs are safer when names collide."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Connected sessions appear in the roster and one targeted send reports delivery to the intended recipient.",
+    "Ask and reply preserve their correlation, while inbound trigger policy controls whether delivery starts a model turn."
+  ],
+  "setupNotes": [
+    "Created and maintained by Nico Bailon; this record reviews npm version 0.10.0 and its registry gitHead.",
+    "The installed package and immutable source commit include the MIT License.",
+    "Only sessions with the extension loaded, enabled, and connected to the local broker appear in discovery.",
+    "The bundled coordination skill remains a secondary, unfeatured surface in this catalog record."
+  ],
+  "commands": ["/intercom", "/intercom-id"]
+}

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Interactive Shell runs terminal programs through a pseudoterminal and exposes them in a Pi overlay or managed background session.",
+    "Its interactive, hands-free, dispatch, and monitor modes let a user watch or take over while the agent sends input, reads output, or waits for event-driven notifications."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Ask Pi to launch an interactive command-line program, use the interactive terminal tool, or use the spawn command for a configured coding agent.",
+    "situations": [
+      {
+        "when": "A terminal program needs live input or user supervision",
+        "use": "Open an interactive overlay and address the running process by session ID."
+      },
+      {
+        "when": "A delegated coding-agent task should return control immediately",
+        "use": "Use dispatch mode and receive a completion turn instead of polling."
+      },
+      {
+        "when": "A long-running process should wake the agent only on selected output or state changes",
+        "use": "Use monitor mode with bounded stream, poll-diff, or file-watch triggers."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A PTY-backed terminal session with xterm-compatible rendering and ordered input.",
+    "Stable session IDs for status, input, backgrounding, reattachment, dismissal, and output retrieval.",
+    "Completion and monitor-event notifications that can start a follow-up Pi turn."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/pi-subagents",
+      "relationship": "Interactive Shell exposes external coding-agent terminals for observation and takeover; Pi Subagents provides structured Pi child execution under parent-controlled contracts."
+    }
+  ],
+  "questions": [
+    {
+      "question": "Does the extension sandbox launched commands?",
+      "answer": [
+        "No. The subprocess runs through a local shell with the selected working directory and inherited environment. Use an isolated working directory or worktree when unattended work could change repository state."
+      ]
+    },
+    {
+      "question": "How do modes differ?",
+      "answer": [
+        "Interactive mode returns a session ID for direct driving, hands-free mode adds progress updates, dispatch mode notifies on completion, and monitor mode emits only configured trigger events."
+      ]
+    }
+  ],
+  "workingIf": [
+    "A launched process returns a session ID and accepts status, output, or input operations while it remains active.",
+    "Dispatch completion or a configured monitor match produces a bounded notification without a polling loop."
+  ],
+  "setupNotes": [
+    "Created and maintained by Nico Bailon; this record reviews npm version 0.14.1 and its registry-linked source commit.",
+    "Requires Node runtime version 22.19 or newer plus a platform supported by the bundled PTY dependency.",
+    "The immutable package manifest and npm metadata declare MIT; version 0.14.1 does not contain a standalone license file.",
+    "Bundled core and example skills plus example prompt templates remain secondary, unfeatured surfaces in this catalog record."
+  ],
+  "commands": ["/spawn", "/attach", "/dismiss"]
+}

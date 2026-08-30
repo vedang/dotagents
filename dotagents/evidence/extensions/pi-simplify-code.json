@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-simplify-code",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "2abab5dfff3269d1ab9be199e9d0e68a27767024"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Treats a path as an automatic-trigger candidate only when at least one changed path is not Markdown.",
+      "sourceUrl": "https://github.com/vedang/pi-simplify-code/blob/2abab5dfff3269d1ab9be199e9d0e68a27767024/src/index.ts#L208-L232"
+    },
+    {
+      "claim": "Records candidate paths from tool calls but promotes them only after matching successful tool results.",
+      "sourceUrl": "https://github.com/vedang/pi-simplify-code/blob/2abab5dfff3269d1ab9be199e9d0e68a27767024/src/index.ts#L331-L363"
+    },
+    {
+      "claim": "Uses Git ignore checks for in-worktree paths and drops uncertain in-worktree candidates when repository or ignore detection fails unexpectedly.",
+      "sourceUrl": "https://github.com/vedang/pi-simplify-code/blob/2abab5dfff3269d1ab9be199e9d0e68a27767024/src/index.ts#L458-L515"
+    },
+    {
+      "claim": "Collects dirty Jujutsu paths when a Jujutsu working copy is present, otherwise combines changed and untracked Git paths.",
+      "sourceUrl": "https://github.com/vedang/pi-simplify-code/blob/2abab5dfff3269d1ab9be199e9d0e68a27767024/src/index.ts#L585-L624"
+    },
+    {
+      "claim": "Applies disabled or confirm-first mode before scheduling a plain-language follow-up after Pi becomes idle.",
+      "sourceUrl": "https://github.com/vedang/pi-simplify-code/blob/2abab5dfff3269d1ab9be199e9d0e68a27767024/src/index.ts#L657-L685"
+    },
+    {
+      "claim": "Registers the simplify-code command, including a manual working-copy pass and scoped mode configuration.",
+      "sourceUrl": "https://github.com/vedang/pi-simplify-code/blob/2abab5dfff3269d1ab9be199e9d0e68a27767024/src/index.ts#L688-L726"
+    },
+    {
+      "claim": "Runs from agent_end while suppressing pending-user-message and self-trigger loops.",
+      "sourceUrl": "https://github.com/vedang/pi-simplify-code/blob/2abab5dfff3269d1ab9be199e9d0e68a27767024/src/index.ts#L752-L781"
+    }
+  ]
+}

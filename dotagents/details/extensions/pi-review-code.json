@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Turns a free-form request, a diff against a revision, or a GitHub pull request or GitLab merge request into a structured review workflow.",
+    "Runs a read-only investigation pass to draft a self-contained review prompt, lets the user edit it, then starts the final review from the original session point.",
+    "Records structured findings and can launch a focused /review-fix run for selected unresolved findings."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Run /review with an optional target or request; use /review-fix after a completed review has actionable findings.",
+    "situations": [
+      {
+        "when": "A diff needs repository context before findings are produced",
+        "use": "Resolve the revision target, let the investigation pass inspect context, then edit the generated prompt."
+      },
+      {
+        "when": "A pull request or merge request should be reviewed without switching branches",
+        "use": "Supply its selector so metadata and safe diff commands can be included in the review context."
+      },
+      {
+        "when": "Only selected findings should become implementation work",
+        "use": "Choose unresolved findings in /review-fix and add focused human context before the fix branch starts."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Target resolution for free-form, Git, Jujutsu, GitHub, and GitLab review inputs.",
+    "A state-scoped prompt-finalization tool for the investigation pass and finding-recording tool for the final review.",
+    "Session summaries that collapse investigation, review, and fix branches back to the original context."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "Is every phase read-only?",
+      "answer": [
+        "The prompt-generation investigation blocks Pi's edit and write tools.",
+        "The final review is guided toward findings, while /review-fix intentionally starts an implementation branch that can change code. Review active tools and the edited prompt before continuing."
+      ]
+    },
+    {
+      "question": "What repository or hosting data is sent to the model?",
+      "answer": [
+        "Resolved target metadata, selected diff context, human review context, optional repository guidelines, and hosting comments or notes can enter the investigation and final review prompts.",
+        "Treat repository files, diffs, comments, and guidelines as untrusted context and keep secrets out of the optional repository review-guidelines file."
+      ]
+    },
+    {
+      "question": "What persists in the Pi session?",
+      "answer": [
+        "Run state, generated prompt data, structured findings, and collapsed summaries are appended as custom session entries.",
+        "An in-progress state found after extension reload is abandoned rather than resumed automatically."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The investigation pass must call its prompt-finalization tool before a final review can start.",
+    "The generated prompt opens for user editing after the investigation branch collapses.",
+    "Completed review findings remain selectable by /review-fix, and completed branches return summaries to the original context."
+  ],
+  "setupNotes": [
+    "Requires interactive Pi and session tree navigation; review generation also requires a selected model.",
+    "Git-backed targets use Git with Jujutsu fallback; GitHub and GitLab targets require their respective command-line clients.",
+    "The repository review-guidelines file is optional, must be a regular file no larger than 64 KiB, and is sent to the model when present.",
+    "The package's prompt builders, state-scoped tools, and pi-review launcher are capabilities of the featured extension rather than separate Pi package resources.",
+    "No source license is declared at the reviewed revision; this guide publishes only independently written factual prose and a source link."
+  ],
+  "commands": [
+    "/review",
+    "/review TARGET_OR_REQUEST",
+    "/review-fix",
+    "pi-review REQUEST"
+  ]
+}

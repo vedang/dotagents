@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-read-map",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "97b6a73305000845d22646f62c72fbf6121e16f3"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Registers a read replacement that delegates targeted reads and recognized binary files to Pi's built-in read tool.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/src/index.ts#L84-L127"
+    },
+    {
+      "claim": "Generates maps only when a file exceeds 2,000 lines or 50 KiB.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/src/constants.ts#L4-L20"
+    },
+    {
+      "claim": "Caches formatted maps by file modification time and appends the map to the ordinary read result.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/src/index.ts#L194-L224"
+    },
+    {
+      "claim": "Dispatches supported formats to language-specific mappers including TypeScript, JavaScript, Python, Go, Rust, C, C++, Clojure, SQL, JSON, JSONL, Markdown, YAML, TOML, and CSV.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/src/mapper.ts#L28-L64"
+    },
+    {
+      "claim": "Falls back from a language mapper to ctags and then to text-based extraction when needed.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/src/mapper.ts#L66-L108"
+    },
+    {
+      "claim": "Reduces maps through full, compact, minimal, and outline tiers before truncating the symbol selection to fit the hard budget.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/src/formatter.ts#L362-L430"
+    },
+    {
+      "claim": "Credits Kevin's Codemap as inspiration and a foundation, and separately credits Baishampayan Ghose for the Clojure mapper contribution.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/README.md#L193-L199"
+    },
+    {
+      "claim": "Identifies the C++ mapper as ported from Codemap.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/src/mappers/cpp.ts#L2-L6"
+    },
+    {
+      "claim": "Identifies the Rust mapper as ported from Codemap.",
+      "sourceUrl": "https://github.com/Whamp/pi-read-map/blob/97b6a73305000845d22646f62c72fbf6121e16f3/src/mappers/rust.ts#L2-L6"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "entryId": "skill/llm-wiki-capture",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "b1ede211d6324eb2f0d3812fd69eac020d31925e"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "The skill is scoped to explicit requests to save, capture, ingest, remember, extend, or structure material in the user's LLM Wiki.",
+      "sourceUrl": "https://github.com/unravel-team/denote-mono/blob/b1ede211d6324eb2f0d3812fd69eac020d31925e/.agents/skills/llm-wiki-capture/SKILL.md#L2-L3"
+    },
+    {
+      "claim": "The normal write path is `denote llm-wiki ingest`, source files remain immutable inputs, and durable rather than temporary source storage is required.",
+      "sourceUrl": "https://github.com/unravel-team/denote-mono/blob/b1ede211d6324eb2f0d3812fd69eac020d31925e/.agents/skills/llm-wiki-capture/SKILL.md#L8-L15"
+    },
+    {
+      "claim": "The default workflow preserves facts and uncertainty, writes a persistent source packet, runs ingestion and optional lint, then reports resulting paths.",
+      "sourceUrl": "https://github.com/unravel-team/denote-mono/blob/b1ede211d6324eb2f0d3812fd69eac020d31925e/.agents/skills/llm-wiki-capture/SKILL.md#L17-L37"
+    },
+    {
+      "claim": "A bundled helper supports source-directory selection, Denote context options, model settings, packet-only mode, and lint after ingestion.",
+      "sourceUrl": "https://github.com/unravel-team/denote-mono/blob/b1ede211d6324eb2f0d3812fd69eac020d31925e/.agents/skills/llm-wiki-capture/SKILL.md#L39-L59"
+    },
+    {
+      "claim": "The safety guidance warns about persistent sensitive data, missing provider credentials, and resumable handling after a round limit.",
+      "sourceUrl": "https://github.com/unravel-team/denote-mono/blob/b1ede211d6324eb2f0d3812fd69eac020d31925e/.agents/skills/llm-wiki-capture/SKILL.md#L112-L117"
+    }
+  ]
+}

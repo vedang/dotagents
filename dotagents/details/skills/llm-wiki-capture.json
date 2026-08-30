@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "LLM Wiki Capture turns explicitly requested conversation material into a durable source packet and routes it through the Denote LLM Wiki ingest command.",
+    "It keeps source provenance available to later wiki checks and reports created or updated paths after ingestion."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Explicitly ask the model to save, capture, ingest, remember, or structure material in your Denote LLM Wiki.",
+    "situations": [
+      {
+        "when": "A useful explanation from the current conversation should become durable reference material",
+        "use": "Capture the selected explanation without inventing missing facts."
+      },
+      {
+        "when": "A new client, project, or topic needs a top-level wiki structure",
+        "use": "Describe the desired topology in the source packet before ingestion."
+      },
+      {
+        "when": "New facts belong beneath a known note",
+        "use": "Include the parent title, identifier, or sequence so ingestion can update the existing structure."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A repeatable conversation-to-source-packet workflow.",
+    "A bundled helper for packet creation, ingestion options, and optional linting.",
+    "Privacy and persistence checks before material enters the wiki."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "Does the skill edit wiki-maintained files directly?",
+      "answer": [
+        "No. Its normal write path is the Denote LLM Wiki ingest command; direct edits are reserved for debugging the repository."
+      ]
+    },
+    {
+      "question": "What should be reviewed before capture?",
+      "answer": [
+        "Secrets, credentials, private client information, and sensitive personal data need explicit review because source packets and wiki notes persist on disk."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The capture source survives outside temporary storage and preserves relevant facts, URLs, caveats, and uncertainty.",
+    "Ingestion reports created or updated note paths and any remaining work.",
+    "A lint pass can trace notes back to source material without missing-on-disk errors."
+  ],
+  "setupNotes": [
+    "Install the Git package so Agent Skills can discover the bundled LLM Wiki Capture skill.",
+    "Install and configure the Denote command-line interface, an LLM Wiki silo, and the selected model provider before ingestion.",
+    "Choose a persistent source directory and review sensitive material before writing the packet.",
+    "The repository is GPL-3.0-only; behavior claims were reviewed at the pinned installed revision."
+  ],
+  "commands": [
+    "denote llm-wiki ingest CAPTURE_FILE",
+    "denote llm-wiki lint --fix"
+  ]
+}

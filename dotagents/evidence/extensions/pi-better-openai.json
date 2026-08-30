@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-better-openai",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "58273a6aeeb387bc61c6ec68cabd867952611bf4"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Declares index.ts as the package's only Pi extension surface and requires Node.js 22.19 or newer.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/package.json#L56-L63"
+    },
+    {
+      "claim": "Registers commands for fast mode and OpenAI subscription usage.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/index.ts#L279-L320"
+    },
+    {
+      "claim": "Registers the settings command, hosted image surfaces, and pet command controller from the single extension entry point.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/index.ts#L822-L890"
+    },
+    {
+      "claim": "Fast mode adds service_tier only when active and the current model matches configured support.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/fast-controller.ts#L89-L100"
+    },
+    {
+      "claim": "Uses the before_provider_request hook to inject fast-mode payload changes rather than registering a provider.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/index.ts#L1231-L1244"
+    },
+    {
+      "claim": "Loads project and global JSON configuration, gives project values precedence, fills defaults, and clamps selected intervals and pet size.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/config.ts#L592-L671"
+    },
+    {
+      "claim": "Limits image input paths to readable files inside the current workspace and enforces per-file and total input bounds.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/image.ts#L168-L220"
+    },
+    {
+      "claim": "Requests hosted image generation with OpenAI Codex credentials and returns the generated image with optional saved path metadata.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/image.ts#L433-L478"
+    },
+    {
+      "claim": "Registers both the openai-image command and model-callable openai_image tool.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/image.ts#L598-L653"
+    },
+    {
+      "claim": "Obtains OpenAI Codex credentials from Pi's model registry first and falls back to the agent auth file.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/codex-auth.ts#L120-L135"
+    },
+    {
+      "claim": "Refreshes subscription usage only for eligible OpenAI models and starts a timer at the configured interval.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/usage-controller.ts#L16-L27"
+    },
+    {
+      "claim": "Starts usage refresh on session activation and repeats it at the configured interval until the session stops.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/usage-controller.ts#L252-L280"
+    },
+    {
+      "claim": "Registers pet help, list, wake, tuck, and select behavior under one pets command.",
+      "sourceUrl": "https://github.com/mattleong/pi-better-openai/blob/58273a6aeeb387bc61c6ec68cabd867952611bf4/src/pets.ts#L935-L971"
+    }
+  ]
+}

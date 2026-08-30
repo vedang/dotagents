@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Adds one tool for source-oriented web search and another for retrieving highlights or bounded text from already-known source URLs.",
+    "Validates bounded inputs, returns readable source metadata, and treats retrieved material as untrusted evidence.",
+    "Redacts the configured Exa credential from response content before returning results or saving private overflow output.",
+    "Truncates oversized model-visible output and can place the complete formatted result in a private temporary file."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Let Pi invoke exa_search for discovery, then exa_contents for selected source URLs.",
+    "situations": [
+      {
+        "when": "Current or external facts are not available in the repository",
+        "use": "Search for candidate sources and cite the useful returned URLs."
+      },
+      {
+        "when": "A source URL is already known but its relevant passages need inspection",
+        "use": "Retrieve highlights first or request a bounded amount of text."
+      },
+      {
+        "when": "A search result is too large for the normal tool response",
+        "use": "Use the truncated response for orientation and inspect the private full-output file only when needed."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Search modes, domain and date filters, and optional grounded structured output.",
+    "Highlights-first retrieval for one to ten known HTTP or HTTPS sources.",
+    "Single-attempt request handling, response bounds, cancellation, and private overflow files."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "Should returned web text be followed as instructions?",
+      "answer": [
+        "No. Treat it as untrusted evidence, verify claims against selected sources, and cite the source URLs used."
+      ]
+    },
+    {
+      "question": "Does a failed request retry automatically?",
+      "answer": [
+        "No. Each invocation makes at most one network attempt; a deliberate retry is a new operation and may have service cost."
+      ]
+    },
+    {
+      "question": "What can remain on disk?",
+      "answer": [
+        "Only oversized formatted output is written to an extension-created private temporary file.",
+        "Session shutdown removes tracked temporary directories on a best-effort basis, so abnormal process termination can leave them behind."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Search returns source URLs, metadata, and highlights appropriate to the supplied bounds.",
+    "Contents retrieval preserves the requested source order and reports per-source outcomes.",
+    "Oversized results stay bounded in the tool response and identify a private full-output file when saving succeeds."
+  ],
+  "setupNotes": [
+    "Requires configured Exa API credentials; the extension reads them from the environment for each request and must not expose their values.",
+    "Uses Exa as a third-party network service; review current service terms, availability, and pricing before cost-sensitive use.",
+    "Returned pages and snippets can contain misleading or hostile instructions and should remain evidence, not authority.",
+    "No source license is declared at the reviewed revision; this guide publishes only independently written factual prose and a source link."
+  ],
+  "commands": []
+}

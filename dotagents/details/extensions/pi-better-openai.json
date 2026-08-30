@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Better OpenAI groups OpenAI subscription conveniences into one extension: priority request tiering, usage feedback, footer controls, hosted image generation, and optional animated local pets.",
+    "Fast mode adjusts outgoing payloads only for configured models, while usage and image requests reuse existing OpenAI Codex credentials."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Install the extension, then use its commands or let the model call the OpenAI image tool when a raster asset is needed.",
+    "situations": [
+      {
+        "when": "A supported OpenAI model should request priority service",
+        "use": "Toggle fast mode and let the provider-request hook add the configured service tier."
+      },
+      {
+        "when": "Subscription usage and reset windows should stay visible during a session",
+        "use": "Enable usage display in the footer or request a fresh status report."
+      },
+      {
+        "when": "The model needs to create or edit an image through OpenAI Codex authentication",
+        "use": "Call the OpenAI image tool with a verbatim prompt and explicit save behavior when needed."
+      },
+      {
+        "when": "Terminal feedback should include a custom local Codex pet",
+        "use": "Select a ready pet and enable footer rendering in a terminal with image support."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Fast-mode, usage, settings, image, and pet commands plus a model-invoked image tool.",
+    "A configurable footer and a before-provider-request hook that works with Pi's existing OpenAI providers rather than registering a new provider."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/status-line",
+      "relationship": "Both expose compact session state; Better OpenAI can also replace the footer and add OpenAI-specific usage, fast-mode, and pet segments."
+    }
+  ],
+  "questions": [
+    {
+      "question": "Does it install another OpenAI provider?",
+      "answer": [
+        "No standalone provider is declared. The extension modifies supported outgoing provider payloads through Pi's before-provider-request hook."
+      ]
+    },
+    {
+      "question": "Where is configuration loaded from?",
+      "answer": [
+        "Project configuration under .pi/extensions overrides global agent configuration. Defaults fill omitted values, and selected timing and size settings are clamped."
+      ]
+    },
+    {
+      "question": "Which features need OpenAI Codex OAuth?",
+      "answer": [
+        "Subscription usage and hosted image generation require existing OpenAI Codex credentials. Fast-mode payload injection itself is model and configuration dependent."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Fast mode reports active only on a configured model and outgoing payloads receive the priority service tier.",
+    "Usage status refreshes for an eligible OpenAI subscription model without exposing raw credentials.",
+    "The image tool returns an image and saves it only to the selected destination.",
+    "Optional footer pets react to agent and tool activity when terminal image support is available."
+  ],
+  "setupNotes": [
+    "Created and maintained by Matt Leong; installed from the original MIT-licensed repository.",
+    "Requires Node runtime version 22.19 or newer and Pi extension APIs. Usage and image features also need OpenAI Codex OAuth.",
+    "Generated image inputs are limited to files inside the current workspace; output location and format remain configurable.",
+    "The package ships one Pi extension. Its provider hook and JSON configuration are embedded behavior, not separate installable provider or config packages."
+  ],
+  "commands": [
+    "/fast",
+    "/openai-usage",
+    "/openai-settings",
+    "/openai-image PROMPT",
+    "/pets help",
+    "/pets list",
+    "/pets wake SLUG",
+    "/pets tuck",
+    "/pets select SLUG"
+  ]
+}

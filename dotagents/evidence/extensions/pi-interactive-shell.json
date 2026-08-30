@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-interactive-shell",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "c5dac7836f6886ed001697acddc15d56fbefe199"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Starts interactive, hands-free, dispatch, or monitor sessions and validates when a new session may run headlessly.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/index.ts#L738-L790"
+    },
+    {
+      "claim": "Runs monitor sessions in the background with structured strategies and event callbacks.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/index.ts#L814-L863"
+    },
+    {
+      "claim": "Runs headless dispatch sessions with completion monitoring and returns immediately with a stable session ID.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/index.ts#L874-L895"
+    },
+    {
+      "claim": "Creates observable overlay sessions and returns control with session operations for input, output, status, and termination.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/index.ts#L898-L968"
+    },
+    {
+      "claim": "Lets the agent kill, background, configure, send input to, or inspect an active session by ID.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/index.ts#L1278-L1453"
+    },
+    {
+      "claim": "Registers spawn, attach, and dismiss commands for operator-managed coding-agent and background-session workflows.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/index.ts#L1673-L1843"
+    },
+    {
+      "claim": "Dispatch completion can inject a bounded result notification that triggers a new Pi turn.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/index.ts#L1916-L1936"
+    },
+    {
+      "claim": "Launches the command through a local shell-backed PTY with the supplied working directory and a merged process environment.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/pty-session.ts#L170-L210"
+    },
+    {
+      "claim": "Processes stream triggers and poll-diff changes without requiring the agent to poll the session.",
+      "sourceUrl": "https://github.com/nicobailon/pi-interactive-shell/blob/c5dac7836f6886ed001697acddc15d56fbefe199/headless-monitor.ts#L108-L218"
+    }
+  ]
+}

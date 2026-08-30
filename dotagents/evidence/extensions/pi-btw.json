@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-btw",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "2996676ecde01da55c1489b62f13c1f70ceb472d"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Registers the interactive /btw command with status, cancellation, fresh, and fork handling.",
+      "sourceUrl": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/src/index.ts#L357-L430"
+    },
+    {
+      "claim": "Exposes exactly read, grep, find, and ls to child sessions and instructs them not to mutate project state.",
+      "sourceUrl": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/src/child-session.ts#L42-L50"
+    },
+    {
+      "claim": "Disables ambient extensions, skills, prompt templates, and themes before creating the child with the read-only tool list.",
+      "sourceUrl": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/src/child-session.ts#L746-L803"
+    },
+    {
+      "claim": "Fork mode captures the persisted parent branch before preparing the private child session.",
+      "sourceUrl": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/src/fork-context.ts#L357-L373"
+    },
+    {
+      "claim": "Limits execution to three active jobs, ten queued jobs, and a five-minute per-job timeout.",
+      "sourceUrl": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/src/manager.ts#L16-L20"
+    },
+    {
+      "claim": "Runs a child prompt asynchronously and finalizes the job with its answer.",
+      "sourceUrl": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/src/manager.ts#L499-L529"
+    },
+    {
+      "claim": "Appends terminal results to the parent transcript and maintains a generic active-work widget.",
+      "sourceUrl": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/src/index.ts#L282-L330"
+    },
+    {
+      "claim": "Cancels managed work and clears the widget when the parent session shuts down.",
+      "sourceUrl": "https://github.com/vedang/pi-btw/blob/2996676ecde01da55c1489b62f13c1f70ceb472d/src/index.ts#L340-L355"
+    }
+  ]
+}

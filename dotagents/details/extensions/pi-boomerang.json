@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Boomerang starts an agent task from a command or an optional model-callable tool, then collapses the completed exchange to a generated summary at an earlier session-tree point.",
+    "It can expand one prompt template, run an ordered template chain, or repeat a task through bounded rethrow passes with a collapse between passes.",
+    "Session context is rewritten, but workspace changes made by the task remain in place."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Run /boomerang with a task. Enable its optional agent tool only when model-initiated boomerang work is wanted.",
+    "situations": [
+      {
+        "when": "A long autonomous task should leave a compact record in future context",
+        "use": "Run one boomerang task and continue from its generated summary."
+      },
+      {
+        "when": "Several prompt templates should run in a fixed order",
+        "use": "Build a template chain so each step completes before the next and collapse once after the chain."
+      },
+      {
+        "when": "A full task should receive several independent improvement passes",
+        "use": "Choose a rethrow count so each pass starts after the preceding pass has been summarized."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Manual and task-scoped anchors for selecting the session-tree point that receives the compacted branch.",
+    "Template argument expansion plus optional per-template model, thinking-level, and skill selection.",
+    "A heuristic completion summary built from assistant text, file-tool activity, and Bash tool-call counts."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "Does a collapse undo file changes?",
+      "answer": [
+        "No. Collapse changes retained session context, not workspace state. Edits and other task side effects remain."
+      ]
+    },
+    {
+      "question": "Is the model-callable tool enabled automatically?",
+      "answer": [
+        "No. Tool registration is disabled by default and must be enabled through the boomerang command. Its enabled state and guidance are stored in user configuration."
+      ]
+    },
+    {
+      "question": "What can be lost in the compacted record?",
+      "answer": [
+        "The generated summary is heuristic. It counts recognized tool activity and preserves the last assistant text, so it may omit semantic details not represented there."
+      ]
+    }
+  ],
+  "workingIf": [
+    "A started task shows boomerang status and returns control after its completed exchange is collapsed.",
+    "Template chains advance in order and restore any saved model or thinking configuration afterward.",
+    "Rethrow passes preserve workspace changes while carrying accumulated summaries into later passes."
+  ],
+  "setupNotes": [
+    "Nico Bailon is original author of the upstream nicobailon/pi-boomerang project. This record covers Vedang Manerikar's vedang/pi-boomerang fork and identifies him as current fork maintainer.",
+    "The reviewed fork revision has no license file, and its package manifest has no license field. Treat source and documentation as all rights reserved unless a separate permission applies.",
+    "This guide contains independently written factual prose, source links, and fork attribution only. It does not grant or assert permission to reuse project source or documentation.",
+    "The package manifest exposes one Pi extension entry point and no other installable Pi surface."
+  ],
+  "commands": [
+    "/boomerang TASK",
+    "/boomerang /TEMPLATE ARGS",
+    "/boomerang /A -> /B -> /C",
+    "/boomerang TASK --rethrow N",
+    "/boomerang anchor",
+    "/boomerang anchor show",
+    "/boomerang anchor clear",
+    "/boomerang tool on GUIDANCE",
+    "/boomerang tool off",
+    "/boomerang guidance TEXT",
+    "/boomerang guidance show",
+    "/boomerang guidance clear",
+    "/boomerang-cancel"
+  ]
+}

@@ -10,6 +10,31 @@ import { describe, test } from "vitest";
 
 const dotagentsRoot = join(import.meta.dirname, "..");
 const fixturesRoot = join(dotagentsRoot, "__fixtures__");
+const publishedPackageLocators = [
+  "git:github.com/ghoseb/pi-askuserquestion",
+  "git:github.com/mattleong/pi-better-openai",
+  "git:github.com/unravel-team/denote-mono",
+  "git:github.com/vedang/caveman",
+  "git:github.com/vedang/chrome-cdp-skill",
+  "git:github.com/vedang/pi-adr",
+  "git:github.com/vedang/pi-boomerang",
+  "git:github.com/vedang/pi-btw",
+  "git:github.com/vedang/pi-exa",
+  "git:github.com/vedang/pi-prompt-history",
+  "git:github.com/vedang/pi-quizme",
+  "git:github.com/vedang/pi-review-code",
+  "git:github.com/vedang/pi-simplify-code",
+  "git:github.com/Whamp/pi-read-map",
+  "npm:pi-interactive-shell",
+  "npm:pi-intercom",
+] as const;
+const blockedPackageLocators = [
+  "git:github.com/ghoseb/pi-damage-control",
+  "git:github.com/unravel-team/dafny-estimation",
+  "git:github.com/unravel-team/unravel-proposal-creator",
+  "git:github.com/unravel-team/thing.git",
+  "git:github.com/vedang/shaping-skills",
+] as const;
 
 function readJson(path: string): unknown {
   return JSON.parse(readFileSync(path, "utf8"));
@@ -307,7 +332,7 @@ describe("Dotagents JSON schemas", () => {
     };
 
     assert.equal(catalog.metadata.tagline, expectedTagline);
-    assert.equal(catalog.entries.length, 11);
+    assert.equal(catalog.entries.length, 11 + publishedPackageLocators.length);
     assert.deepEqual(
       catalog.entries.filter(({ publication }) => publication !== "featured"),
       [],
@@ -324,6 +349,190 @@ describe("Dotagents JSON schemas", () => {
         `dotagents/evidence/${directory}/${entry.slug}.json`,
       );
     }
+  });
+
+  test("publishes every approved package from reviewed surface coverage", () => {
+    const catalog = readJson(join(dotagentsRoot, "catalog.json")) as {
+      projects: Array<{ installedLocator: string }>;
+      entries: Array<{
+        kind: "extension" | "skill" | "prompt";
+        publication: "featured" | "listed";
+        source: { locator?: string; path?: string };
+      }>;
+    };
+    const coverage = readJson(join(dotagentsRoot, "coverage.json")) as {
+      packageSurfaces: Array<{
+        locator: string;
+        surfaces: Array<{
+          kind: "extension" | "skill" | "prompt";
+          path: string;
+        }>;
+      }>;
+      excluded: Array<{
+        kind: "extension" | "skill" | "prompt" | "package";
+        source: string;
+        surfacePath?: string;
+      }>;
+    };
+
+    for (const locator of publishedPackageLocators) {
+      assert.ok(
+        catalog.projects.some(
+          ({ installedLocator }) => installedLocator === locator,
+        ),
+        `missing project for ${locator}`,
+      );
+      assert.ok(
+        catalog.entries.some(
+          ({ publication, source }) =>
+            publication === "featured" && source.locator === locator,
+        ),
+        `missing featured entry for ${locator}`,
+      );
+
+      const inventory = coverage.packageSurfaces.find(
+        ({ locator: candidate }) => candidate === locator,
+      );
+      assert.ok(inventory, `missing surface inventory for ${locator}`);
+      assert.ok(
+        inventory.surfaces.length > 0,
+        `empty inventory for ${locator}`,
+      );
+      assert.equal(
+        coverage.excluded.some(
+          ({ kind, source }) => kind === "package" && source === locator,
+        ),
+        false,
+        `package exclusion remains for ${locator}`,
+      );
+
+      for (const surface of inventory.surfaces) {
+        const publicMatches = catalog.entries.filter(
+          ({ kind, source }) =>
+            kind === surface.kind &&
+            source.locator === locator &&
+            source.path === surface.path,
+        );
+        const excludedMatches = coverage.excluded.filter(
+          ({ kind, source, surfacePath }) =>
+            kind === surface.kind &&
+            source === locator &&
+            surfacePath === surface.path,
+        );
+        assert.equal(
+          publicMatches.length + excludedMatches.length,
+          1,
+          `surface needs one classification: ${locator} ${surface.kind} ${surface.path}`,
+        );
+      }
+    }
+  });
+
+  test("keeps rights- or evidence-blocked packages fail closed", () => {
+    const catalog = readJson(join(dotagentsRoot, "catalog.json")) as {
+      projects: Array<{ installedLocator: string }>;
+      entries: Array<{ source: { locator?: string } }>;
+    };
+    const coverage = readJson(join(dotagentsRoot, "coverage.json")) as {
+      packageSurfaces: Array<{ locator: string }>;
+      excluded: Array<{
+        kind: "extension" | "skill" | "prompt" | "package";
+        source: string;
+        reason: string;
+      }>;
+    };
+
+    for (const locator of blockedPackageLocators) {
+      assert.equal(
+        catalog.projects.some(
+          ({ installedLocator }) => installedLocator === locator,
+        ),
+        false,
+        `blocked project became public: ${locator}`,
+      );
+      assert.equal(
+        catalog.entries.some(({ source }) => source.locator === locator),
+        false,
+        `blocked entry became public: ${locator}`,
+      );
+      assert.equal(
+        coverage.packageSurfaces.some(
+          ({ locator: candidate }) => candidate === locator,
+        ),
+        false,
+        `blocked package gained surface inventory: ${locator}`,
+      );
+      const exclusion = coverage.excluded.find(
+        ({ kind, source }) => kind === "package" && source === locator,
+      );
+      assert.ok(exclusion, `blocked package lacks exclusion: ${locator}`);
+      assert.ok(
+        exclusion.reason.length > 20,
+        `blocked package needs an explicit reason: ${locator}`,
+      );
+    }
+  });
+
+  test("keeps adopted Read Map provenance and Exa credentials explicit", () => {
+    const catalog = readJson(join(dotagentsRoot, "catalog.json")) as {
+      projects: Array<{
+        id: string;
+        upstreamUrl?: string;
+        relationship: string;
+        originalAuthors: string[];
+      }>;
+      licenses: Array<{ id: string; evidence: { value: string } }>;
+      entries: Array<{
+        id: string;
+        licenseRef: string;
+        compatibility: string[];
+      }>;
+    };
+    const readMapEvidence = readJson(
+      join(dotagentsRoot, "evidence", "extensions", "pi-read-map.json"),
+    ) as { claims: Array<{ claim: string }> };
+    const exaEvidence = readJson(
+      join(dotagentsRoot, "evidence", "extensions", "pi-exa.json"),
+    ) as { claims: Array<{ claim: string }> };
+
+    const readMapProject = catalog.projects.find(
+      ({ id }) => id === "project/pi-read-map",
+    );
+    assert.equal(readMapProject?.relationship, "adopted");
+    assert.equal(
+      readMapProject?.upstreamUrl,
+      "https://github.com/kcosr/codemap",
+    );
+    assert.deepEqual(readMapProject?.originalAuthors, ["Kevin"]);
+    assert.equal(
+      catalog.entries.find(({ id }) => id === "extension/pi-read-map")
+        ?.licenseRef,
+      "codemap-upstream-mit",
+    );
+    assert.match(
+      catalog.licenses.find(({ id }) => id === "codemap-upstream-mit")?.evidence
+        .value ?? "",
+      /github\.com\/kcosr\/codemap\/blob\/[0-9a-f]{40}\/LICENSE/u,
+    );
+    assert.ok(
+      readMapEvidence.claims.some(({ claim }) =>
+        claim.includes("ported from Codemap"),
+      ),
+    );
+
+    assert.ok(
+      catalog.entries
+        .find(({ id }) => id === "extension/pi-exa")
+        ?.compatibility.includes("Configured Exa API credentials"),
+    );
+    assert.ok(
+      exaEvidence.claims.some(({ claim }) =>
+        claim.includes("Requires configured Exa API credentials"),
+      ),
+    );
+    assert.ok(
+      exaEvidence.claims.some(({ claim }) => claim.includes("Redacts")),
+    );
   });
 
   test("keep the approved Handoff context contract pinned exactly", () => {

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-intercom",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "0685e199b7003cddbb190352f1669fe23be8b9c2"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Supports inbound policies that trigger every message, replies only, or no broker message, and otherwise steers delivery into a busy session.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/index.ts#L864-L900"
+    },
+    {
+      "claim": "Includes attachment content in the agent-visible body and delivers an accepted message by triggering an idle session or steering a busy interactive session.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/index.ts#L912-L965"
+    },
+    {
+      "claim": "Registers a child-only supervisor tool when orchestrator metadata is present and a native supervisor channel is unavailable.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/index.ts#L1505-L1539"
+    },
+    {
+      "claim": "Registers direct session messaging actions for listing, sending, asking, replying, pending asks, status, cancellation, attachments, and cwd-scoped targeting.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/index.ts#L1779-L1840"
+    },
+    {
+      "claim": "Records successfully sent message text and attachments in Pi session history.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/index.ts#L2025-L2044"
+    },
+    {
+      "claim": "Records an ask and its received reply, including attachments, in Pi session history.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/index.ts#L2134-L2183"
+    },
+    {
+      "claim": "Resolves one target, validates reply and supersede relationships, and routes the message only to that target socket.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/broker/broker.ts#L484-L583"
+    },
+    {
+      "claim": "Keeps a bounded in-memory mailbox and replays queued messages only when the reconnecting session matches its ID or a unique same-directory name identity.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/broker/broker.ts#L890-L952"
+    },
+    {
+      "claim": "Uses owner-restricted runtime modes, a Unix socket or Windows named pipe by default, and an explicitly selected loopback TCP transport on Windows.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/broker/paths.ts#L5-L7"
+    },
+    {
+      "claim": "Selects local socket or named-pipe paths by default and only resolves a loopback TCP endpoint after explicit Windows opt-in.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/broker/paths.ts#L44-L115"
+    },
+    {
+      "claim": "Creates the runtime directory with owner-only access and restricts runtime files on Unix-like systems.",
+      "sourceUrl": "https://github.com/nicobailon/pi-intercom/blob/0685e199b7003cddbb190352f1669fe23be8b9c2/broker/paths.ts#L118-L134"
+    }
+  ]
+}

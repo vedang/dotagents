@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Only after explicit user approval, Chrome CDP guides an agent through inspecting, debugging, or interacting with a page open in the user's local Chrome-family browser.",
+    "Its Node command-line interface connects over the Chrome DevTools Protocol and supports tab listing, screenshots, accessibility snapshots, HTML or JavaScript inspection, navigation, and controlled input."
+  ],
+  "whenToReachForIt": {
+    "invocation": "First ask for approval to inspect, debug, or interact with a page open in Chrome; invoke this skill only after the user explicitly approves that browser task.",
+    "situations": [
+      {
+        "when": "The user approves inspection of the current state of an already-open page",
+        "use": "List targets, select the approved tab, then capture the smallest useful snapshot or screenshot."
+      },
+      {
+        "when": "The user approves debugging a live DOM, accessibility, or resource-timing problem",
+        "use": "Run the narrow read-only command that answers the question before considering any interaction."
+      },
+      {
+        "when": "The user approves navigation, clicking, or typing in a named page",
+        "use": "Act only in the approved target and report the resulting page state."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "An attach-oriented CDP workflow for an existing local browser session instead of a newly launched automation profile.",
+    "A fail-closed Lightpanda fallback message that requires fresh user approval before using a separate browser backend."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "Does loading the skill grant permission to inspect Chrome?",
+      "answer": [
+        "No. Explicit user approval for the intended inspection, debugging, or interaction is required before any command runs. Chrome's own Allow debugging prompt is an additional browser gate, not a substitute for that approval."
+      ]
+    },
+    {
+      "question": "What happens if Lightpanda cannot perform an operation?",
+      "answer": [
+        "The command stops and explains that another browser has separate cookies, login, storage, DOM, and workflow state. A fallback configuration changes suggestion text only; execution still waits for explicit user approval."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The user explicitly approved the named browser task before any CDP command ran.",
+    "The selected target belongs to the approved browser and page, and output answers only the approved task.",
+    "An unsupported Lightpanda operation stops until the user separately approves a fallback browser."
+  ],
+  "setupNotes": [
+    "Created by Petr Baudis; this installed MIT-licensed fork is maintained by Vedang Manerikar.",
+    "Requires Node runtime version 22 or newer and a supported browser with remote debugging enabled.",
+    "Treat authenticated tabs as sensitive: describe the intended access and obtain explicit user approval before listing, reading, or changing browser state.",
+    "Behavior claims were reviewed against the installed commit rather than a moving branch."
+  ],
+  "commands": []
+}

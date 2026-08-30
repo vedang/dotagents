@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi Simplify Code follows successful code edits with a focused request for behavior-preserving cleanup.",
+    "It combines successful file-changing tool results with dirty Git or Jujutsu paths, filters the candidate list, and asks the model to apply project-specific judgment."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Leave automatic mode enabled, choose confirm-first mode, or run /simplify-code wc for an immediate working-copy pass.",
+    "situations": [
+      {
+        "when": "A coding turn has left implementation changes that would benefit from a separate cleanup pass",
+        "use": "Let the extension send a follow-up after the current agent turn finishes."
+      },
+      {
+        "when": "You want to approve each automatic cleanup pass",
+        "use": "Set ask mode and review the changed-path confirmation before continuing."
+      },
+      {
+        "when": "You want to review all current dirty code regardless of automatic mode",
+        "use": "Run the manual working-copy command."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "An agent-end hook that requests simplification only when eligible non-Markdown paths changed.",
+    "Global and project mode controls for automatic, disabled, and confirm-first behavior.",
+    "A manual working-copy pass that uses the same changed-path collection and filtering pipeline."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/pi-watcher",
+      "relationship": "Pi Watcher starts focused turns from editor comments; Pi Simplify Code starts a cleanup follow-up after code-changing agent work."
+    }
+  ],
+  "questions": [
+    {
+      "question": "Does the extension rewrite code by itself?",
+      "answer": [
+        "No. It sends a follow-up to the model, which still applies repository instructions and decides which behavior-preserving improvements are appropriate."
+      ]
+    },
+    {
+      "question": "Which paths can appear in the follow-up?",
+      "answer": [
+        "The list combines successful write, edit, or compatible patch results with current dirty version-control paths. Git-ignored in-worktree paths are removed when Git can evaluate ignore rules."
+      ]
+    }
+  ],
+  "workingIf": [
+    "An eligible code-changing turn produces one follow-up after Pi becomes idle.",
+    "Markdown-only changes, pending user messages, disabled mode, and the extension's own follow-up do not start another automatic pass."
+  ],
+  "setupNotes": [
+    "Created and maintained by Vedang Manerikar; installed directly from the original WTFPL-licensed Git project.",
+    "Git or Jujutsu improves working-copy discovery, while confirmed file-changing tool results provide a narrower fallback.",
+    "Behavior claims were reviewed against the installed commit rather than a moving branch."
+  ],
+  "commands": [
+    "/simplify-code wc",
+    "/simplify-code yes",
+    "/simplify-code no",
+    "/simplify-code ask",
+    "/simplify-code global yes|no|ask",
+    "/simplify-code project yes|no|ask"
+  ]
+}

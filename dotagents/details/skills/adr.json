@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "ADR guides creation and maintenance of architecture decision records while preserving the context, decision, consequences, status, and links that future maintainers need.",
+    "A bundled Bun CLI handles deterministic ADR initialization, filenames, creation, supersession links, navigation, reports, and validation."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Ask to create, review, update, supersede, list, validate, summarize, or report on Architecture Decision Records.",
+    "situations": [
+      {
+        "when": "An architectural choice needs durable rationale",
+        "use": "Capture one decision with value-neutral context and explicit consequences."
+      },
+      {
+        "when": "A newer decision replaces or qualifies an earlier record",
+        "use": "Preserve the old record and add explicit supersession or relationship links."
+      },
+      {
+        "when": "An ADR log has drifted or needs an overview",
+        "use": "Validate its structure or generate a list, table of contents, or graph."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A repository-aware workflow that respects an existing ADR-directory marker before the conventional architecture-record directory and asks before establishing a new location.",
+    "Deterministic helpers for fragile file and link operations, while leaving architectural reasoning to the agent and user."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "Does superseding a decision delete the old record?",
+      "answer": [
+        "No. The writing rules preserve superseded and rejected decisions so their rationale remains part of repository history."
+      ]
+    },
+    {
+      "question": "Can the helper CLI decide architecture on its own?",
+      "answer": [
+        "No. It performs deterministic repository operations and checks structure; humans and agents still supply and review the context, decision, and consequences."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Each new ADR captures one decision and follows the repository's existing numbering and status conventions.",
+    "Supersession and relationship links are reciprocal and old rationale remains available.",
+    "Validation reports no structural, numbering, date, status, or link errors."
+  ],
+  "setupNotes": [
+    "Created and maintained by Vedang Manerikar; the installed Vedang locator now resolves to the canonical Unravel Team repository.",
+    "Helper commands require Bun and should run from the project whose ADR paths they manage.",
+    "The pinned repository declares no public source license. This catalog provides independently written factual notes and a source link, not permission to reuse source code or documentation.",
+    "Behavior claims were reviewed against the installed commit rather than a moving branch."
+  ],
+  "commands": []
+}

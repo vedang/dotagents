@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-quizme",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "dbb6249a78aef1dc2bfb1bf9221479903e9bf861"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Declares one Pi extension entrypoint in the package manifest.",
+      "sourceUrl": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/package.json#L1-L18"
+    },
+    {
+      "claim": "Builds quiz context from current-branch user, assistant, custom, and bounded tool-result content.",
+      "sourceUrl": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/src/index.ts#L187-L239"
+    },
+    {
+      "claim": "Resolves project, user, then bundled quiz instructions in that precedence order.",
+      "sourceUrl": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/src/index.ts#L241-L279"
+    },
+    {
+      "claim": "Reads the current branch, builds a quiz request, and sends it through the selected model path.",
+      "sourceUrl": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/src/index.ts#L362-L424"
+    },
+    {
+      "claim": "Collects answers interactively and sends an explicit grading request before rendering results.",
+      "sourceUrl": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/src/index.ts#L494-L630"
+    },
+    {
+      "claim": "Offers one confirmed shutdown quiz and registers the manual /quizme command.",
+      "sourceUrl": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/src/index.ts#L633-L659"
+    },
+    {
+      "claim": "Keeps diagnostic logging disabled by default and writes cumulative JSON snapshots only when explicitly enabled.",
+      "sourceUrl": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/src/debug.ts#L18-L64"
+    },
+    {
+      "claim": "The bundled quiz instruction requests five to twelve mixed-format questions and later grading explanations.",
+      "sourceUrl": "https://github.com/vedang/pi-quizme/blob/dbb6249a78aef1dc2bfb1bf9221479903e9bf861/prompt.md#L1-L43"
+    }
+  ]
+}

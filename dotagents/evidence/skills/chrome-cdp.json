@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "entryId": "skill/chrome-cdp",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "24d2354b1041a51219d3e42013162e83b787e740"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "The skill may be used only after explicit user approval to inspect, debug, or interact with a page open in Chrome.",
+      "sourceUrl": "https://github.com/vedang/chrome-cdp-skill/blob/24d2354b1041a51219d3e42013162e83b787e740/skills/chrome-cdp/SKILL.md#L1-L4"
+    },
+    {
+      "claim": "The documented command surface covers target listing, screenshots, accessibility snapshots, page inspection, navigation, input, and daemon shutdown.",
+      "sourceUrl": "https://github.com/vedang/chrome-cdp-skill/blob/24d2354b1041a51219d3e42013162e83b787e740/skills/chrome-cdp/SKILL.md#L17-L64"
+    },
+    {
+      "claim": "The skill forbids automatic Lightpanda fallback and requires explicit approval before connecting to another browser or retrying there.",
+      "sourceUrl": "https://github.com/vedang/chrome-cdp-skill/blob/24d2354b1041a51219d3e42013162e83b787e740/skills/chrome-cdp/SKILL.md#L76-L90"
+    },
+    {
+      "claim": "On non-Windows systems, the CLI applies a private process mask and creates its runtime directory with owner-only permissions.",
+      "sourceUrl": "https://github.com/vedang/chrome-cdp-skill/blob/24d2354b1041a51219d3e42013162e83b787e740/skills/chrome-cdp/scripts/cdp.mjs#L27-L35"
+    },
+    {
+      "claim": "The CLI's Lightpanda error response states that fallback did not run automatically and prints manual steps beginning with asking the user.",
+      "sourceUrl": "https://github.com/vedang/chrome-cdp-skill/blob/24d2354b1041a51219d3e42013162e83b787e740/skills/chrome-cdp/scripts/cdp.mjs#L1285-L1320"
+    },
+    {
+      "claim": "Unsupported Lightpanda methods route to the fallback-required message and return a failing process status instead of retrying elsewhere.",
+      "sourceUrl": "https://github.com/vedang/chrome-cdp-skill/blob/24d2354b1041a51219d3e42013162e83b787e740/skills/chrome-cdp/scripts/cdp.mjs#L1419-L1429"
+    },
+    {
+      "claim": "Opening a new tab reports that the tab needs Chrome's Allow debugging approval on first access.",
+      "sourceUrl": "https://github.com/vedang/chrome-cdp-skill/blob/24d2354b1041a51219d3e42013162e83b787e740/skills/chrome-cdp/scripts/cdp.mjs#L1347-L1364"
+    }
+  ]
+}

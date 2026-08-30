@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Caveman adds selectable response styles to Pi that remove filler while retaining technical terms, code blocks, and quoted errors.",
+    "The extension restores the active mode from session history, adds the matching instructions before each agent run, and returns to normal output when the user says stop caveman or normal mode."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Use the caveman command, optionally followed by a supported mode, or ask for a terse Caveman response style.",
+    "situations": [
+      {
+        "when": "Agent responses are accurate but longer than needed",
+        "use": "Choose lite, full, or ultra mode to reduce filler at the desired intensity."
+      },
+      {
+        "when": "A session should start in a consistent response mode",
+        "use": "Set a saved default while retaining a per-session override."
+      },
+      {
+        "when": "A security warning or irreversible action needs unambiguous prose",
+        "use": "Let the clarity boundary temporarily take priority, then resume the selected mode."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Lite, full, ultra, and three Wenyan response modes, plus an explicit off state.",
+    "Command aliases for the package's commit-message, code-review, help, and memory-compression skills."
+  ],
+  "howItFits": [
+    {
+      "entryId": "prompt/sharpen-communication",
+      "relationship": "Sharpen communication edits supplied writing for its audience and goal; Caveman controls the ongoing response style of the agent session."
+    }
+  ],
+  "questions": [
+    {
+      "question": "Does terse mode override safety or clarity?",
+      "answer": [
+        "No. Its own guidance calls for normal, explicit prose for security warnings, irreversible confirmations, and ordered instructions where fragments could be misunderstood."
+      ]
+    },
+    {
+      "question": "How long does a selected mode last?",
+      "answer": [
+        "The extension stores mode changes in session history and restores the latest valid value when that session resumes. A separate environment or config default controls new sessions."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The caveman command reports the current and default modes.",
+    "A selected mode affects later agent runs without changing code blocks or technical terms.",
+    "Saying stop caveman or normal mode switches the session back off."
+  ],
+  "setupNotes": [
+    "Created by Julius Brussee; this installed MIT-licensed fork is maintained by Vedang Manerikar and adds the Pi package integration.",
+    "The saved default resolves from the Caveman default-mode environment setting, then the Caveman config file, then full mode.",
+    "Behavior claims were reviewed against the installed commit rather than a moving branch."
+  ],
+  "commands": [
+    "/caveman",
+    "/caveman status",
+    "/caveman lite",
+    "/caveman full",
+    "/caveman ultra",
+    "/caveman default MODE",
+    "/caveman-commit",
+    "/caveman-review",
+    "/caveman-help",
+    "/caveman:compress FILE"
+  ]
+}

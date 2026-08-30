@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Pi AskUserQuestion gives the model a structured tool for pausing work and collecting user choices before it continues.",
+    "Each call can present one to four questions, support single or multiple selections, and accept a typed answer without requiring the model to invent an extra option."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Ask the model to clarify requirements or preferences; the model invokes the structured question tool.",
+    "situations": [
+      {
+        "when": "Several valid implementation paths need an explicit user choice",
+        "use": "Present concise options and return the selected label to the model."
+      },
+      {
+        "when": "More than one answer may apply",
+        "use": "Use a multi-select question and combine checked options with optional typed input."
+      },
+      {
+        "when": "A larger request has a few independent decisions",
+        "use": "Group up to four questions into tabs and review every answer before submission."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "One model-invoked tool with bounded question and option schemas.",
+    "An interactive terminal component for option selection, typed answers, answer review, cancellation, and compact result rendering."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "What happens outside an interactive session?",
+      "answer": [
+        "The call returns an error, marks the result cancelled, and removes the question tool from active tools for the rest of that session."
+      ]
+    },
+    {
+      "question": "Can users provide an answer not listed by the model?",
+      "answer": [
+        "Yes. The component adds its own typed-answer row, so callers should provide only real choices rather than adding an Other option."
+      ]
+    }
+  ],
+  "workingIf": [
+    "The terminal opens the question view and returns selected or typed answers to the model.",
+    "Duplicate question text or duplicate labels are rejected before the interactive view opens."
+  ],
+  "setupNotes": [
+    "Created and maintained by Baishampayan Ghose; installed directly from the original repository.",
+    "The reviewed package revision exposes one Pi extension entry point and requires an interactive terminal UI.",
+    "The pinned README names MIT but does not include license grant text. This catalog page uses independently written factual prose and does not assert source-reuse permission."
+  ],
+  "commands": []
+}

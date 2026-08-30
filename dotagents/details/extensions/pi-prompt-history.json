@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Scans Pi session JSONL files, extracts user-message text, and stores a searchable copy in a local SQLite database.",
+    "Offers exact-cwd Local search and cross-session Global search through commands or Ctrl+R.",
+    "Can replace editor text and copy a selected prompt to the system clipboard, or restore or fork from the selected session point."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Press Ctrl+R or run /prompt-history for exact-cwd search; use /prompt-history-global only when cross-project history is intended.",
+    "situations": [
+      {
+        "when": "A useful prompt from the current working directory should be reused",
+        "use": "Search Local history and load the selected text into the editor."
+      },
+      {
+        "when": "The prompt came from another Pi working directory",
+        "use": "Switch deliberately to Global history and inspect the displayed cwd metadata."
+      },
+      {
+        "when": "Work should continue from the selected historical point",
+        "use": "Choose fork to branch from that entry or restore to switch to the full session."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Persistent prompt indexing independent of the original session-file scan cost.",
+    "Local and Global scopes with current-session, same-cwd, and other-cwd grouping.",
+    "Copy, restore, and fork actions from one interactive history overlay."
+  ],
+  "howItFits": [],
+  "questions": [
+    {
+      "question": "Where does prompt text persist?",
+      "answer": [
+        "Original prompt text remains in Pi session JSONL files and is also copied into a SQLite database.",
+        "The default database lives in the agent prompt-history data directory, and configuration can move both database and session source paths.",
+        "The extension exposes reindexing and status commands but no data-retention or database-deletion command; remove the configured database separately when its history should no longer remain."
+      ]
+    },
+    {
+      "question": "Is Local mode a privacy boundary across projects?",
+      "answer": [
+        "Local queries filter by exact cwd, but the same database can contain prompts from many working directories.",
+        "Global mode searches all indexed prompts and displays other-cwd metadata. Treat the database as sensitive local data protected by host filesystem access."
+      ]
+    },
+    {
+      "question": "Does selecting a prompt create another copy?",
+      "answer": [
+        "The copy action replaces Pi editor text and also sends the selected prompt to the terminal or operating-system clipboard path, creating another exposure boundary."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Local search returns only entries whose stored cwd exactly matches the current cwd.",
+    "Global search can show entries from other working directories with source metadata.",
+    "Copy loads the full selected prompt into the editor; restore and fork use the selected session file and entry."
+  ],
+  "setupNotes": [
+    "Review configured database and session paths before enabling Global search on a shared account.",
+    "Prompt text is stored as readable SQLite content; this extension does not establish a separate encryption boundary.",
+    "Copying uses terminal and platform clipboard mechanisms, whose retention and sharing behavior is outside the extension.",
+    "Created and maintained by Vedang Manerikar under the WTFPL at the reviewed revision."
+  ],
+  "commands": [
+    "/prompt-history",
+    "/prompt-history-global",
+    "/prompt-history-reindex",
+    "/prompt-history-reindex global",
+    "/prompt-history-status"
+  ]
+}

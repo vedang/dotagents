@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-boomerang",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "The package manifest exposes index.ts as its only Pi extension and contains no license field.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/package.json#L1-L23"
+    },
+    {
+      "claim": "Template loading rejects absolute and parent-traversal references, checks project prompts before user prompts, and reads model, thinking, and skill choices from frontmatter.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/index.ts#L632-L669"
+    },
+    {
+      "claim": "Chain execution resolves every template before starting, records the prior model and thinking level, and then advances through the ordered steps.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/index.ts#L875-L930"
+    },
+    {
+      "claim": "Rethrow mode accepts a bounded pass count, anchors at the current session leaf, supports plain tasks, templates, or chains, and delegates repeated execution to the rethrow loop.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/index.ts#L1306-L1404"
+    },
+    {
+      "claim": "Completion summaries collect recognized file reads, file writes, Bash call counts, and the last assistant text into a compact record.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/index.ts#L1243-L1304"
+    },
+    {
+      "claim": "The user command handles manual anchors, persistent guidance, optional tool enablement, task startup, busy-state rejection, and explicit cancellation.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/index.ts#L1513-L1646"
+    },
+    {
+      "claim": "The optional boomerang tool can queue an autonomous task or toggle a manual anchor and requests context collapse after the second anchor call.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/index.ts#L1648-L1725"
+    },
+    {
+      "claim": "Agent hooks inject boomerang instructions, wait for task completion, navigate the session tree, and combine summaries for rethrows or persistent anchors.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/index.ts#L1733-L1918"
+    },
+    {
+      "claim": "A session start restores saved model and thinking settings and clears boomerang state.",
+      "sourceUrl": "https://github.com/vedang/pi-boomerang/blob/12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca/index.ts#L1932-L1936"
+    }
+  ]
+}

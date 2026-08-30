@@ -96,6 +96,238 @@
           "path": "src/index.ts"
         }
       ]
+    },
+    {
+      "locator": "git:github.com/ghoseb/pi-askuserquestion",
+      "reviewedRevision": "e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/mattleong/pi-better-openai",
+      "reviewedRevision": "58273a6aeeb387bc61c6ec68cabd867952611bf4",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "index.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-boomerang",
+      "reviewedRevision": "12c1b2997c7acc3baa0ee2a88eaa241dafa9cfca",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "index.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/unravel-team/denote-mono",
+      "reviewedRevision": "b1ede211d6324eb2f0d3812fd69eac020d31925e",
+      "surfaces": [
+        {
+          "kind": "skill",
+          "path": ".agents/skills/llm-wiki-capture/SKILL.md"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/caveman",
+      "reviewedRevision": "2ae85e3ea7a0e7db89bbb71c497a68ebac952559",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "pi-extension/index.js"
+        },
+        {
+          "kind": "skill",
+          "path": "caveman-compress/SKILL.md"
+        },
+        {
+          "kind": "skill",
+          "path": "skills/caveman/SKILL.md"
+        },
+        {
+          "kind": "skill",
+          "path": "skills/caveman-commit/SKILL.md"
+        },
+        {
+          "kind": "skill",
+          "path": "skills/caveman-help/SKILL.md"
+        },
+        {
+          "kind": "skill",
+          "path": "skills/caveman-review/SKILL.md"
+        },
+        {
+          "kind": "skill",
+          "path": "skills/compress/SKILL.md"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/chrome-cdp-skill",
+      "reviewedRevision": "24d2354b1041a51219d3e42013162e83b787e740",
+      "surfaces": [
+        {
+          "kind": "skill",
+          "path": "skills/chrome-cdp/SKILL.md"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-adr",
+      "reviewedRevision": "8f10418d7fbec46c3a75e6f54b2b8a3be26d4958",
+      "surfaces": [
+        {
+          "kind": "skill",
+          "path": "skills/adr/SKILL.md"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-btw",
+      "reviewedRevision": "2996676ecde01da55c1489b62f13c1f70ceb472d",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-exa",
+      "reviewedRevision": "34e083e304206107cc2e0c0171f378a1103a64f3",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-prompt-history",
+      "reviewedRevision": "eedbef7afdf16a317785be469f600d71fadc9ef0",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-quizme",
+      "reviewedRevision": "dbb6249a78aef1dc2bfb1bf9221479903e9bf861",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        },
+        {
+          "kind": "prompt",
+          "path": "prompt.md"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-review-code",
+      "reviewedRevision": "305a398f8b6a7da2817681c2e54f69a2a1840714",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        },
+        {
+          "kind": "prompt",
+          "path": "src/prompts.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/vedang/pi-simplify-code",
+      "reviewedRevision": "2abab5dfff3269d1ab9be199e9d0e68a27767024",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        }
+      ]
+    },
+    {
+      "locator": "git:github.com/Whamp/pi-read-map",
+      "reviewedRevision": "97b6a73305000845d22646f62c72fbf6121e16f3",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "src/index.ts"
+        },
+        {
+          "kind": "skill",
+          "path": ".pi/skills/summary-judge/SKILL.md"
+        }
+      ]
+    },
+    {
+      "locator": "npm:pi-interactive-shell",
+      "reviewedRevision": "c5dac7836f6886ed001697acddc15d56fbefe199",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "index.ts"
+        },
+        {
+          "kind": "skill",
+          "path": "skills/pi-interactive-shell/SKILL.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "examples/prompts/codex-implement-plan.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "examples/prompts/codex-review-impl.md"
+        },
+        {
+          "kind": "prompt",
+          "path": "examples/prompts/codex-review-plan.md"
+        },
+        {
+          "kind": "skill",
+          "path": "examples/skills/codex-5-3-prompting/SKILL.md"
+        },
+        {
+          "kind": "skill",
+          "path": "examples/skills/codex-cli/SKILL.md"
+        },
+        {
+          "kind": "skill",
+          "path": "examples/skills/cursor-cli/SKILL.md"
+        },
+        {
+          "kind": "skill",
+          "path": "examples/skills/gpt-5-4-prompting/SKILL.md"
+        }
+      ]
+    },
+    {
+      "locator": "npm:pi-intercom",
+      "reviewedRevision": "0685e199b7003cddbb190352f1669fe23be8b9c2",
+      "surfaces": [
+        {
+          "kind": "extension",
+          "path": "index.ts"
+        },
+        {
+          "kind": "skill",
+          "path": "skills/pi-intercom/SKILL.md"
+        }
+      ]
     }
   ],
   "excluded": [
@@ -300,88 +532,23 @@
     },
     {
       "kind": "package",
-      "source": "git:github.com/ghoseb/pi-askuserquestion",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
       "source": "git:github.com/ghoseb/pi-damage-control",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/mattleong/pi-better-openai",
-      "reason": "Not selected for the launch catalog."
+      "reason": "Publication is withheld because anonymous readers cannot access the pinned source or license evidence in the private repository."
     },
     {
       "kind": "package",
       "source": "git:github.com/unravel-team/dafny-estimation",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/unravel-team/denote-mono",
-      "reason": "Not selected for the launch catalog."
+      "reason": "Publication is withheld because anonymous readers cannot access the pinned source or MIT license evidence in the private repository."
     },
     {
       "kind": "package",
       "source": "git:github.com/unravel-team/thing.git",
-      "reason": "Not selected for the launch catalog."
+      "reason": "Publication is withheld because the private repository has no root license declaration and its CLI package license does not establish rights for the Pi skill."
     },
     {
       "kind": "package",
       "source": "git:github.com/unravel-team/unravel-proposal-creator",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/caveman",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/chrome-cdp-skill",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/pi-adr",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/pi-boomerang",
-      "reason": "Excluded pending license and fork-policy resolution."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/pi-btw",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/pi-exa",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/pi-prompt-history",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/pi-quizme",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/pi-review-code",
-      "reason": "Not selected for the launch catalog."
-    },
-    {
-      "kind": "package",
-      "source": "git:github.com/vedang/pi-simplify-code",
-      "reason": "Not selected for the launch catalog."
+      "reason": "Publication is withheld because the private repository describes copied skills without upstream provenance or a tracked license grant."
     },
     {
       "kind": "package",
@@ -389,19 +556,112 @@
       "reason": "Excluded pending upstream publication permission or a license."
     },
     {
-      "kind": "package",
+      "kind": "skill",
+      "source": "git:github.com/vedang/caveman",
+      "surfacePath": "caveman-compress/SKILL.md",
+      "reason": "Bundled memory-compression workflow is not selected as this package's featured primary surface."
+    },
+    {
+      "kind": "skill",
+      "source": "git:github.com/vedang/caveman",
+      "surfacePath": "skills/caveman/SKILL.md",
+      "reason": "Bundled communication instructions support the featured extension and are not published as a separate entry."
+    },
+    {
+      "kind": "skill",
+      "source": "git:github.com/vedang/caveman",
+      "surfacePath": "skills/caveman-commit/SKILL.md",
+      "reason": "Bundled commit-message workflow is not selected as this package's featured primary surface."
+    },
+    {
+      "kind": "skill",
+      "source": "git:github.com/vedang/caveman",
+      "surfacePath": "skills/caveman-help/SKILL.md",
+      "reason": "Bundled reference-card workflow is not selected as this package's featured primary surface."
+    },
+    {
+      "kind": "skill",
+      "source": "git:github.com/vedang/caveman",
+      "surfacePath": "skills/caveman-review/SKILL.md",
+      "reason": "Bundled code-review workflow is not selected as this package's featured primary surface."
+    },
+    {
+      "kind": "skill",
+      "source": "git:github.com/vedang/caveman",
+      "surfacePath": "skills/compress/SKILL.md",
+      "reason": "Bundled symlink exposes the same memory-compression workflow and is not published as a separate entry."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/pi-quizme",
+      "surfacePath": "prompt.md",
+      "reason": "Bundled quiz-generation instruction is consumed internally by the featured extension and is not a separately invoked Pi prompt template."
+    },
+    {
+      "kind": "prompt",
+      "source": "git:github.com/vedang/pi-review-code",
+      "surfacePath": "src/prompts.ts",
+      "reason": "Workflow-specific prompt builders are internal to the featured extension and are not separately invoked Pi prompt templates."
+    },
+    {
+      "kind": "skill",
       "source": "git:github.com/Whamp/pi-read-map",
-      "reason": "Not selected for the launch catalog."
+      "surfacePath": ".pi/skills/summary-judge/SKILL.md",
+      "reason": "Repository-local evaluation skill is not declared as an installed package skill and is not selected for the public catalog."
     },
     {
-      "kind": "package",
+      "kind": "skill",
       "source": "npm:pi-interactive-shell",
-      "reason": "Not selected for the launch catalog."
+      "surfacePath": "skills/pi-interactive-shell/SKILL.md",
+      "reason": "Bundled usage guidance is secondary to the featured runtime extension and is not selected for a separate public entry."
     },
     {
-      "kind": "package",
+      "kind": "prompt",
+      "source": "npm:pi-interactive-shell",
+      "surfacePath": "examples/prompts/codex-implement-plan.md",
+      "reason": "Opt-in example prompt is bundled as reference material, is not installed automatically as a Pi prompt, and is not selected for the public catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "npm:pi-interactive-shell",
+      "surfacePath": "examples/prompts/codex-review-impl.md",
+      "reason": "Opt-in example prompt is bundled as reference material, is not installed automatically as a Pi prompt, and is not selected for the public catalog."
+    },
+    {
+      "kind": "prompt",
+      "source": "npm:pi-interactive-shell",
+      "surfacePath": "examples/prompts/codex-review-plan.md",
+      "reason": "Opt-in example prompt is bundled as reference material, is not installed automatically as a Pi prompt, and is not selected for the public catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "npm:pi-interactive-shell",
+      "surfacePath": "examples/skills/codex-5-3-prompting/SKILL.md",
+      "reason": "Opt-in example skill is outside the package's declared skills directory and is not selected for the public catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "npm:pi-interactive-shell",
+      "surfacePath": "examples/skills/codex-cli/SKILL.md",
+      "reason": "Opt-in example skill is outside the package's declared skills directory and is not selected for the public catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "npm:pi-interactive-shell",
+      "surfacePath": "examples/skills/cursor-cli/SKILL.md",
+      "reason": "Opt-in example skill is outside the package's declared skills directory and is not selected for the public catalog."
+    },
+    {
+      "kind": "skill",
+      "source": "npm:pi-interactive-shell",
+      "surfacePath": "examples/skills/gpt-5-4-prompting/SKILL.md",
+      "reason": "Opt-in example skill is outside the package's declared skills directory and is not selected for the public catalog."
+    },
+    {
+      "kind": "skill",
       "source": "npm:pi-intercom",
-      "reason": "Not selected for the launch catalog."
+      "surfacePath": "skills/pi-intercom/SKILL.md",
+      "reason": "Bundled coordination guidance is secondary to the featured runtime extension and is not selected for a separate public entry."
     }
   ]
 }

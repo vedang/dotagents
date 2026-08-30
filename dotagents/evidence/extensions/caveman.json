@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/caveman",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "2ae85e3ea7a0e7db89bbb71c497a68ebac952559"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "The Pi package declares one extension entrypoint plus the bundled skill roots.",
+      "sourceUrl": "https://github.com/vedang/caveman/blob/2ae85e3ea7a0e7db89bbb71c497a68ebac952559/package.json#L1-L10"
+    },
+    {
+      "claim": "The `/caveman` command reports status, saves a default, changes the session mode, and rejects unsupported modes.",
+      "sourceUrl": "https://github.com/vedang/caveman/blob/2ae85e3ea7a0e7db89bbb71c497a68ebac952559/pi-extension/extension.js#L39-L81"
+    },
+    {
+      "claim": "The extension exposes aliases for commit, review, help, and compression skills.",
+      "sourceUrl": "https://github.com/vedang/caveman/blob/2ae85e3ea7a0e7db89bbb71c497a68ebac952559/pi-extension/extension.js#L83-L109"
+    },
+    {
+      "claim": "The extension handles explicit stop phrases, restores the latest session mode, and adds active-mode instructions before each agent run.",
+      "sourceUrl": "https://github.com/vedang/caveman/blob/2ae85e3ea7a0e7db89bbb71c497a68ebac952559/pi-extension/extension.js#L111-L135"
+    },
+    {
+      "claim": "Default-mode resolution checks the environment, then the user config file, then the full-mode fallback.",
+      "sourceUrl": "https://github.com/vedang/caveman/blob/2ae85e3ea7a0e7db89bbb71c497a68ebac952559/pi-extension/config.js#L18-L50"
+    },
+    {
+      "claim": "The communication skill defines six intensity variants and requires technical terms, code blocks, and quoted errors to remain exact.",
+      "sourceUrl": "https://github.com/vedang/caveman/blob/2ae85e3ea7a0e7db89bbb71c497a68ebac952559/skills/caveman/SKILL.md#L19-L37"
+    },
+    {
+      "claim": "The skill restores normal prose for security warnings, irreversible confirmations, and instructions where compressed ordering could be misunderstood.",
+      "sourceUrl": "https://github.com/vedang/caveman/blob/2ae85e3ea7a0e7db89bbb71c497a68ebac952559/skills/caveman/SKILL.md#L54-L67"
+    }
+  ]
+}

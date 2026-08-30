@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-askuserquestion",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Declares src/index.ts as the package's only Pi extension surface.",
+      "sourceUrl": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/package.json#L16-L20"
+    },
+    {
+      "claim": "Registers ask_user_question as a model-callable tool and describes clarification, preference, and implementation-decision uses.",
+      "sourceUrl": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/src/index.ts#L7-L24"
+    },
+    {
+      "claim": "Bounds each call to one through four questions and each question to two through four options, with a multi-select flag.",
+      "sourceUrl": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/src/schema.ts#L17-L42"
+    },
+    {
+      "claim": "Rejects duplicate question text and duplicate option labels before opening the UI.",
+      "sourceUrl": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/src/validate.ts#L3-L23"
+    },
+    {
+      "claim": "Disables the tool for the session and returns a cancelled error result when no interactive UI is present.",
+      "sourceUrl": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/src/index.ts#L40-L58"
+    },
+    {
+      "claim": "Adds a typed-answer row and a separate submit tab to the interactive component.",
+      "sourceUrl": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/src/component.ts#L99-L115"
+    },
+    {
+      "claim": "Renders multi-select options as checkboxes and preserves typed input as an additional answer choice.",
+      "sourceUrl": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/src/component.ts#L227-L266"
+    },
+    {
+      "claim": "Combines selected labels in option order and appends typed input for a multi-select answer.",
+      "sourceUrl": "https://github.com/ghoseb/pi-askuserquestion/blob/e58609c9e9c8c4e8a0348c96eaad38dd7e6f0578/src/component.ts#L359-L371"
+    }
+  ]
+}

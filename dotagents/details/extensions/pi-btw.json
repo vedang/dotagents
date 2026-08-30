@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Runs a side question asynchronously in its own Pi child session and returns the result to the parent transcript.",
+    "Uses fresh context by default, with an explicit fork mode that snapshots the current persisted parent branch.",
+    "Limits child inspection to Pi's read, grep, find, and ls tools; no shell or file-mutation tool is exposed to the child."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Run /btw with a question; add --fork only when the side question needs the current persisted branch.",
+    "situations": [
+      {
+        "when": "A small question should not redirect the main conversation",
+        "use": "Ask it in a fresh child session and keep the parent workflow focused."
+      },
+      {
+        "when": "The answer depends on decisions already recorded in the current branch",
+        "use": "Use fork mode to give the child a point-in-time branch snapshot."
+      },
+      {
+        "when": "Several read-only investigations can run independently",
+        "use": "Queue side questions and inspect generic status or cancel by run prefix."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "A bounded queue for asynchronous side questions.",
+    "Fresh and forked context modes with per-run child sessions.",
+    "Durable result cards plus a compact active-work widget."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/pi-subagents",
+      "relationship": "BTW handles short read-only side questions; Pi Subagents covers broader delegated workflows and configurable child execution."
+    }
+  ],
+  "questions": [
+    {
+      "question": "Is the read-only child a filesystem sandbox?",
+      "answer": [
+        "No. Its tool list excludes shell and mutation tools, but read-oriented tools can inspect paths available to the Pi process.",
+        "Use operating-system or container isolation when code running under the same account is not trusted."
+      ]
+    },
+    {
+      "question": "What persists after a run?",
+      "answer": [
+        "The terminal result is appended to the parent session as a transcript entry.",
+        "Child session artifacts are temporary and cleanup is guarded and best effort; abnormal failure can leave private temporary data for later cleanup."
+      ]
+    },
+    {
+      "question": "What does fork mode include?",
+      "answer": [
+        "It copies only the persisted parent ancestry through the leaf captured at invocation, not later parent updates."
+      ]
+    }
+  ],
+  "workingIf": [
+    "Accepted questions appear as queued, starting, or running without replacing the parent turn.",
+    "A completed side question appears as a durable result card.",
+    "Fresh runs have no parent transcript, while forked runs use the captured branch snapshot."
+  ],
+  "setupNotes": [
+    "Requires interactive Pi and an available selected model through Pi's provider runtime.",
+    "The package itself runs with host-process access even though its child tool inventory is read-only.",
+    "No source license is declared at the reviewed revision; this guide publishes only independently written factual prose and a source link."
+  ],
+  "commands": [
+    "/btw QUESTION",
+    "/btw --fresh QUESTION",
+    "/btw --fork QUESTION",
+    "/btw status",
+    "/btw cancel RUN_PREFIX"
+  ]
+}

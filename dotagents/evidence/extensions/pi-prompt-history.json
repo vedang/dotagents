@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-prompt-history",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "eedbef7afdf16a317785be469f600d71fadc9ef0"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Registers Local, Global, reindex, and status commands plus Ctrl+R Local search.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/commands.ts#L100-L143"
+    },
+    {
+      "claim": "Defaults the persistent database and source-session locations under the Pi agent directory.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/config.ts#L6-L43"
+    },
+    {
+      "claim": "Parses session JSONL and indexes only text from user-role messages.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/parser.ts#L120-L222"
+    },
+    {
+      "claim": "Stores full prompt text, cwd, session metadata, timestamps, previews, and hashes in SQLite tables.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/db.ts#L272-L306"
+    },
+    {
+      "claim": "Filters Local queries by exact cwd while Global queries read all indexed prompt rows.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/db.ts#L203-L234"
+    },
+    {
+      "claim": "Discovers all session files for Global refresh and only the current cwd directory for Local refresh.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/commands.ts#L481-L504"
+    },
+    {
+      "claim": "The copy action replaces editor text and sends the selected prompt to clipboard handling.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/commands.ts#L280-L303"
+    },
+    {
+      "claim": "Clipboard handling emits OSC 52 and then attempts a platform-native clipboard path.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/clipboard.ts#L4-L53"
+    },
+    {
+      "claim": "Restore switches to the selected session, while fork switches when needed and branches from the selected entry.",
+      "sourceUrl": "https://github.com/vedang/pi-prompt-history/blob/eedbef7afdf16a317785be469f600d71fadc9ef0/src/commands.ts#L353-L380"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/pi-review-code",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "305a398f8b6a7da2817681c2e54f69a2a1840714"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Registers interactive /review and /review-fix commands and restores extension state from session entries.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/index.ts#L121-L246"
+    },
+    {
+      "claim": "Resolves free-form, diff, GitHub pull-request, and GitLab merge-request targets without a branch checkout step.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/targets.ts#L212-L320"
+    },
+    {
+      "claim": "Starts an investigation pass that produces a review prompt, then starts the final review with that prompt.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/flow.ts#L1145-L1216"
+    },
+    {
+      "claim": "Blocks edit and write calls during the prompt-generation investigation pass.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/flow.ts#L1425-L1480"
+    },
+    {
+      "claim": "Makes prompt-finalization and finding-recording tools active only in their matching workflow states.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/state.ts#L244-L265"
+    },
+    {
+      "claim": "Requires a matching active investigation run before recording the generated review prompt as a session entry.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/meta-result.ts#L111-L174"
+    },
+    {
+      "claim": "Records structured review findings with priority and optional source references as session entries.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/comments.ts#L169-L226"
+    },
+    {
+      "claim": "Collapses the investigation branch, opens the generated prompt for editing, and starts the final review only after handoff succeeds.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/flow.ts#L1673-L1803"
+    },
+    {
+      "claim": "Collapses completed review and fix branches and appends their summaries to the session.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/flow.ts#L1828-L1895"
+    },
+    {
+      "claim": "Loads optional REVIEW_GUIDELINES.md only when it is a regular file within the 64 KiB bound.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/src/guidelines.ts#L18-L47"
+    },
+    {
+      "claim": "Ships a standalone pi-review launcher that opens Pi with the package and preloads the /review command.",
+      "sourceUrl": "https://github.com/vedang/pi-review-code/blob/305a398f8b6a7da2817681c2e54f69a2a1840714/bin/pi-review#L1-L54"
+    }
+  ]
+}
