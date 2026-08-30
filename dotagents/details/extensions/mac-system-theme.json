@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "On interactive session start, this extension asks macOS for its dark-mode setting, selects Pi's dark or light theme, and repeats the check every two seconds.",
+    "It changes the theme only when the newly selected value differs, and it stops its polling timer during session shutdown."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Load the extension in Pi; session hooks run without a slash command.",
+    "situations": [
+      {
+        "when": "Pi's interactive interface should follow macOS appearance",
+        "use": "Let startup select the current light or dark theme automatically."
+      },
+      {
+        "when": "System appearance may change while a Pi session stays open",
+        "use": "Use periodic checks to update Pi after the preference changes."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "An initial appearance check plus a two-second polling loop for interactive UI sessions.",
+    "Change detection, session-start reset, shutdown cleanup, and an unreferenced timer."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/status-line",
+      "relationship": "Mac system theme selects Pi's palette; Status line separately uses the themed interface to display turn activity."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What are its platform and failure limits?",
+      "answer": [
+        "It requires an interactive Pi UI and macOS System Events through osascript. A command error or any trimmed response other than true selects light.",
+        "Appearance changes are discovered by polling every two seconds, so updates are not event-driven."
+      ]
+    }
+  ],
+  "workingIf": [
+    "An interactive session starts with Pi using the theme selected from the current macOS appearance response.",
+    "Changing macOS appearance causes Pi to switch after a later successful check, while an unchanged result does not call the theme setter again."
+  ],
+  "setupNotes": [
+    "Adopted from the MIT-licensed Pi example originally written by Mario Zechner; Vedang maintains this local copy.",
+    "The extension depends on macOS, osascript, and Pi's interactive theme API.",
+    "No polling starts when Pi reports no UI. The timer is cleared on shutdown and is unreferenced so it cannot keep the process alive by itself."
+  ],
+  "commands": []
+}

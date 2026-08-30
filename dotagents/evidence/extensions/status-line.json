@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/status-line",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Initializes the turn counter inside the extension function and starts it at zero.",
+      "sourcePath": "pi-extensions/status-line.ts",
+      "sourceLines": "10-11"
+    },
+    {
+      "claim": "On session start, writes dim Ready text under the status-demo key.",
+      "sourcePath": "pi-extensions/status-line.ts",
+      "sourceLines": "13-16"
+    },
+    {
+      "claim": "On turn start, increments the counter and writes an accent dot with dim numbered in-progress text under the same key.",
+      "sourcePath": "pi-extensions/status-line.ts",
+      "sourceLines": "18-24"
+    },
+    {
+      "claim": "On turn end, writes a success check with dim completion text containing the current turn number.",
+      "sourcePath": "pi-extensions/status-line.ts",
+      "sourceLines": "26-31"
+    },
+    {
+      "claim": "On a session switch whose reason is new, resets the counter and restores dim Ready text; other switch reasons do not enter that branch.",
+      "sourcePath": "pi-extensions/status-line.ts",
+      "sourceLines": "33-39"
+    }
+  ]
+}

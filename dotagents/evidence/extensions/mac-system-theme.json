@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/mac-system-theme",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Queries the macOS System Events dark-mode preference with osascript, recognizes only trimmed true output as dark, and treats command errors as light.",
+      "sourcePath": "pi-extensions/mac-system-theme.ts",
+      "sourceLines": "14-22"
+    },
+    {
+      "claim": "At session start, removes earlier polling and returns without an appearance check when the session has no interactive UI.",
+      "sourcePath": "pi-extensions/mac-system-theme.ts",
+      "sourceLines": "28-40"
+    },
+    {
+      "claim": "Maps each appearance result to a dark or light Pi theme and calls the theme setter only when that selection differs from the previous one.",
+      "sourcePath": "pi-extensions/mac-system-theme.ts",
+      "sourceLines": "42-48"
+    },
+    {
+      "claim": "Runs one theme check immediately, schedules later checks every two seconds, and unreferences the polling timer.",
+      "sourcePath": "pi-extensions/mac-system-theme.ts",
+      "sourceLines": "50-57"
+    },
+    {
+      "claim": "Registers polling cleanup for session shutdown; cleanup clears an active interval and resets its stored handle.",
+      "sourcePath": "pi-extensions/mac-system-theme.ts",
+      "sourceLines": "28-33, 60"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "metadata": {
     "title": "Dotagents",
-    "tagline": "A source-backed guide to the extensions, skills, and prompts in Vedang's agent setup.",
+    "tagline": "All documentation on this page and its sub-pages is automatically generated and maintained by Vedang's Pi Agent from source-backed records of the extensions, skills, and prompts in Vedang's agent setup.",
     "repository": "https://github.com/vedang/dotagents"
   },
   "projects": [
@@ -304,7 +304,9 @@
       "activation": ["automatic", "hook"],
       "compatibility": ["macOS", "osascript", "Interactive Pi UI"],
       "useAreas": ["appearance", "desktop-integration"],
-      "publication": "listed"
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/mac-system-theme.json",
+      "evidencePath": "dotagents/evidence/extensions/mac-system-theme.json"
     },
     {
       "id": "extension/notify",
@@ -326,7 +328,9 @@
         "OSC 777-capable terminal"
       ],
       "useAreas": ["notifications", "terminal-integration"],
-      "publication": "listed"
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/notify.json",
+      "evidencePath": "dotagents/evidence/extensions/notify.json"
     },
     {
       "id": "extension/status-line",
@@ -344,7 +348,9 @@
       "activation": ["automatic", "hook"],
       "compatibility": ["Interactive Pi status and theme APIs"],
       "useAreas": ["status", "session-feedback"],
-      "publication": "listed"
+      "publication": "featured",
+      "detailPath": "dotagents/details/extensions/status-line.json",
+      "evidencePath": "dotagents/evidence/extensions/status-line.json"
     },
     {
       "id": "extension/pi-subagents",

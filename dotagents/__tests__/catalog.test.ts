@@ -284,27 +284,46 @@ describe("Dotagents JSON schemas", () => {
 
     listed.entries[0].limitation = "Review output before relying on it.";
     assertValid(validate, listed);
+  });
 
+  test("publish Pi Agent-maintained documentation for every current entry", () => {
+    const expectedTagline =
+      "All documentation on this page and its sub-pages is automatically generated and maintained by Vedang's Pi Agent from source-backed records of the extensions, skills, and prompts in Vedang's agent setup.";
+    const directoryByKind = {
+      extension: "extensions",
+      skill: "skills",
+      prompt: "prompts",
+    } as const;
     const catalog = readJson(join(dotagentsRoot, "catalog.json")) as {
+      metadata: { tagline: string };
       entries: Array<{
         id: string;
-        limitation?: string;
+        kind: keyof typeof directoryByKind;
+        slug: string;
         publication: "featured" | "listed";
+        detailPath?: string;
+        evidencePath?: string;
       }>;
     };
-    const actual = Object.fromEntries(
-      catalog.entries
-        .filter((entry) => entry.publication === "listed")
-        .map((entry) => [entry.id, entry.limitation]),
+
+    assert.equal(catalog.metadata.tagline, expectedTagline);
+    assert.equal(catalog.entries.length, 11);
+    assert.deepEqual(
+      catalog.entries.filter(({ publication }) => publication !== "featured"),
+      [],
     );
-    assert.deepEqual(actual, {
-      "extension/mac-system-theme":
-        "macOS-only; AppleScript failures fall back to light, and appearance is polled every two seconds.",
-      "extension/notify":
-        "Terminal support is heuristic, notification failures are not surfaced, and this local copy triggers on `agent_end`.",
-      "extension/status-line":
-        "Display state is process-local, uses a fixed status key, and is a compact activity indicator rather than durable telemetry.",
-    });
+
+    for (const entry of catalog.entries) {
+      const directory = directoryByKind[entry.kind];
+      assert.equal(
+        entry.detailPath,
+        `dotagents/details/${directory}/${entry.slug}.json`,
+      );
+      assert.equal(
+        entry.evidencePath,
+        `dotagents/evidence/${directory}/${entry.slug}.json`,
+      );
+    }
   });
 
   test("keep the approved Handoff context contract pinned exactly", () => {

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "Status line writes themed Ready, in-progress, and completed-turn messages to Pi's footer as session and turn events arrive.",
+    "It keeps a process-local turn count, increments it at each turn start, and resets it when a session switch reports a new session."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Load the local extension in an interactive Pi session; its event hooks update the status entry automatically.",
+    "situations": [
+      {
+        "when": "You want a glanceable signal that an interactive turn has started or ended",
+        "use": "Watch the accent dot while work is in progress and the success check when the turn completes."
+      },
+      {
+        "when": "You want a lightweight turn number in the footer",
+        "use": "Read the in-memory count shown in the running and completed messages."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "One footer status entry under the fixed status-demo key.",
+    "Theme-aware dim text, an accent running marker, and a success completion marker."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/mac-system-theme",
+      "relationship": "Status line uses Pi's themed colors; Mac system theme can select the active light or dark palette."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What should not be treated as durable state?",
+      "answer": [
+        "The counter lives in the extension process and every update uses the same status-demo key. A session-start event displays Ready without resetting the count; only a session switch whose reason is new resets it. Treat this as a compact activity indicator, not durable telemetry."
+      ]
+    },
+    {
+      "question": "Does every session switch change the display?",
+      "answer": [
+        "No. The session-switch handler does nothing unless the event reason is new."
+      ]
+    }
+  ],
+  "workingIf": [
+    "A session-start event displays dim Ready in the status entry.",
+    "Each turn start shows an accent dot and incremented turn number; the matching turn end shows a success check and complete text for that number."
+  ],
+  "setupNotes": [
+    "Adopted from the MIT-licensed Pi example originally authored by Mario Zechner; Vedang maintains this local copy.",
+    "The installed source is the local Status line extension.",
+    "It needs an interactive Pi UI that exposes status and theme APIs.",
+    "Behavior claims were reviewed against the project's pinned Dotagents revision."
+  ],
+  "commands": []
+}

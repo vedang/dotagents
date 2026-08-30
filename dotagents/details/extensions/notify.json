@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "whatItDoes": [
+    "After Pi emits agent_end, this extension sends the fixed title Pi and body Ready for input through one terminal notification path.",
+    "It selects a Windows toast when WT_SESSION is present, Kitty OSC 99 when KITTY_WINDOW_ID is present, and OSC 777 otherwise."
+  ],
+  "whenToReachForIt": {
+    "invocation": "Load the extension; its agent-end hook runs automatically.",
+    "situations": [
+      {
+        "when": "A Pi run may finish while the terminal is not in view",
+        "use": "Request a generic ready-for-input signal from a compatible notification client."
+      },
+      {
+        "when": "A completion alert should avoid session details",
+        "use": "Use the fixed title and body instead of including prompt, response, file, or task content."
+      }
+    ]
+  },
+  "whatItAdds": [
+    "Environment-based routing among PowerShell, Kitty OSC 99, and OSC 777.",
+    "A fixed completion message that does not include session content."
+  ],
+  "howItFits": [
+    {
+      "entryId": "extension/pi-watcher",
+      "relationship": "Pi Watcher can initiate focused agent turns from editor markers; Notify adds a generic signal when an agent run ends."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What are its limitations?",
+      "answer": [
+        "Routing is heuristic: WT_SESSION chooses Windows, KITTY_WINDOW_ID chooses Kitty, and every other environment receives OSC 777 whether or not the terminal supports it. The extension does not report notification failures, and this local copy runs on agent_end."
+      ]
+    }
+  ],
+  "workingIf": [
+    "After an agent run ends, a compatible notification client displays Pi and Ready for input.",
+    "The selected branch invokes PowerShell or writes the expected OSC sequence; the extension has no separate success indicator."
+  ],
+  "setupNotes": [
+    "Adopted from the MIT-licensed Pi example originally implemented by Fero; Vedang maintains this local copy.",
+    "The installed source is a local Pi extension that registers an agent-end hook.",
+    "The Windows route needs WT_SESSION and PowerShell, the Kitty route needs KITTY_WINDOW_ID and OSC 99 support, and the fallback needs OSC 777 support."
+  ],
+  "commands": []
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "entryId": "extension/notify",
+  "verifiedAgainst": {
+    "type": "commit",
+    "value": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
+  },
+  "reviewedBy": "Vedang Manerikar",
+  "reviewedOn": "2026-08-30",
+  "claims": [
+    {
+      "claim": "Writes an OSC 777 notification sequence containing the supplied title and body to standard output.",
+      "sourcePath": "pi-extensions/notify.ts",
+      "sourceLines": "26-28"
+    },
+    {
+      "claim": "Writes the Kitty OSC 99 title and body as two standard-output sequences.",
+      "sourcePath": "pi-extensions/notify.ts",
+      "sourceLines": "30-34"
+    },
+    {
+      "claim": "Builds a Windows Runtime toast command whose text comes from the supplied body and whose notifier name comes from the supplied title.",
+      "sourcePath": "pi-extensions/notify.ts",
+      "sourceLines": "13-23"
+    },
+    {
+      "claim": "Invokes PowerShell with NoProfile and the generated toast command without a completion callback.",
+      "sourcePath": "pi-extensions/notify.ts",
+      "sourceLines": "36-42"
+    },
+    {
+      "claim": "Chooses the Windows branch from WT_SESSION, the Kitty branch from KITTY_WINDOW_ID, and OSC 777 for every other environment.",
+      "sourcePath": "pi-extensions/notify.ts",
+      "sourceLines": "45-53"
+    },
+    {
+      "claim": "Registers an agent_end hook that dispatches only the fixed title Pi and body Ready for input.",
+      "sourcePath": "pi-extensions/notify.ts",
+      "sourceLines": "55-58"
+    },
+    {
+      "claim": "The notification functions emit escape sequences or start PowerShell without reporting a delivery outcome through Pi.",
+      "sourcePath": "pi-extensions/notify.ts",
+      "sourceLines": "26-58"
+    }
+  ]
+}
