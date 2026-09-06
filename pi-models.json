@@ -1,27 +1,32 @@
 {
   "providers": {
     "local": {
-      "baseUrl": "http://127.0.0.1:8011/v1",
+      "baseUrl": "http://127.0.0.1:18081/v1",
       "api": "openai-completions",
       "apiKey": "no-key-required",
       "headers": {
-        "X-APC-Tenant": "hermes-local"
+        "X-APC-Tenant": "shaantkombda-local"
       },
       "compat": {
         "supportsDeveloperRole": false,
-        "supportsReasoningEffort": false,
+        "supportsReasoningEffort": true,
         "supportsUsageInStreaming": true,
-        "maxTokensField": "max_tokens"
+        "maxTokensField": "max_tokens",
+        "thinkingFormat": "qwen"
       },
       "models": [
         {
-          "id": "mlx-community/Qwen3.6-27B-4bit",
-          "name": "Qwen 3.6 27B (Local)",
-          "reasoning": false,
-          "input": ["text"],
+          "id": "mlx-community/Qwen3.8-27B-4bit",
+          "name": "Qwen 3.8 27B (Local)",
+          "reasoning": true,
+          "input": ["text", "image"],
           "contextWindow": 131072,
           "maxTokens": 16384,
-          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+          "samplingParams": {
+            "temperature": 0,
+            "top_p": 1
+          }
         }
       ]
     }
