@@ -5,13 +5,12 @@
 - Never create or switch branches unless the user explicitly asks.
 - Use `jj` for version control. Always try a `jj` command first. Fallback to `git` only and only if the `jj` command does not work.
 - Keep each logical task in its own commit.
-- The main agent is the only agent allowed to create commits.
 - Before starting a new task, ensure you are working in a fresh `jj` change. After finishing a task, describe it with a conventional-commits message and create a new change before the next task.
 
 ## Main Agent Responsibilities
 
 - Own the workflow: understand the request, plan the work, delegate aggressively, verify results, and decide when the task is complete.
-- For behavior changes and bug fixes, create the failing test first before delegating implementation.
+- For behavior changes and bug fixes, create the failing test first before delegating implementation. Not everything needs a failing test. Think about the task and choose when to create the failing test.
 - Run the quality gates periodically, after a batch of commits:
   - Preferred gates are `make format`, `make check`, and `make test`, in that order
   - If a repo has no Makefile or a target is missing, do not count that as a code failure by itself. Instead:
@@ -42,12 +41,11 @@
 
 Use `[tag:name]` and `[ref:name]` for non-obvious constraints that must stay in sync across the codebase, such as security rules, accessibility requirements, intentional workarounds, or other cross-cutting invariants. Use lowercase names with underscores.
 
-## Tool Call Behaviour
-- Before a meaningful tool call, send one concise sentence describing the immediate action.
-- Always do this before edits and verification commands.
-- Skip it for routine reads, obvious follow-up searches, and repetitive low-signal tool calls.
-- When you preface a tool call, make that tool call in the same turn.
-
+## Important Principles
+- Do not preserve backwards compatibility unless explicitly asked. Remove obsolete paths. Do not add compatibility layers, fallbacks, migrations unless explicitly asked.
+- Choose the simplest implementation that meets the current requirements. No speculative abstraction.
+- Grow the system in layers, always. Start from the smallest version that works end to end, add each new capability on top of a product that already works. Never trade a working product for unfinished complexity.
+- Keep the components modular and concerns clearly separated
 ## Instructions specifically for pi-coding-agent
 
 ### Use pi-intercom to coordinate with other local pi sessions on related codebases
@@ -165,7 +163,7 @@ summaries, pairs of those as #0-3, and so on -- every `#a-b` line wake
 prints is one node of it. `~/.optmem/memo zoom <a-b>` opens a node into its
 two halves, down to the raw memories.
 
-### If you're a subagent: skip everything above
+### If you're a subagent: skip everything related to OptMem and memo
 
 Parallel sessions on this machine are all you, and may all write memories.
 A subagent is not: it must never run `memo`, because it cannot judge what
