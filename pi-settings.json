@@ -12,7 +12,7 @@
     "openai-codex/gpt-5.6-sol",
     "moonshotai/kimi-k3",
     "zai/glm-5.3",
-    "openai/gpt-6-astra"
+    "openai-codex/gpt-6-astra"
   ],
   "compaction": {
     "enabled": true,
