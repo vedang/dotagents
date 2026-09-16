@@ -14,7 +14,7 @@ Watchdog supplies cadence and wake signal only. This master session retains all 
 1. Interpret `${1:-10}` as a positive whole number of minutes. If invalid, ask for a valid interval.
 2. Use `pi-intercom` (`intercom` with `action: "list"`) to discover this master session's exact current ID. Never reuse an ID from an earlier session or infer it from name/path.
 3. Use `interactive_shell({ listBackground: true })` to check for an existing watchdog. Do not create a duplicate. Reuse one only if its prompt targets this exact master ID and uses the requested interval; otherwise stop/dismiss stale watchdog first.
-4. Derive a clear unique background-session name, preferably `orchestration-watchdog-<master-short-id>`.
+4. Read the short ID shown for this master by `intercom list`. Set the background-session name exactly to `orchestration-watchdog-<master-short-id>`. Do not invent another name; deterministic naming lets `/orchestration-watchdog-stop` find it safely.
 5. Convert interval to seconds for `sleep` and milliseconds for interactive-shell quiet/update settings.
 
 ## Launch watchdog
@@ -26,7 +26,7 @@ Use `interactive_shell` to spawn fresh Pi with:
 - `mode: "dispatch"`
 - `background: true`
 - `cwd`: absolute path obtained by expanding `~/.pi/agent` (outside every repository; do not pass a literal unexpanded `~`)
-- chosen unique `name`
+- `name`: the exact deterministic name `orchestration-watchdog-<master-short-id>`
 - `handsFree.autoExitOnQuiet: false`
 - quiet/update/grace intervals at least as long as watchdog interval
 
@@ -45,7 +45,7 @@ Give spawned Pi this contract, substituting discovered master ID and calculated 
 
 ## Verify launch
 
-1. Confirm `interactive_shell` returns named background session in running state.
+1. Confirm `interactive_shell` returns the exact requested session ID in running state. If the returned ID differs, use and report the returned exact ID rather than guessing.
 2. Confirm master receives `WATCHDOG READY` through intercom.
 3. Confirm `intercom list` shows watchdog Pi rooted at `~/.pi/agent`, not a repository.
 4. Confirm `interactive_shell({ listBackground: true })` shows exactly one intended watchdog.
@@ -71,8 +71,8 @@ Ticks are approximate, not real-time. A busy master may receive queued ticks lat
 
 ## Retargeting and cleanup
 
-- Master intercom IDs are session-specific. If master session changes, stop old watchdog and create a new one targeting new exact ID.
-- When orchestration completes, stop/dismiss named watchdog with `interactive_shell` and verify it no longer appears in background-session or intercom lists.
+- Master intercom IDs are session-specific. If master session changes, run `/orchestration-watchdog-stop <watchdog-session-id>` from any session, then create a new watchdog targeting the new exact master ID.
+- When orchestration completes, run `/orchestration-watchdog-stop` from the owning master session. Pass the reported watchdog session ID explicitly when stopping it elsewhere.
 - Never leave watchdog running after its task lifecycle ends.
 
 After setup, report:
@@ -82,4 +82,4 @@ After setup, report:
 - target master ID
 - READY verification
 - background-session state
-- exact cleanup action
+- exact cleanup command: `/orchestration-watchdog-stop <watchdog-session-id>`
