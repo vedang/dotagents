@@ -1,7 +1,7 @@
 ---
 name: plan-reviewer
 description: Reviews plans for flaws and missing steps
-model: openai-codex/gpt-5.6-sol
+model: openai-codex/gpt-6-astra
 thinking: max
 fallbackModels: deepseek/deepseek-v4-pro:max
 tools: read, grep, find, ls, bash
