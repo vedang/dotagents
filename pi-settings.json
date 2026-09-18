@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.85.1",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-sol",
-  "defaultThinkingLevel": "high",
+  "defaultModel": "gpt-6-astra",
+  "defaultThinkingLevel": "medium",
   "enabledModels": [
     "deepseek/deepseek-v4-flash",
     "deepseek/deepseek-v4-pro",
@@ -54,7 +54,9 @@
     "git:github.com/vedang/visual-explainer",
     "git:github.com/Whamp/pi-read-map",
     "npm:pi-interactive-shell",
-    "npm:pi-intercom"
+    "npm:pi-intercom",
+    "git:github.com/vedang/typesafe-skills",
+    "git:github.com/vedang/pi-progress-bar"
   ],
   "subagents": {
     "agentOverrides": {
