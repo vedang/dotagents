@@ -13,3 +13,4 @@ __pycache__/
 *.py[cod]
 # [tag:private_session_analysis] Session-derived audits must never enter version control.
 /session_analysis/
+skills/trellis-pgmt
