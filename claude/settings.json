@@ -23,7 +23,7 @@
       "Read(**/secrets/**)"
     ]
   },
-  "model": "claude-fable-5[1m]",
+  "model": "fable[1m]",
   "hooks": {
     "Notification": [
       {
@@ -62,6 +62,16 @@
           {
             "type": "command",
             "command": "\"/Users/nejo/Library/Application Support/Wel/hooks/wel-cc-hook.sh\" start"
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/nejo/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
           }
         ]
       }
