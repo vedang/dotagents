@@ -531,6 +531,21 @@
       "reason": "Not selected for the launch catalog."
     },
     {
+      "kind": "prompt",
+      "source": "prompts/orchestration-watchdog-stop.md",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/typesafe-skills",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
+      "kind": "package",
+      "source": "git:github.com/vedang/pi-progress-bar",
+      "reason": "Not selected for the launch catalog."
+    },
+    {
       "kind": "package",
       "source": "git:github.com/ghoseb/pi-damage-control",
       "reason": "Publication is withheld because anonymous readers cannot access the pinned source or license evidence in the private repository."
