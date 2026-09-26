@@ -63,25 +63,15 @@
     "agentOverrides": {
       "scout": {
         "model": "openai-codex/gpt-5.6-luna",
-        "thinking": "minimal",
-        "fallbackModels": [
-          "deepseek/deepseek-v4-pro:low"
-        ]
+        "thinking": "minimal"
       },
       "worker": {
         "model": "openai-codex/gpt-5.6-terra",
-        "thinking": "xhigh",
-        "fallbackModels": [
-          "deepseek/deepseek-v4-pro:high"
-        ]
+        "thinking": "xhigh"
       },
       "reviewer": {
         "model": "openai-codex/gpt-5.6-sol",
-        "thinking": "max",
-        "fallbackModels": [
-          "moonshotai/kimi-k3:max",
-          "openai-codex/gpt-5.6-terra:xhigh"
-        ]
+        "thinking": "max"
       }
     }
   }
