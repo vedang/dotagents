@@ -50,25 +50,50 @@ Source of truth: [`pi-settings.json`](pi-settings.json).
 
 | Setting | Value | Notes |
 |---------|-------|-------|
-| `defaultProvider` | `deepseek` | Primary provider. |
-| `defaultModel` | `deepseek-v4-pro` | Default model for new sessions. |
-| `defaultThinkingLevel` | `high` | Moderate reasoning by default. |
+| `defaultProvider` | `openai` | Sign in with ChatGPT through `/login openai`. |
+| `defaultModel` | `gpt-6.1-sol` | Default model for new sessions. |
+| `defaultThinkingLevel` | `medium` | Moderate reasoning by default. |
+| `defaultTools` | `["+codemode"]` | Add codemode alongside the standard tools. |
 | `steeringMode` | `all` | Apply steering globally. |
 | `followUpMode` | `one-at-a-time` | Sequential follow-up flow. |
 | `hideThinkingBlock` | `false` | Show thinking block. |
-| `theme` | `dark` | Base default; [`mac-system-theme.ts`](pi-extensions/mac-system-theme.ts) can override it in interactive macOS sessions. |
+| `theme` | `system` | Follow the terminal palette using Pi's native theme support. |
 | `compaction.enabled` | `true` | Context compaction on. |
 | `compaction.reserveTokens` | `16384` | Reserved token budget. |
-| `compaction.keepRecentTokens` | `20000` | Keep recent context before compacting. |
+| `compaction.keepRecentTokens` | `12000` | Keep recent context before compacting. |
 
 ### Enabled models
 
-- `zai-custom/zai-glm-4.7`
-- `zai-custom/glm-5-turbo`
-- `zai-custom/glm-5.1`
-- `openai-codex/gpt-5.5`
-- `deepseek/deepseek-v4-flash`
-- `deepseek/deepseek-v4-pro`
+- `deepseek/deepseek-flash`
+- `local/mlx-community/Qwen3.8-27B-4bit`
+- `openai/gpt-5.6-terra`
+- `moonshotai/kimi-k3`
+- `zai/glm-5.3`
+- `openai/gpt-6-astra`
+- `openai/gpt-6-luna`
+- `openai/gpt-6-sol`
+- `openai/gpt-6.1-sol`
+- `anthropic/claude-opus-5-5`
+- `anthropic/claude-sonnet-5-5`
+- `anthropic/claude-fable-5-1`
+
+### Agent model assignments
+
+Built-in scout, worker, and reviewer assignments live in `subagents.agentOverrides` in `pi-settings.json`; custom roles live in `agents/`.
+
+| Role | Model | Thinking |
+|------|-------|----------|
+| Scout | `openai/gpt-6-luna` | `low` |
+| Worker | `openai/gpt-6.1-sol` | `medium` |
+| Reviewer | `openai/gpt-6.1-sol` | `high` |
+| Planner | `openai/gpt-6.1-sol` | `high` |
+| Plan-reviewer | `openai/gpt-6-astra` | `high` |
+| Multimodal | `openai/gpt-6-luna` | `medium` |
+| Researcher | `openai/gpt-6-luna` | `medium` |
+
+Each role has one primary model; obsolete `fallbackModels` declarations are removed. Restart Pi after updating. Resumed sessions retain their previous model selection; select the new OpenAI model explicitly when continuing an older session.
+
+The `pi-better-openai` package and its local configuration are removed. Its image-generation and usage-display features are no longer loaded; native ChatGPT login supplies authentication, not replacement extension tools.
 
 ### Packages loaded from `pi-settings.json`
 
@@ -139,7 +164,6 @@ Checked-in local runtime extensions.
 |------|-------------|
 | [`explanatory-output-style.ts`](pi-extensions/explanatory-output-style.ts) | Appends explanatory-output guidance to the system prompt. |
 | [`handoff.ts`](pi-extensions/handoff.ts) | Adds `/handoff` to draft a focused prompt for a new session. |
-| [`mac-system-theme.ts`](pi-extensions/mac-system-theme.ts) | Syncs Pi theme with macOS light/dark appearance. |
 | [`notify.ts`](pi-extensions/notify.ts) | Sends terminal-native notifications when Pi is ready again. |
 | [`status-line.ts`](pi-extensions/status-line.ts) | Demonstrates persistent footer status updates across session turns. |
 

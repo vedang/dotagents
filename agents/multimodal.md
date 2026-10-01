@@ -1,9 +1,8 @@
 ---
 name: multimodal
 description: Media Analysis subagent. Use for reading PDFs, images, or other media
-model: openai-codex/gpt-6-luna
-thinking: xhigh
-fallbackModels: moonshotai/kimi-k3:max
+model: openai/gpt-6-luna
+thinking: medium
 tools: read,ls
 completionGuard: false
 timeoutMs: 1200000

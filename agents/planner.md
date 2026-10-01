@@ -1,9 +1,8 @@
 ---
 name: planner
 description: Creates implementation plans from context and requirements
-model: openai-codex/gpt-6-sol
-thinking: max
-fallbackModels: moonshotai/kimi-k3:max, openai-codex/gpt-5.6-terra:xhigh
+model: openai/gpt-6.1-sol
+thinking: high
 defaultProgress: true
 defaultReads: context.md
 completionGuard: false

@@ -1,9 +1,8 @@
 ---
 name: researcher
 description: Autonomous web researcher — searches, evaluates, and synthesizes a focused research brief
-model: deepseek/deepseek-flash
+model: openai/gpt-6-luna
 thinking: medium
-fallbackModels: openai-codex/gpt-6-luna:medium
 tools: read, write, grep, bash, ls
 defaultProgress: true
 timeoutMs: 2400000
