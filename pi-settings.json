@@ -35,6 +35,7 @@
     }
   },
   "theme": "system",
+  "tuiMode": "regular",
   "packages": [
     "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/ghoseb/pi-damage-control",
