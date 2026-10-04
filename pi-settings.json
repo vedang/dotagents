@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.99.2",
+  "lastChangelogVersion": "1.0.2",
   "defaultProvider": "openai",
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
@@ -35,6 +35,7 @@
   "theme": "dark",
   "tuiMode": "regular",
   "specific_packages": [
+    "git:github.com/ghoseb/pi-askuserquestion",
     "git:github.com/nicobailon/pi-subagents",
     "git:github.com/unravel-team/dafny-estimation",
     "git:github.com/unravel-team/unravel-proposal-creator",
@@ -44,7 +45,7 @@
     "git:github.com/vedang/archify"
   ],
   "packages": [
-    "git:github.com/earendil/pi-review",
+    "git:github.com/earendil-works/pi-review",
     "git:github.com/ghoseb/pi-damage-control",
     "git:github.com/nicobailon/pi-boomerang",
     "git:github.com/vedang/chrome-cdp-skill",
