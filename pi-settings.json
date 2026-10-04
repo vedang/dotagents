@@ -3,9 +3,7 @@
   "defaultProvider": "openai",
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
-  "defaultTools": [
-    "+codemode"
-  ],
+  "defaultTools": ["+codemode"],
   "enabledModels": [
     "deepseek/deepseek-flash",
     "local/mlx-community/Qwen3.8-27B-4bit",
@@ -36,33 +34,26 @@
   },
   "theme": "dark",
   "tuiMode": "regular",
-  "packages": [
-    "git:github.com/ghoseb/pi-askuserquestion",
-    "git:github.com/ghoseb/pi-damage-control",
+  "specific_packages": [
     "git:github.com/nicobailon/pi-subagents",
     "git:github.com/unravel-team/dafny-estimation",
     "git:github.com/unravel-team/unravel-proposal-creator",
     "git:github.com/unravel-team/denote-mono",
     "git:github.com/unravel-team/thing.git",
-    "git:github.com/vedang/caveman",
+    "git:github.com/vedang/typesafe-skills",
+    "git:github.com/vedang/archify"
+  ],
+  "packages": [
+    "git:github.com/earendil/pi-review",
+    "git:github.com/ghoseb/pi-damage-control",
+    "git:github.com/nicobailon/pi-boomerang",
     "git:github.com/vedang/chrome-cdp-skill",
     "git:github.com/vedang/pi-adr",
-    "git:github.com/vedang/pi-boomerang",
-    "git:github.com/vedang/pi-btw",
     "git:github.com/vedang/pi-exa",
-    "git:github.com/vedang/pi-prompt-history",
-    "git:github.com/vedang/pi-quizme",
-    "git:github.com/vedang/pi-ralph-loop",
-    "git:github.com/vedang/pi-review-code",
-    "git:github.com/vedang/pi-watcher",
-    "git:github.com/vedang/shaping-skills",
-    "git:github.com/vedang/visual-explainer",
-    "git:github.com/Whamp/pi-read-map",
-    "npm:pi-interactive-shell",
-    "npm:pi-intercom",
-    "git:github.com/vedang/typesafe-skills",
     "git:github.com/vedang/pi-progress-bar",
-    "git:github.com/vedang/archify"
+    "git:github.com/vedang/shaping-skills",
+    "npm:pi-interactive-shell",
+    "npm:pi-intercom"
   ],
   "subagents": {
     "agentOverrides": {
