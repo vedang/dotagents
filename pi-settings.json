@@ -56,7 +56,8 @@
     "git:github.com/vedang/pi-progress-bar",
     "git:github.com/vedang/shaping-skills",
     "npm:pi-interactive-shell",
-    "npm:pi-intercom"
+    "npm:pi-intercom",
+    "git:github.com/vedang/modularity"
   ],
   "subagents": {
     "agentOverrides": {
