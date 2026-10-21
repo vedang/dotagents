@@ -2,49 +2,25 @@
 
 ![Agents Banner](images/banner.png)
 
-This is my Agent Harness configuration. Tell your agent to clone it to `~/.config/agents` and symlink the parts you want into your harness.
+My personal configuration for [Pi](https://github.com/badlogic/pi-mono) (`pi-coding-agent`) and local coding agents. Clone it to `~/.config/agents` and symlink the pieces you want into `~/.pi/agent/`.
 
 Public guide: [vedang.me/dotagents](https://vedang.me/dotagents/).
 
-## Example setup (pi-coding-agent)
-
-1. `git clone https://github.com/vedang/dotagents ~/.config/agents`
-2. `mkdir -p ~/.pi/agent`
-3. `ln -s ~/.config/agents/AGENTS.md ~/.pi/agent/AGENTS.md`
-4. `ln -s ~/.config/agents/APPEND_SYSTEM.md ~/.pi/agent/APPEND_SYSTEM.md`
-5. `ln -s ~/.config/agents/pi-settings.json ~/.pi/agent/settings.json`
-6. `ln -s ~/.config/agents/agents ~/.pi/agent/agents`
-7. `ln -s ~/.config/agents/prompts ~/.pi/agent/prompts`
-8. `ln -s ~/.config/agents/pi-extensions ~/.pi/agent/extensions`
-9. `ln -s ~/.config/agents/skills ~/.pi/agent/skills`
-
-## Claude Code setup
-
-The [`claude/`](claude/) directory holds the Claude Code surface of this
-harness: `CLAUDE.md` (symlink to the shared `AGENTS.md`), `settings.json`
-(Explanatory output style, notification hooks, statusline, permissions),
-ported subagent role cards under [`claude/agents/`](claude/agents/), and
-skills under [`claude/skills/`](claude/skills/) (claude-specific skills plus
-symlinks to the shared `skills/`).
-
-See [`docs/install-claude.md`](docs/install-claude.md) for the symlink setup
-into `~/.claude`, the pi→Claude surface map, and what replaces each pi
-package. Migration plans for my own pi extensions live in
-[`docs/claude-compat-*.md`](docs/).
-
-## Weekly local session analysis
-
-Runbook: [`scripts/README.md`](scripts/README.md). On Sunday, run from repository root:
+## Setup (`pi-coding-agent`)
 
 ```sh
-python3 scripts/session_analysis.py --week-ending YYYY-MM-DD
+git clone https://github.com/vedang/dotagents ~/.config/agents
+mkdir -p ~/.pi/agent
+ln -s ~/.config/agents/AGENTS.md ~/.pi/agent/AGENTS.md
+ln -s ~/.config/agents/pi-settings.json ~/.pi/agent/settings.json
+ln -s ~/.config/agents/pi-models.json ~/.pi/agent/models.json
+ln -s ~/.config/agents/prompts ~/.pi/agent/prompts
+ln -s ~/.config/agents/skills ~/.pi/agent/skills
 ```
-
-Replace `YYYY-MM-DD` with Sunday date. Generated `session_analysis/` data stays local and ignored.
 
 ## Current Pi runtime profile
 
-Source of truth: [`pi-settings.json`](pi-settings.json).
+Source of truth: [`pi-settings.json`](pi-settings.json) and [`pi-models.json`](pi-models.json).
 
 ### Core defaults
 
@@ -53,22 +29,21 @@ Source of truth: [`pi-settings.json`](pi-settings.json).
 | `defaultProvider` | `openai` | Sign in with ChatGPT through `/login openai`. |
 | `defaultModel` | `gpt-6.1-sol` | Default model for new sessions. |
 | `defaultThinkingLevel` | `medium` | Moderate reasoning by default. |
-| `defaultTools` | `["+codemode"]` | Add codemode alongside the standard tools. |
+| `defaultTools` | `["+codemode"]` | Enables `codemode` alongside the standard tools. |
 | `steeringMode` | `all` | Apply steering globally. |
 | `followUpMode` | `one-at-a-time` | Sequential follow-up flow. |
 | `hideThinkingBlock` | `false` | Show thinking block. |
-| `theme` | `system` | Follow the terminal palette using Pi's native theme support. |
-| `compaction.enabled` | `true` | Context compaction on. |
-| `compaction.reserveTokens` | `16384` | Reserved token budget. |
-| `compaction.keepRecentTokens` | `12000` | Keep recent context before compacting. |
+| `theme` | `dark` | Dark terminal theme. |
+| `tuiMode` | `regular` | Standard Pi TUI mode. |
+| `compaction.enabled` | `true` | Automatic context compaction (`reserveTokens: 16384`, `keepRecentTokens: 12000`). |
 
 ### Enabled models
 
 - `deepseek/deepseek-flash`
-- `local/mlx-community/Qwen3.8-27B-4bit`
-- `openai/gpt-5.6-terra`
+- `local/mlx-community/Qwen3.8-27B-4bit` (served locally via MLX on `http://127.0.0.1:8080/v1`, defined in [`pi-models.json`](pi-models.json))
 - `moonshotai/kimi-k3`
 - `zai/glm-5.3`
+- `openai/gpt-5.6-terra`
 - `openai/gpt-6-astra`
 - `openai/gpt-6-luna`
 - `openai/gpt-6-sol`
@@ -77,43 +52,23 @@ Source of truth: [`pi-settings.json`](pi-settings.json).
 - `anthropic/claude-sonnet-5-5`
 - `anthropic/claude-fable-5-1`
 
-### Agent model assignments
-
-Built-in scout, worker, and reviewer assignments live in `subagents.agentOverrides` in `pi-settings.json`; custom roles live in `agents/`.
-
-| Role | Model | Thinking |
-|------|-------|----------|
-| Scout | `openai/gpt-6-luna` | `low` |
-| Worker | `openai/gpt-6.1-sol` | `medium` |
-| Reviewer | `openai/gpt-6.1-sol` | `high` |
-| Planner | `openai/gpt-6.1-sol` | `high` |
-| Plan-reviewer | `openai/gpt-6-astra` | `high` |
-| Multimodal | `openai/gpt-6-luna` | `medium` |
-| Researcher | `openai/gpt-6-luna` | `medium` |
-
-Each role has one primary model; obsolete `fallbackModels` declarations are removed. Restart Pi after updating. Resumed sessions retain their previous model selection; select the new OpenAI model explicitly when continuing an older session.
-
-The `pi-better-openai` package and its local configuration are removed. Its image-generation and usage-display features are no longer loaded; native ChatGPT login supplies authentication, not replacement extension tools.
-
-### Packages loaded from `pi-settings.json`
+### Active packages (`pi-settings.json` → `"packages"`)
 
 | Package | Source | Purpose |
 |---------|--------|---------|
-| `pi-askuserquestion` | `git:github.com/ghoseb/pi-askuserquestion` | Structured multi-choice questions via `ask_user_question`. |
-| `pi-interactive-shell` | `npm:pi-interactive-shell` | Overlay, dispatch, and monitor workflows for interactive CLI agents. |
-| `dafny-estimation` | `git:github.com/unravel-team/dafny-estimation` | Formal specification-driven project estimation skill. |
-| `caveman` | `git:github.com/vedang/caveman` | Token-efficient caveman response mode plus terse helper skills. |
-| `pi-boomerang` | `git:github.com/vedang/pi-boomerang` | Collapse large task context into compact summaries. |
-| `pi-custom-provider-zai` | `git:github.com/vedang/pi-custom-provider-zai` | Registers ZAI-hosted GLM models as custom provider models. |
-| `pi-prompt-history` | `git:github.com/vedang/pi-prompt-history` | Prompt-history search for past session inputs. |
-| `pi-quizme` | `git:github.com/vedang/pi-quizme` | Quiz-style recall and change-comprehension checks. |
-| `pi-ralph-loop` | `git:github.com/vedang/pi-ralph-loop` | Ralph-style autonomous planning loops via `/ralph` commands. |
-| `pi-simplify-code` | `git:github.com/vedang/pi-simplify-code` | Refactor/simplify changed code without changing behavior. |
-| `pi-subagents` | `git:github.com/vedang/pi-subagents` | Subagent execution, parallel work, and chain orchestration. |
-| `visual-explainer` | `git:github.com/vedang/visual-explainer` | Generate self-contained HTML visual explainers. |
-| `pi-read-map` | `git:github.com/Whamp/pi-read-map` | Better large-file reads with structure maps. |
-| `chrome-cdp-skill` | `git:github.com/pasky/chrome-cdp-skill` | Interact with live local Chrome tabs through CDP. |
-| `pi-autoresearch` | `git:github.com/davebcn87/pi-autoresearch` | Autonomous experiment loop with metrics tracking and confidence scoring. |
+| `pi-review` | `git:github.com/earendil-works/pi-review` | Structured code review workflow (`/review`, `/end-review`) across diffs, branches, commits, PRs, and folders. |
+| `pi-damage-control` | `git:github.com/ghoseb/pi-damage-control` | Command and path safety rules configured via [`extension_config/damage-control/config.yaml`](extension_config/damage-control/config.yaml). |
+| `pi-boomerang` | `git:github.com/nicobailon/pi-boomerang` | Runs autonomous tasks or template chains (`/boomerang`) and rewinds intermediate turns into a compact summary. |
+| `chrome-cdp-skill` | `git:github.com/vedang/chrome-cdp-skill` | Attaches to open local Chrome tabs over CDP with explicit pre-connection approval. |
+| `pi-adr` | `git:github.com/vedang/pi-adr` | Workflow and Bun CLI for drafting, superseding, linking, and validating Architecture Decision Records. |
+| `pi-exa` | `git:github.com/vedang/pi-exa` | Web search (`exa_search`) and URL content extraction (`exa_contents`) via Exa. |
+| `pi-progress-bar` | `git:github.com/vedang/pi-progress-bar` | Passive task board (`/progress`) and footer widget backed by Jev verification and tool evidence. |
+| `shaping-skills` | `git:github.com/vedang/shaping-skills` | Ryan Singer's Shape Up workflow packaged for Pi (`framing-doc`, `shaping`, `breadboarding`, `breadboard-reflection`, `kickoff-doc`). |
+| `pi-interactive-shell` | `npm:pi-interactive-shell` | Full PTY and xterm emulation for interactive CLIs and background Pi sessions (`/spawn`, `/attach`, `/dismiss`). |
+| `pi-intercom` | `npm:pi-intercom` | Local Unix-socket messaging between running Pi sessions (`/intercom`, `/intercom-id`). |
+| `modularity` | `git:github.com/vedang/modularity` | Vlad Khononov's Balanced Coupling architecture skills (`design`, `review`, `balanced-coupling`, `document`). |
+
+Packages parked under `"specific_packages"` in `pi-settings.json` (`pi-askuserquestion`, `pi-subagents`, `dafny-estimation`, `unravel-proposal-creator`, `denote-mono`, `thing`, `typesafe-skills`, `archify`) are inactive by default and only moved into `"packages"` when needed.
 
 ## Repository contents
 
@@ -121,79 +76,52 @@ The `pi-better-openai` package and its local configuration are removed. Its imag
 
 | File | Description |
 |------|-------------|
-| [`AGENTS.md`](AGENTS.md) | Global workflow rules: `jj`, planning folders, tests, commits, tagref. |
-| [`APPEND_SYSTEM.md`](APPEND_SYSTEM.md) | Extra system-prompt guidance layered into the harness. |
-| [`pi-settings.json`](pi-settings.json) | Pi runtime defaults, enabled models, and package list. |
-
-### `agents/` role cards
-
-| File | Description |
-|------|-------------|
-| [`context-builder.md`](agents/context-builder.md) | Builds codebase context and a planner-ready meta-prompt from requirements. |
-| [`multimodal.md`](agents/multimodal.md) | Reads PDFs, images, and other media for implementation details. |
-| [`plan-reviewer.md`](agents/plan-reviewer.md) | Critiques plans for missing steps, bad assumptions, and risk. |
-| [`planner.md`](agents/planner.md) | Turns scoped context into a concrete implementation plan. |
-| [`researcher.md`](agents/researcher.md) | Runs focused web research and produces a source-backed brief. |
-| [`reviewer.md`](agents/reviewer.md) | Reviews implementation quality and can make small follow-up fixes. |
-| [`scout.md`](agents/scout.md) | Fast codebase recon with compressed handoff context. |
-| [`worker.md`](agents/worker.md) | General-purpose implementation subagent for scoped coding work. |
-
-### `agents/` chain workflows
-
-| File | Description |
-|------|-------------|
-| [`full-workflow.chain.md`](agents/full-workflow.chain.md) | Scout → plan → review plan → implement → review. Main agent still owns tests and commits. |
-| [`implement-plan.chain.md`](agents/implement-plan.chain.md) | Implement a pre-created plan, then run a review pass. Main agent still owns tests and commits. |
-| [`quick-plan.chain.md`](agents/quick-plan.chain.md) | Fast scout → plan workflow without a plan review pass. |
-| [`scout-and-plan.chain.md`](agents/scout-and-plan.chain.md) | Scout code, create a plan, then review the plan. |
+| [`AGENTS.md`](AGENTS.md) | Global operating rules: `jj` for VCS, `br` (`.beads/`) for issue tracking, quality gates (`make format`, `make check`, `make test`), and modular design principles. |
+| [`pi-settings.json`](pi-settings.json) | Pi runtime defaults, enabled models, and active `packages` list. |
+| [`pi-models.json`](pi-models.json) | Custom provider definition for local MLX inference (`mlx-community/Qwen3.8-27B-4bit`). |
+| [`hermes-config.yaml`](hermes-config.yaml) | Local Hermes CLI configuration. |
 
 ### `prompts/`
 
-Reusable prompt templates and operator instructions.
+Loaded via `~/.pi/agent/prompts`.
 
 | File | Description |
 |------|-------------|
-| [`orchestration-watchdog.md`](prompts/orchestration-watchdog.md) | Starts a verified periodic headless Pi watchdog that wakes the master for cross-workspace orchestration checks. |
-| [`sharpen-communication.md`](prompts/sharpen-communication.md) | Rewrites communication with BLUF/MECE structure and stronger phrasing. |
-
-### `pi-extensions/`
-
-Checked-in local runtime extensions.
-
-| File | Description |
-|------|-------------|
-| [`explanatory-output-style.ts`](pi-extensions/explanatory-output-style.ts) | Appends explanatory-output guidance to the system prompt. |
-| [`handoff.ts`](pi-extensions/handoff.ts) | Adds `/handoff` to draft a focused prompt for a new session. |
-| [`notify.ts`](pi-extensions/notify.ts) | Sends terminal-native notifications when Pi is ready again. |
-| [`status-line.ts`](pi-extensions/status-line.ts) | Demonstrates persistent footer status updates across session turns. |
+| [`sharpen-communication.md`](prompts/sharpen-communication.md) | Clarifies audience, goal, and tone, then rewrites drafts using BLUF and MECE structure (`/sharpen-communication`). |
+| [`orchestration-watchdog.md`](prompts/orchestration-watchdog.md) | Spawns a verified read-only background Pi ticker that wakes the coordinator session every N minutes over `pi-intercom` (`/orchestration-watchdog`). |
+| [`orchestration-watchdog-stop.md`](prompts/orchestration-watchdog-stop.md) | Safely validates and dismisses the active `orchestration-watchdog-<master-id>` background session (`/orchestration-watchdog-stop`). |
 
 ### `skills/`
 
-Checked-in local skills in this repo.
+Checked-in local skills loaded via `~/.pi/agent/skills`.
 
 | Skill | Description |
 |-------|-------------|
-| [`docx/`](skills/docx/) | Create, edit, and analyze Word `.docx` documents. |
-| [`pdf/`](skills/pdf/) | Extract, edit, merge, split, OCR, and otherwise process PDFs. |
-| [`pptx/`](skills/pptx/) | Read, edit, and create PowerPoint `.pptx` decks. |
-| [`skill-creator/`](skills/skill-creator/) | Create or update reusable agent skills. |
-| [`xlsx/`](skills/xlsx/) | Create, edit, and validate spreadsheet outputs. |
+| [`test-audit/`](skills/test-audit/) | Gates new tests with four boundary questions and prunes mock-heavy, duplicate, or implementation-coupled tests from existing suites. |
+| [`tufte-viz/`](skills/tufte-viz/) | Applies Edward Tufte's principles (data-ink ratio, chartjunk elimination, direct labeling, small multiples) to charts and dashboards. |
 
 ### Skills provided by installed packages
 
-These are available at runtime through packages in `pi-settings.json`, even though they are not stored under this repo's `skills/` directory.
+Available at runtime through the active packages in [`pi-settings.json`](pi-settings.json):
 
 | Skill | Provided by | Description |
 |-------|-------------|-------------|
-| `caveman` | `caveman` | Ultra-compressed communication mode for token efficiency. |
-| `caveman-commit` | `caveman` | Terse Conventional Commits helper. |
-| `caveman-help` | `caveman` | Quick reference for caveman commands and modes. |
-| `caveman-review` | `caveman` | One-line compressed code review comments. |
-| `caveman-compress` | `caveman` | Compress natural-language memory files while preserving technical content. |
-| `dafny-estimation` | `dafny-estimation` | Risk-adjusted project estimation using Dafny specs. |
-| `visual-explainer` | `visual-explainer` | HTML visual explainers for plans, systems, and diffs. |
-| `chrome-cdp` | `chrome-cdp-skill` | Inspect and interact with live local Chrome tabs. |
-| `interactive-shell` | `pi-interactive-shell` | Cheat sheet and workflow for launching TUI coding agents. |
-| `codex-cli` | `pi-interactive-shell` | Codex CLI reference material. |
-| `gpt-5-4-prompting` | `pi-interactive-shell` | Prompting guidance for GPT-5.4. |
-| `codex-5-3-prompting` | `pi-interactive-shell` | Prompting guidance for Codex 5.3. |
+| `framing-doc` | `vedang/shaping-skills` | Distill conversation transcripts or stakeholder notes into a grounded Problem Framing Document. |
+| `shaping` | `vedang/shaping-skills` | Iterate on problem requirements (`R`) and solution shapes (`A`, `B`, `C`) with fit checks. |
+| `breadboarding` | `vedang/shaping-skills` | Map systems into UI and code affordances with wiring and vertical implementation slices. |
+| `breadboard-reflection` | `vedang/shaping-skills` | Compare implemented code against an existing breadboard to find drift and update design artifacts. |
+| `kickoff-doc` | `vedang/shaping-skills` | Package a shaped slice into a self-contained implementation kickoff brief. |
+| `design` | `vedang/modularity` | Design modular software architectures with clean boundaries and contracts. |
+| `review` | `vedang/modularity` | Review codebases and PRs for coupling problems, boundary leaks, and cascading change risks. |
+| `balanced-coupling` | `vedang/modularity` | Reference model for evaluating integration strength, distance, and volatility. |
+| `document` | `vedang/modularity` | Document system architecture, module responsibilities, and dependency diagrams. |
+| `adr` | `vedang/pi-adr` | Create, supersede, link, and validate Architecture Decision Records. |
+| `chrome-cdp` | `vedang/chrome-cdp-skill` | Inspect and interact with live local Chrome tabs over CDP. |
+| `interactive-shell` | `pi-interactive-shell` | Workflow and reference for running interactive CLI programs and background Pi sessions in a PTY. |
+
+### Inactive / reference directories
+
+- [`specific_skills/`](specific_skills/) — Domain-specific skills (Cloudflare, Stripe, `web-perf`, `mck-consult`) kept outside `skills/` so they do not load into every session.
+- [`pi-extensions/`](pi-extensions/), [`agents/`](agents/), [`chains/`](chains/) — Archived local extensions, subagent role cards, and chains not currently symlinked into `~/.pi/agent/`.
+- [`claude/`](claude/) — Claude Code configuration surface (`CLAUDE.md` symlinked to `AGENTS.md`, `settings.json`, and skills); see [`docs/install-claude.md`](docs/install-claude.md).
+- [`scripts/`](scripts/) — Weekly local session analysis scripts; see [`scripts/README.md`](scripts/README.md).
