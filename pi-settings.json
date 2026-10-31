@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.4.0",
   "defaultProvider": "openai",
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
@@ -49,12 +49,13 @@
     "git:github.com/ghoseb/pi-damage-control",
     "git:github.com/nicobailon/pi-boomerang",
     "git:github.com/vedang/chrome-cdp-skill",
+    "git:github.com/vedang/modularity",
     "git:github.com/vedang/pi-adr",
     "git:github.com/vedang/pi-exa",
+    "git:github.com/vedang/pi-opentelemetry",
     "git:github.com/vedang/shaping-skills",
     "npm:pi-interactive-shell",
-    "npm:pi-intercom",
-    "git:github.com/vedang/modularity"
+    "npm:pi-intercom"
   ],
   "subagents": {
     "agentOverrides": {
