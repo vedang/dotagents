@@ -34,16 +34,6 @@
   },
   "theme": "dark",
   "tuiMode": "regular",
-  "specific_packages": [
-    "git:github.com/ghoseb/pi-askuserquestion",
-    "git:github.com/nicobailon/pi-subagents",
-    "git:github.com/unravel-team/dafny-estimation",
-    "git:github.com/unravel-team/unravel-proposal-creator",
-    "git:github.com/unravel-team/denote-mono",
-    "git:github.com/unravel-team/thing.git",
-    "git:github.com/vedang/typesafe-skills",
-    "git:github.com/vedang/archify"
-  ],
   "packages": [
     "git:github.com/earendil-works/pi-review",
     "git:github.com/ghoseb/pi-damage-control",
@@ -58,6 +48,22 @@
     "npm:pi-interactive-shell",
     "npm:pi-intercom"
   ],
+  "load_specific_skills": {
+    "specific_skills": [
+      "~/src/private-skills"
+    ],
+    "specific_packages": [
+      "git:github.com/ghoseb/pi-askuserquestion",
+      "git:github.com/nicobailon/pi-subagents",
+      "git:github.com/unravel-team/dafny-estimation",
+      "git:github.com/unravel-team/unravel-proposal-creator",
+      "git:github.com/unravel-team/denote-mono",
+      "git:github.com/unravel-team/thing.git",
+      "git:github.com/vedang/typesafe-skills",
+      "git:github.com/vedang/archify"
+    ],
+    "hermes_agent_skills": "~/src/NousResearch/hermes-agent/hermes-agent.root"
+  },
   "subagents": {
     "agentOverrides": {
       "scout": {
