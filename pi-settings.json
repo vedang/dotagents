@@ -90,6 +90,7 @@
     "{\"source\":\"git:github.com/vedang/pi-exa\",\"scope\":\"user\"}": "0.2.0",
     "{\"source\":\"git:github.com/vedang/pi-load-skill\",\"scope\":\"user\"}": "0.1.0",
     "{\"source\":\"git:github.com/vedang/pi-opentelemetry\",\"scope\":\"user\"}": "0.1.0",
-    "{\"source\":\"npm:pi-interactive-shell\",\"scope\":\"user\"}": "0.18.0"
+    "{\"source\":\"npm:pi-interactive-shell\",\"scope\":\"user\"}": "0.18.0",
+    "{\"source\":\"git:github.com/vedang/SimpleEnglish\",\"scope\":\"user\"}": "2.1.1"
   }
 }
