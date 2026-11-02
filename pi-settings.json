@@ -1,9 +1,11 @@
 {
-  "lastChangelogVersion": "1.4.0",
+  "lastChangelogVersion": "1.5.0",
   "defaultProvider": "openai",
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
-  "defaultTools": ["+codemode"],
+  "defaultTools": [
+    "+codemode"
+  ],
   "enabledModels": [
     "deepseek/deepseek-flash",
     "local/mlx-community/Qwen3.8-27B-4bit",
@@ -46,7 +48,8 @@
     "git:github.com/vedang/pi-opentelemetry",
     "git:github.com/vedang/shaping-skills",
     "npm:pi-interactive-shell",
-    "npm:pi-intercom"
+    "npm:pi-intercom",
+    "git:github.com/vedang/SimpleEnglish"
   ],
   "load_specific_skills": {
     "specific_skills": [
@@ -80,5 +83,13 @@
       }
     }
   },
-  "deviceId": "ecbc965b-825e-4f46-8904-30e9a06d5e30"
+  "deviceId": "ecbc965b-825e-4f46-8904-30e9a06d5e30",
+  "extensionChangelogVersions": {
+    "{\"source\":\"git:github.com/ghoseb/pi-damage-control\",\"scope\":\"user\"}": "0.11.2",
+    "{\"source\":\"git:github.com/nicobailon/pi-boomerang\",\"scope\":\"user\"}": "0.7.0",
+    "{\"source\":\"git:github.com/vedang/pi-exa\",\"scope\":\"user\"}": "0.2.0",
+    "{\"source\":\"git:github.com/vedang/pi-load-skill\",\"scope\":\"user\"}": "0.1.0",
+    "{\"source\":\"git:github.com/vedang/pi-opentelemetry\",\"scope\":\"user\"}": "0.1.0",
+    "{\"source\":\"npm:pi-interactive-shell\",\"scope\":\"user\"}": "0.18.0"
+  }
 }
