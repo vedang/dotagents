@@ -44,7 +44,7 @@
     "The critique identifies distortion or chartjunk and proposes a smaller, checkable correction."
   ],
   "setupNotes": [
-    "Written and maintained by Vedang under the WTFPL, drawing on principles published by Edward Tufte; not affiliated with or endorsed by Edward Tufte or Graphics Press.",
+    "Originally authored by quzhi-ai, adapted by Vedang, drawing on principles published by Edward Tufte; not affiliated with or endorsed by Edward Tufte or Graphics Press.",
     "The local Agent Skill is Markdown-only and has no runtime dependency.",
     "Behavior claims were reviewed against the pinned Dotagents revision."
   ],

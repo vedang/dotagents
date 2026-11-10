@@ -107,8 +107,9 @@
       "title": "Tufte visualization skill",
       "installedLocator": "skills/tufte-viz/SKILL.md",
       "canonicalUrl": "https://github.com/vedang/dotagents",
-      "relationship": "original",
-      "originalAuthors": ["Vedang Manerikar"],
+      "upstreamUrl": "https://github.com/quzhi-ai/tufte-viz",
+      "relationship": "adopted",
+      "originalAuthors": ["quzhi-ai"],
       "currentMaintainers": ["Vedang Manerikar"],
       "reviewedRevision": "9a0af933d90ad9175eca0ff27db6624c5d6bb4fe"
     },
