@@ -45,6 +45,7 @@
   ],
   "setupNotes": [
     "Originally authored by quzhi-ai, adapted by Vedang, drawing on principles published by Edward Tufte; not affiliated with or endorsed by Edward Tufte or Graphics Press.",
+    "The skill uses the upstream MIT license. Keep the copyright notice, Copyright (c) 2026 quzhi-ai, and the permission notice in skills/tufte-viz/LICENSE with copies or substantial portions.",
     "The local Agent Skill is Markdown-only and has no runtime dependency.",
     "Behavior claims were reviewed against the pinned Dotagents revision."
   ],

@@ -337,14 +337,27 @@
       },
       "scope": {
         "type": "local-paths",
-        "pathPrefixes": [
-          "skills/tufte-viz/",
-          "prompts/sharpen-communication.md"
-        ]
+        "pathPrefixes": ["prompts/sharpen-communication.md"]
       },
       "publicationScope": "Source link, independently written summary, and reviewed behavior claims.",
       "reviewedBy": "Vedang Manerikar",
       "reviewedOn": "2026-08-22"
+    },
+    {
+      "id": "tufte-viz-mit",
+      "scheme": "spdx",
+      "identifier": "MIT",
+      "evidence": {
+        "type": "path",
+        "value": "skills/tufte-viz/LICENSE"
+      },
+      "scope": {
+        "type": "local-paths",
+        "pathPrefixes": ["skills/tufte-viz/"]
+      },
+      "publicationScope": "Source link, independently written summary, and reviewed behavior claims. Preserve the MIT notice: Copyright (c) 2026 quzhi-ai.",
+      "reviewedBy": "Vedang Manerikar",
+      "reviewedOn": "2026-11-10"
     },
     {
       "id": "pi-subagents-mit",
@@ -888,7 +901,7 @@
     {
       "id": "skill/tufte-viz",
       "projectId": "project/tufte-viz",
-      "licenseRef": "dotagents-wtfpl",
+      "licenseRef": "tufte-viz-mit",
       "slug": "tufte-viz",
       "name": "Tufte visualization",
       "kind": "skill",
